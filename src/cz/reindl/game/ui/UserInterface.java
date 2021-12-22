@@ -12,8 +12,8 @@ public class UserInterface {
     GameHub gameHub;
     JFrame window;
     public JTextArea textMessage;
-    public JPanel bgPanelImage[] = new JPanel[20];
-    public JLabel bgLabelImg[] = new JLabel[20];
+    public JPanel[] bgPanelImage = new JPanel[20];
+    public JLabel[] bgLabelImg = new JLabel[20];
 
     public Font fontBold, fontRegular, fontRpg;
     public Font font;
@@ -75,6 +75,7 @@ public class UserInterface {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src/cz/reindl/game/ui/font/rpgFire.ttf")));
         } catch (IOException | FontFormatException e) {
+            System.out.println("Font not found, regular font is used");
         }
     }
 
