@@ -1,9 +1,9 @@
 # WindowedRPG
 
 <strong>Version 0.1</strong>
-- Needs to be added:
+- Needs to be added: <br>
 ...
-- Fixed:
+- Fixed: <br>
 ...
--Needs to be fixed:
+- Needs to be fixed: <br>
 ...
