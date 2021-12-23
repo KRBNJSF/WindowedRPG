@@ -12,18 +12,21 @@ public class UserInterface {
     GameHub gameHub;
     JFrame window;
     public JTextArea textMessage;
-    public JPanel[] bgPanelImage = new JPanel[20];
-    public JLabel[] bgLabelImg = new JLabel[20];
+    public JPanel[] panelBackgroundImage = new JPanel[20];
+    public JLabel[] labelBackground = new JLabel[20];
 
     public Font fontBold, fontRegular, fontRpg;
     public Font font;
     //ImageIcon logo = new ImageIcon(getClass().getClassLoader().getResource("logo.png")); //File path if JAR is wanted
-    ImageIcon logo = new ImageIcon("src/cz/reindl/game/ui/graphics/logo.png");
+    ImageIcon logo = new ImageIcon("src/cz/reindl/game/ui/graphics/logo/logo.png");
 
     public UserInterface(GameHub gameHub) {
         this.gameHub = gameHub;
+
         mainField();
-        background();
+        gameBackground();
+        gameObject();
+
         window.setVisible(true);
     }
 
@@ -52,21 +55,32 @@ public class UserInterface {
         window.add(textMessage);
     }
 
-    public void background() {
-        bgPanelImage[1] = new JPanel();
-        bgPanelImage[1].setBounds(162, 90, 700, 350);  //Panel position relative to frame
-        bgPanelImage[1].setBackground(Color.red); //Just to make sure it's set properly
-        bgPanelImage[1].setLayout(null);
-        window.add(bgPanelImage[1]);
+    public void gameBackground() {
+        panelBackgroundImage[1] = new JPanel();
+        panelBackgroundImage[1].setBounds(162, 90, 700, 350);  //Panel position relative to frame
+        panelBackgroundImage[1].setBackground(Color.red); //Just to make sure it's set properly
+        panelBackgroundImage[1].setLayout(null);
+        window.add(panelBackgroundImage[1]);
 
-        bgLabelImg[1] = new JLabel();
-        bgLabelImg[1].setBounds(0, 0, 700, 350);  //Image position relative to panel
+        labelBackground[1] = new JLabel();
+        labelBackground[1].setBounds(0, 0, 700, 350);  //Image position relative to panel
 
-        ImageIcon imgObject = new ImageIcon("src/cz/reindl/game/ui/graphics/bg/forestBg.jpg");
-        bgLabelImg[1].setIcon(imgObject); //Image = label
+        ImageIcon imgBackground = new ImageIcon("src/cz/reindl/game/ui/graphics/bg/forestBg.jpg");
+        labelBackground[1].setIcon(imgBackground); //Image = label
 
-        bgPanelImage[1].add(bgLabelImg[1]); //Adding Label to Panel
 
+    }
+
+    public void gameObject() {
+        JLabel labelObject = new JLabel();
+
+        labelObject.setBounds(200, 200, 150, 180);
+
+        ImageIcon imgObject = new ImageIcon("src/cz/reindl/game/ui/graphics/entity/Knight2.png");
+        labelObject.setIcon(imgObject);
+
+        panelBackgroundImage[1].add(labelObject); //Adding Label to Panel
+        panelBackgroundImage[1].add(labelBackground[1]); //First comes the object image then background image otherwise the background will overlap the object
     }
 
     public void validateFont() { //Validating custom font
