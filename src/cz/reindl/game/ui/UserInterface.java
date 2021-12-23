@@ -24,8 +24,7 @@ public class UserInterface {
         this.gameHub = gameHub;
 
         mainField();
-        gameBackground();
-        gameObject();
+        gameScreen();
 
         window.setVisible(true);
     }
@@ -44,8 +43,9 @@ public class UserInterface {
         window.setIconImage(logo.getImage()); //App logo settings
 
         validateFont();
-        textMessage = new JTextArea("Welcome");
-        textMessage.setBounds(162, 480, 700, 150); //Text position relative to frame
+        textMessage = new JTextArea();
+        textMessage.setText("Welcome");
+        textMessage.setBounds(120, 540, 760, 150); //Text position relative to frame
         textMessage.setBackground(Color.blue);
         textMessage.setForeground(Color.white);
         textMessage.setEditable(false);
@@ -55,32 +55,39 @@ public class UserInterface {
         window.add(textMessage);
     }
 
-    public void gameBackground() {
-        panelBackgroundImage[1] = new JPanel();
-        panelBackgroundImage[1].setBounds(162, 90, 700, 350);  //Panel position relative to frame
-        panelBackgroundImage[1].setBackground(Color.red); //Just to make sure it's set properly
-        panelBackgroundImage[1].setLayout(null);
+    public void gameBackground(int screenNum, String fileName) {
+        panelBackgroundImage[screenNum] = new JPanel();
+        panelBackgroundImage[screenNum].setBounds(120, 60, 760, 450);  //Panel position relative to frame
+        panelBackgroundImage[screenNum].setBackground(Color.red); //Just to make sure it's set properly
+        panelBackgroundImage[screenNum].setLayout(null);
         window.add(panelBackgroundImage[1]);
 
         labelBackground[1] = new JLabel();
-        labelBackground[1].setBounds(0, 0, 700, 350);  //Image position relative to panel
+        labelBackground[1].setBounds(0, 0, 760, 450);  //Image position relative to panel
 
-        ImageIcon imgBackground = new ImageIcon("src/cz/reindl/game/ui/graphics/bg/forestBg.jpg");
+        ImageIcon imgBackground = new ImageIcon(fileName);
         labelBackground[1].setIcon(imgBackground); //Image = label
-
-
     }
 
-    public void gameObject() {
+    public void gameObject(int screenNum, int x, int y, int width, int height, String fileName) {
         JLabel labelObject = new JLabel();
+        labelObject.setBounds(x, y, width, height);
 
-        labelObject.setBounds(200, 200, 150, 180);
-
-        ImageIcon imgObject = new ImageIcon("src/cz/reindl/game/ui/graphics/entity/Knight2.png");
+        ImageIcon imgObject = new ImageIcon(fileName);
         labelObject.setIcon(imgObject);
 
-        panelBackgroundImage[1].add(labelObject); //Adding Label to Panel
-        panelBackgroundImage[1].add(labelBackground[1]); //First comes the object image then background image otherwise the background will overlap the object
+        panelBackgroundImage[screenNum].add(labelObject); //Adding Label to Panel
+        panelBackgroundImage[screenNum].add(labelBackground[screenNum]); //First comes the object image then background image otherwise the background will overlap the object
+    }
+
+    public void gameScreen() {
+        //#1 SCREEN
+        gameBackground(1, "src/cz/reindl/game/ui/graphics/bg/forestBg.jpg");
+        gameObject(1, 225, 295, 150, 180, "src/cz/reindl/game/ui/graphics/entity/Knight2.png");
+        gameObject(1, 350, 330, 150, 180, "src/cz/reindl/game/ui/graphics/object/Chest.png");
+        gameObject(1, 0, 270, 200, 200, "src/cz/reindl/game/ui/graphics/object/hut.png");
+
+        //#2 SCREEN
     }
 
     public void validateFont() { //Validating custom font
@@ -90,6 +97,22 @@ public class UserInterface {
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src/cz/reindl/game/ui/font/rpgFire.ttf")));
         } catch (IOException | FontFormatException e) {
             System.out.println("Font not found, regular font is used");
+        }
+    }
+
+    public static void printText(String text) {
+        try {
+            for (String s : text.split(" ")) {
+                for (char c : s.toCharArray()) {
+                    Thread.sleep(35);
+                    System.out.print(c);
+                }
+                System.out.print(" ");
+                Thread.sleep(60);
+            }
+            System.out.println();
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 
