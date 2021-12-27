@@ -8,11 +8,10 @@ public class GameHub {
 
     public ActionHandler actionHandler = new ActionHandler(this);
     public UserInterface ui = new UserInterface(this);
-
     public Event event = new Event(this);
 
     public GameHub() {
-
+        event.screen1();
     }
 
 }
