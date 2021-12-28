@@ -20,7 +20,7 @@ public class ActionHandler implements ActionListener {
 
             case "-" -> hub.ui.textMessage.setText("no action yet");
             case "talkKnight" -> hub.ui.textMessage.setText("Hello there");
-            case "openChest" -> hub.ui.textMessage.setText("You opened the chest and found a sword!");
+            case "openChest" -> hub.ui.textMessage.setText("You opened the chest and found a knife!");
             //Location changes
 
             case "shopHut" -> hub.event.shop();
