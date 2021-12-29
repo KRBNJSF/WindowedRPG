@@ -25,13 +25,15 @@ public class UserInterface {
     //ImageIcon logo = new ImageIcon(getClass().getClassLoader().getResource("logo.png")); //File path if JAR is wanted
     ImageIcon logo = new ImageIcon("src/cz/reindl/game/ui/graphics/logo/logo.png");
 
+    public JLabel labelTitle;
+    public JButton restartButton;
 
     //PLAYER UI
     JPanel panelHp;
     public JLabel[] labelHp = new JLabel[10];
     JPanel panelInventory;
 
-    public JLabel labelHand, labelChestArmor, labelShield, labelCoin, labelKnife;
+    public JLabel labelWeapon, labelChestArmor, labelShield, labelCoin, labelKnife;
 
 
     public UserInterface(GameHub gameHub) {
@@ -39,9 +41,33 @@ public class UserInterface {
 
         mainField();
         playerStats();
+        gameOverScreen();
         gameScreen();
 
         window.setVisible(true);
+    }
+
+    public void gameOverScreen() {
+        Border border = BorderFactory.createLineBorder(Color.yellow, 2);
+        //validateFont();
+        labelTitle = new JLabel("YOU DIED", JLabel.CENTER);
+        labelTitle.setBounds(0, 0, 1024, 768);
+        labelTitle.setForeground(Color.red);
+        labelTitle.setFont(new Font("Times New Roman", Font.PLAIN, 70));
+        labelTitle.setBorder(border);
+        labelTitle.setVisible(false);
+        window.add(labelTitle);
+
+        restartButton = new JButton("Restart");
+        restartButton.setBounds(340, 320, 120, 50);
+        restartButton.setBorder(null);
+        restartButton.setBackground(null);
+        restartButton.setForeground(Color.white);
+        restartButton.setFocusPainted(false);
+        restartButton.addActionListener(gameHub.actionHandler);
+        restartButton.setActionCommand("restart");
+        restartButton.setVisible(false);
+        window.add(restartButton);
     }
 
     public void setFont(Font font) {
@@ -94,10 +120,10 @@ public class UserInterface {
         window.add(panelInventory);
 
         //ITEMS
-        labelHand = new JLabel();
-        labelHand.setIcon(imgIcon("/icon/hand.png"));
+        labelWeapon = new JLabel();
+        labelWeapon.setIcon(imgIcon("/icon/hand.png"));
         //labelKnife.setToolTipText("Weapon");
-        panelInventory.add(labelHand);
+        panelInventory.add(labelWeapon);
 
         labelCoin = new JLabel();
         labelCoin.setIcon(imgIcon("/icon/coin.png"));
@@ -120,6 +146,7 @@ public class UserInterface {
         panelBackground[screenNum].setBounds(120, 60, 760, 450);  //Panel position relative to frame
         panelBackground[screenNum].setBackground(Color.red); //Just to make sure it's set properly
         panelBackground[screenNum].setLayout(null);
+        panelBackground[screenNum].setVisible(false);
         window.add(panelBackground[screenNum]);
 
         labelBackground[screenNum] = new JLabel();
@@ -213,19 +240,25 @@ public class UserInterface {
     }
 
     public void gameScreen() {
-        //#1 SCREEN
+        //#SPAWN
         gameBackground(1, imgPath("bg/forestBg.jpg"));
         ChangeScreenButton(1, 0, 150, 50, 50, "mainScreen2");
         gameObject(1, 225, 295, 98, 120, imgPath("entity/Knight2.png"), "Talk", "-", "-", "talkKnight", "-", "-");
         gameObject(1, 350, 330, 150, 180, imgPath("object/Chest.png"), "Open", "-", "-", "openChest", "-", "-");
         gameObject(1, 0, 270, 200, 200, imgPath("object/hut.png"), "Shop", "-", "-", "shopHut", "-", "-");
 
-        //#2 SCREEN
+        //#TOWN
         gameBackground(2, imgPath("bg/tavernOutside.png"));
         ChangeScreenButton(2, 710, 150, 50, 50, "mainScreen1");
         gameObject(2, 125, 205, 98, 120, imgPath("entity/Knight2.png"), "Talk", "-", "-", "talkKnight", "-", "-");
-        gameObject(2, 100, 100, 100, 100, imgPath("object/blankTransparent.png"), "Enter", "-", "-", "enterPub", "-", "-");
-        gameObject(2, 240, 210, 100, 125, imgPath("object/blankTransparent.png"), "Search", "-", "-", "searchPubOut", "-", "-");
+        gameObject(2, 100, 100, 100, 100, imgPath("object/blankTransparent.png"), "Enter", "Knock", "-", "enterPub", "knock", "-");
+        gameObject(2, 240, 210, 100, 125, imgPath("object/blankTransparent.png"), "Search", "-", "-", "searchWell", "-", "-");
+
+        //#PUB INSIDE
+        gameBackground(3, imgPath("bg/tavernInside.jpg"));
+        ChangeScreenButton(3, 710, 150, 50, 50, "mainScreen2");
+        gameObject(3, 100, 100, 100, 100, imgPath("object/blankTransparent.png"), "Encounter", "-", "-", "fightEnemy", "-", "-");
+
     }
 
 

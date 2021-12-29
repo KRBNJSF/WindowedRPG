@@ -39,13 +39,14 @@ public class Player {
             i++;
         }
 
-        while (playerHp != 0) {
-            hub.ui.labelHp[playerHp].setVisible(true);
-            playerHp--;
+        int currentHp = playerHp;
+        while (currentHp != 0) {
+            hub.ui.labelHp[currentHp].setVisible(true);
+            currentHp--;
         }
 
         //PLAYER ITEMS CHECK
-        hub.ui.labelHand.setVisible(hand);
+        hub.ui.labelWeapon.setVisible(hand);
         hub.ui.labelShield.setVisible(shield);
         hub.ui.labelCoin.setVisible(coin);
         hub.ui.labelChestArmor.setVisible(torso);

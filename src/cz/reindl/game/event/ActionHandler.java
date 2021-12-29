@@ -16,16 +16,22 @@ public class ActionHandler implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) { //User's clicked button action
-            //Text changes
-
             case "-" -> hub.ui.textMessage.setText("no action yet");
-            case "talkKnight" -> hub.ui.textMessage.setText("Hello there");
-            case "openChest" -> hub.ui.textMessage.setText("You opened the chest and found a knife!");
+            case "restart" -> {
+                hub.event.gameOverScreenApply();
+                hub.event.screen1();
+                //Object interaction
+            }
+
+            case "talkKnight" -> hub.event.guard();
+            case "openChest" -> hub.event.chest();
+            case "enterPub" -> hub.event.pubDoor();
+            case "searchWell" -> hub.event.well();
             //Location changes
 
             case "shopHut" -> hub.event.shop();
-            case "mainScreen2" -> hub.event.screen2();
             case "mainScreen1" -> hub.event.screen1();
+            case "mainScreen2" -> hub.event.screen2();
             default -> hub.ui.textMessage.setText("");
         }
     }
