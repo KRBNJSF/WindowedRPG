@@ -182,7 +182,7 @@ public class UserInterface {
         labelObject.setBounds(x, y, width, height);
         labelObject.setBorder(border);
         //labelObject.setOpaque(true); //Setting visible background of the object
-        // labelObject.setBackground(Color.yellow); //Setting opaques color
+        //labelObject.setBackground(Color.yellow); //Setting opaques color
 
         ImageIcon imgObject = new ImageIcon(fileName);
         labelObject.setIcon(imgObject);
