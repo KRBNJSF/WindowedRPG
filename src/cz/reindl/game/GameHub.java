@@ -1,8 +1,10 @@
 package cz.reindl.game;
 
+import cz.reindl.game.entity.Enemies;
 import cz.reindl.game.event.ActionHandler;
 import cz.reindl.game.event.Event;
 import cz.reindl.game.entity.Player;
+import cz.reindl.game.event.Fight;
 import cz.reindl.game.ui.UserInterface;
 import res.Sound;
 
@@ -15,6 +17,7 @@ public class GameHub {
     public Player player = new Player(this);
     public Event event = new Event(this);
     public Sound sound = new Sound(this);
+    public Fight fight = new Fight(this);
 
     public GameHub() {
         sound.currentMusic = sound.townMusic;

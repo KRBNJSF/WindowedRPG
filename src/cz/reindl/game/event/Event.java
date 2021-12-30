@@ -13,6 +13,8 @@ public class Event {
 
     public void gameOverScreen(int currentScreen) {
         hub.ui.panelBackground[currentScreen].setVisible(false);
+        hub.ui.panelInventory.setVisible(false);
+        hub.ui.panelHp.setVisible(false);
         hub.ui.labelTitle.setVisible(true);
         hub.ui.restartButton.setVisible(true);
 

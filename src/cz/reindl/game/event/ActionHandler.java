@@ -1,6 +1,7 @@
 package cz.reindl.game.event;
 
 import cz.reindl.game.GameHub;
+import cz.reindl.game.entity.Enemies;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,13 +21,14 @@ public class ActionHandler implements ActionListener {
             case "restart" -> {
                 hub.event.gameOverScreenApply();
                 hub.event.screen1();
-                //Object interaction
             }
+            //Object interaction
 
             case "talkKnight" -> hub.event.guard();
             case "openChest" -> hub.event.chest();
             case "enterPub" -> hub.event.pubDoor();
             case "searchWell" -> hub.event.well();
+            case "fightEnemy" -> hub.fight.setEnemy(Enemies.BAT);
             //Location changes
 
             case "shopHut" -> hub.event.shop();

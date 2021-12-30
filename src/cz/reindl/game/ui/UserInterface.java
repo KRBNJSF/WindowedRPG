@@ -29,9 +29,9 @@ public class UserInterface {
     public JButton restartButton;
 
     //PLAYER UI
-    JPanel panelHp;
+    public JPanel panelHp;
     public JLabel[] labelHp = new JLabel[10];
-    JPanel panelInventory;
+    public JPanel panelInventory;
 
     public JLabel labelWeapon, labelChestArmor, labelShield, labelCoin, labelKnife;
 
@@ -86,6 +86,7 @@ public class UserInterface {
         window.setSize(1024, 768);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.getContentPane().setBackground(Color.BLACK);
+        window.setLocationRelativeTo(null); //Center window
         window.setLayout(null);
         window.setResizable(false);
         window.setIconImage(logo.getImage()); //App logo settings
@@ -99,7 +100,7 @@ public class UserInterface {
         textMessage.setLineWrap(true);
         textMessage.setWrapStyleWord(true);
         validateFont();
-        textMessage.setFont(setFont(fontRpg, "font/rpgFire.ttf"));
+        textMessage.setFont(setFont(fontRpg, "font/Ancient.ttf"));
         window.add(textMessage);
     }
 
