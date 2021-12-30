@@ -59,7 +59,7 @@ public class UserInterface {
         window.add(labelTitle);
 
         restartButton = new JButton("Restart");
-        restartButton.setBounds(340, 320, 120, 50);
+        restartButton.setBounds(440, 420, 120, 50);
         restartButton.setBorder(null);
         restartButton.setBackground(null);
         restartButton.setForeground(Color.white);
@@ -70,8 +70,15 @@ public class UserInterface {
         window.add(restartButton);
     }
 
-    public void setFont(Font font) {
-        this.font = font; // FIXME: 22.12.2021
+    public Font setFont(Font font, String pathName) {
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, new File(path(pathName))).deriveFont(30f);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(path(pathName))));
+        } catch (IOException | FontFormatException e) {
+            System.out.println("Font not found, regular font is used");
+        }
+        return font;
     }
 
     public void mainField() {
@@ -92,7 +99,7 @@ public class UserInterface {
         textMessage.setLineWrap(true);
         textMessage.setWrapStyleWord(true);
         validateFont();
-        textMessage.setFont(fontRpg);
+        textMessage.setFont(setFont(fontRpg, "font/rpgFire.ttf"));
         window.add(textMessage);
     }
 
@@ -220,6 +227,7 @@ public class UserInterface {
 
     public void ChangeScreenButton(int screenNum, int x, int y, int width, int height, String command) { //Change screen button
         final int[] i = {0};
+        final int[] j = {0};
         JButton arrowButton = new JButton();
         arrowButton.setBounds(x, y, width, height);
         arrowButton.setBackground(Color.yellow);
@@ -229,10 +237,11 @@ public class UserInterface {
         arrowButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         if (x > 200) {
             arrowButton.setIcon(imgIcon("icon/arrowRight.png"));
+            arrowButton.addActionListener(l -> System.out.println("Right arrow button clicked " + ++i[0] + " times"));
         } else {
             arrowButton.setIcon(imgIcon("icon/arrowLeft.png"));
+            arrowButton.addActionListener(l -> System.out.println("Left arrow button clicked " + ++j[0] + " times"));
         }
-        arrowButton.addActionListener(l -> System.out.println("Arrow button clicked " + ++i[0] + " times"));
         arrowButton.addActionListener(gameHub.actionHandler);
         arrowButton.setActionCommand(command);
 

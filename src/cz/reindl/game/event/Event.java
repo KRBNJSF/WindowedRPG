@@ -1,6 +1,7 @@
 package cz.reindl.game.event;
 
 import cz.reindl.game.GameHub;
+import res.Sound;
 
 public class Event {
 
@@ -14,6 +15,9 @@ public class Event {
         hub.ui.panelBackground[currentScreen].setVisible(false);
         hub.ui.labelTitle.setVisible(true);
         hub.ui.restartButton.setVisible(true);
+
+        hub.stopMusic(hub.sound.currentMusic);
+        hub.playMusic(hub.sound.fightWin, false);
     }
 
     public void gameOverScreenApply() {
@@ -26,6 +30,10 @@ public class Event {
         hub.ui.panelBackground[1].setVisible(true);
         hub.ui.panelBackground[2].setVisible(false);
         hub.ui.textMessage.setText("Forest");
+
+        hub.stopMusic(hub.sound.currentMusic);
+        hub.sound.currentMusic = hub.sound.townMusic;
+        hub.playMusic(hub.sound.currentMusic, true);
     }
 
     public void screen2() {
@@ -33,12 +41,22 @@ public class Event {
         hub.ui.panelBackground[2].setVisible(true);
         hub.ui.panelBackground[3].setVisible(false);
         hub.ui.textMessage.setText("Town");
+
+        hub.stopMusic(hub.sound.currentMusic);
+        hub.sound.currentMusic = hub.sound.shopMusic;
+        hub.playMusic(hub.sound.currentMusic, true);
+        // FIXME: 30.12.2021 hub.playMusic(hub.sound.forge, true);
     }
 
     public void screen3() {
         hub.ui.panelBackground[2].setVisible(false);
         hub.ui.panelBackground[3].setVisible(true);
         hub.ui.textMessage.setText("Pub");
+
+        hub.stopMusic(hub.sound.currentMusic);
+        hub.sound.currentMusic = hub.sound.mainTheme;
+        hub.playMusic(hub.sound.currentMusic, true);
+        System.out.println(hub.sound.currentMusic);
     }
 
     public void shop() { //Changing the scene
@@ -47,6 +65,7 @@ public class Event {
             hub.ui.textMessage.setText("You recovered 1 hp");
             hub.player.playerHp++;
             hub.player.playerCurrentStats();
+            hub.playMusic(hub.sound.pubGreet, false);
         } else {
             hub.ui.textMessage.setText("You are at full health");
         }
