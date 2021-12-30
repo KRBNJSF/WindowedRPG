@@ -13,7 +13,7 @@ import java.io.IOException;
 public class UserInterface {
 
     GameHub gameHub;
-    public static JFrame window;
+    public JFrame window;
     public JTextArea textMessage;
     public JPanel[] panelBackground = new JPanel[20];
     public JLabel[] labelBackground = new JLabel[20];

@@ -15,6 +15,7 @@ public class Event {
         hub.ui.panelBackground[currentScreen].setVisible(false);
         hub.ui.panelInventory.setVisible(false);
         hub.ui.panelHp.setVisible(false);
+        hub.ui.textMessage.setVisible(false);
         hub.ui.labelTitle.setVisible(true);
         hub.ui.restartButton.setVisible(true);
 
@@ -29,6 +30,10 @@ public class Event {
     }
 
     public void screen1() {
+        hub.ui.panelInventory.setVisible(true);
+        hub.ui.panelHp.setVisible(true);
+        hub.ui.textMessage.setVisible(true);
+
         hub.ui.panelBackground[1].setVisible(true);
         hub.ui.panelBackground[2].setVisible(false);
         hub.ui.textMessage.setText("Forest");

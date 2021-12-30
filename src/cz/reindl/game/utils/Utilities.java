@@ -1,5 +1,6 @@
 package cz.reindl.game.utils;
 
+import cz.reindl.game.GameHub;
 import cz.reindl.game.ui.UserInterface;
 
 import javax.swing.*;
@@ -8,6 +9,12 @@ import java.io.File;
 import java.io.IOException;
 
 public class Utilities {
+
+    GameHub hub;
+
+    public Utilities(GameHub hub) {
+        this.hub = hub;
+    }
 
     public void validateFont() { //Validating custom font
         try {
@@ -45,7 +52,7 @@ public class Utilities {
     }
 
     public void addItem(JLabel label, int x, int y, int width, int height) {
-        UserInterface.window.add(label);
+        hub.ui.window.add(label);
         label.setBounds(x, y, width, height);
     }
 

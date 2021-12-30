@@ -6,6 +6,7 @@ import cz.reindl.game.event.Event;
 import cz.reindl.game.entity.Player;
 import cz.reindl.game.event.Fight;
 import cz.reindl.game.ui.UserInterface;
+import cz.reindl.game.utils.Utilities;
 import res.Sound;
 
 import java.io.File;
@@ -18,6 +19,7 @@ public class GameHub {
     public Event event = new Event(this);
     public Sound sound = new Sound(this);
     public Fight fight = new Fight(this);
+    public Utilities utilities = new Utilities(this);
 
     public GameHub() {
         sound.currentMusic = sound.townMusic;
