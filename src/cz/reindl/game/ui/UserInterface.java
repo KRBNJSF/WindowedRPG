@@ -256,19 +256,24 @@ public class UserInterface {
         gameObject(1, 225, 295, 98, 120, imgPath("entity/Knight2.png"), "Talk", "-", "-", "talkKnight", "-", "-");
         gameObject(1, 350, 330, 150, 180, imgPath("object/Chest.png"), "Open", "-", "-", "openChest", "-", "-");
         gameObject(1, 0, 270, 200, 200, imgPath("object/hut.png"), "Shop", "-", "-", "shopHut", "-", "-");
+        //gameObject(1, 0, 50, 300, 300, imgPath("entity/blackSmith.png"));
 
         //#TOWN
-        gameBackground(2, imgPath("bg/tavernOutside.png"));
+        gameBackground(2, imgPath("bg/townSquare.png"));
         ChangeScreenButton(2, 710, 150, 50, 50, "mainScreen1");
         gameObject(2, 125, 205, 98, 120, imgPath("entity/Knight2.png"), "Talk", "-", "-", "talkKnight", "-", "-");
         gameObject(2, 100, 100, 100, 100, imgPath("object/blankTransparent.png"), "Enter", "Knock", "-", "enterPub", "knock", "-");
         gameObject(2, 240, 210, 100, 125, imgPath("object/blankTransparent.png"), "Search", "-", "-", "searchWell", "-", "-");
 
         //#PUB INSIDE
-        gameBackground(3, imgPath("bg/tavernInside.jpg"));
+        gameBackground(3, imgPath("bg/tavernInside.png"));
         ChangeScreenButton(3, 710, 150, 50, 50, "mainScreen2");
-        gameObject(3, 100, 100, 100, 100, imgPath("object/blankTransparent.png"), "Encounter", "-", "-", "fightEnemy", "-", "-");
+        gameObject(3, 100, 100, 100, 100, imgPath("object/blankTransparent.png"), "Enter", "-", "-", "enterDungeon", "-", "-");
 
+        //#DUNGEON
+        gameBackground(4, imgPath("bg/Dungeon.png"));
+        gameObject(4, 50, 56, 91, 70, imgPath("entity/Rat.png"), "Attack", "Defend", "Run", "fightEnemy", "", "");
+        gameObject(4, 150, 56, 222, 200, imgPath("entity/wolf.png"), "Attack", "Defend", "Run", "fightEnemy", "", "");
     }
 
 

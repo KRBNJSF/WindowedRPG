@@ -5,13 +5,16 @@ import cz.reindl.game.GameHub;
 public enum Enemies {
 
     KNIGHT("Knight", 5, 3, 0),
-    BAT("Bat", 5, 3, 0),
-    WOLF("Wolf", 5, 3, 0);
+    RAT("Rat", 5, 3, 0),
+    WOLF("Wolf", 5, 3, 0),
+    MIRROR("You", 5, 3, 0),
+    TROLL("Troll", 5, 3, 0);
 
     public String entityName;
     public int entityHp;
     public int entityDmg;
     public int entityDefense;
+    public GameHub hub;
 
     Enemies(String entityName, int entityHp, int entityDmg, int entityDefense) {
         this.entityName = entityName;

@@ -1,7 +1,6 @@
 package cz.reindl.game.event;
 
 import cz.reindl.game.GameHub;
-import res.Sound;
 
 public class Event {
 
@@ -43,7 +42,7 @@ public class Event {
         hub.playMusic(hub.sound.currentMusic, true);
     }
 
-    public void screen2() {
+    public void sceneTownSquare() {
         hub.ui.panelBackground[1].setVisible(false);
         hub.ui.panelBackground[2].setVisible(true);
         hub.ui.panelBackground[3].setVisible(false);
@@ -55,9 +54,10 @@ public class Event {
         // FIXME: 30.12.2021 hub.playMusic(hub.sound.forge, true);
     }
 
-    public void screen3() {
+    public void scenePubInside() {
         hub.ui.panelBackground[2].setVisible(false);
         hub.ui.panelBackground[3].setVisible(true);
+        hub.ui.panelBackground[4].setVisible(false);
         hub.ui.textMessage.setText("Pub");
 
         hub.stopMusic(hub.sound.currentMusic);
@@ -114,7 +114,7 @@ public class Event {
         if (!hub.player.coin) {
             hub.ui.textMessage.setText("Coin is needed to enter");
         } else {
-            screen3();
+            scenePubInside();
         }
     }
 
@@ -126,5 +126,10 @@ public class Event {
         } else {
             hub.ui.textMessage.setText("There's nothing");
         }
+    }
+
+    public void dungeon() {
+        hub.ui.panelBackground[3].setVisible(false);
+        hub.ui.panelBackground[4].setVisible(true);
     }
 }

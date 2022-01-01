@@ -27,7 +27,8 @@ public class Fight {
         enemies.setEntityHp(enemies.getEntityHp() - playerDmg);
 
         if (enemies.getEntityHp() <= 0) {
-            winScreen();
+            winScreen(Enemies.WOLF);
+            hub.ui.textMessage.setText("You won");
         } else {
             int enemyDmg = random.nextInt(enemies.getEntityDmg());
             hub.player.playerHp -= enemyDmg;
@@ -36,13 +37,15 @@ public class Fight {
             if (hub.player.playerHp <= 0) {
                 hub.player.playerHp = 0;
                 hub.player.playerCurrentStats();
-                hub.event.gameOverScreen(3);
+                hub.event.gameOverScreen(4);
             }
         }
     }
 
-    public void winScreen() {
+    public void winScreen(Enemies enemy) {
         hub.ui.textMessage.setText("You won");
         hub.stopMusic(hub.sound.currentMusic);
+        hub.event.scenePubInside();
+        setEnemy(enemy);
     }
 }

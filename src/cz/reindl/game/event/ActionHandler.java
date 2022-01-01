@@ -28,12 +28,14 @@ public class ActionHandler implements ActionListener {
             case "openChest" -> hub.event.chest();
             case "enterPub" -> hub.event.pubDoor();
             case "searchWell" -> hub.event.well();
-            case "fightEnemy" -> hub.fight.setEnemy(Enemies.BAT);
+            case "fightEnemy" -> hub.fight.setEnemy(Enemies.RAT);
+            case "fightEnemy2" -> hub.fight.setEnemy(Enemies.WOLF);
             //Location changes
 
             case "shopHut" -> hub.event.shop();
             case "mainScreen1" -> hub.event.screen1();
-            case "mainScreen2" -> hub.event.screen2();
+            case "mainScreen2" -> hub.event.sceneTownSquare();
+            case "enterDungeon" -> hub.event.dungeon();
             default -> hub.ui.textMessage.setText("");
         }
     }
