@@ -38,6 +38,7 @@ public class Fight {
                 hub.player.playerHp = 0;
                 hub.player.playerCurrentStats();
                 hub.event.gameOverScreen(4);
+                hub.event.gameOverScreen(3);
             }
         }
     }
