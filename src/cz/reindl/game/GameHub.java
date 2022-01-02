@@ -1,6 +1,5 @@
 package cz.reindl.game;
 
-import cz.reindl.game.entity.Enemies;
 import cz.reindl.game.event.ActionHandler;
 import cz.reindl.game.event.Event;
 import cz.reindl.game.entity.Player;
@@ -26,7 +25,7 @@ public class GameHub {
         playMusic(sound.currentMusic, true);
 
         player.playerDefaultStats();
-        event.screen1(); //First executed scene method
+        event.spawnScreen(); //First executed scene method
     }
 
     public void playMusic(File file, Boolean loop) {

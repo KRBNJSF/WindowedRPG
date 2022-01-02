@@ -20,22 +20,45 @@ public class ActionHandler implements ActionListener {
             case "-" -> hub.ui.textMessage.setText("no action yet");
             case "restart" -> {
                 hub.event.gameOverScreenApply();
-                hub.event.screen1();
+                hub.event.spawnScreen();
             }
             //Object interaction
 
             case "talkKnight" -> hub.event.guard();
             case "openChest" -> hub.event.chest();
             case "enterPub" -> hub.event.pubDoor();
+            //case "knockPub" -> hub.event;
             case "searchWell" -> hub.event.well();
-            case "fightEnemy" -> hub.fight.setEnemy(Enemies.RAT);
-            case "fightEnemy2" -> hub.fight.setEnemy(Enemies.WOLF);
+            case "drinkBeer" -> hub.event.beer();
+            //FIGHT SCENE
+
+            case "runAway" -> {
+                hub.event.scenePubInside();
+                hub.fight.restartEnemyHp();
+            }
+            case "fightEnemy" -> {
+                hub.fight.setEnemy(Enemies.RAT);
+                hub.fight.attack();
+            }
+            case "fightEnemy2" -> {
+                hub.fight.setEnemy(Enemies.WOLF);
+                hub.fight.attack();
+            }
+            case "fightEnemy3" -> {
+                hub.fight.setEnemy(Enemies.KNIGHT);
+                hub.fight.attack();
+            }
+            case "fightEnemy4" -> {
+                hub.fight.setEnemy(Enemies.MIRROR);
+                hub.fight.attack();
+            }
             //Location changes
 
-            case "shopHut" -> hub.event.shop();
-            case "mainScreen1" -> hub.event.screen1();
+            case "mainScreen1" -> hub.event.spawnScreen();
             case "mainScreen2" -> hub.event.sceneTownSquare();
-            case "enterDungeon" -> hub.event.dungeon();
+            case "enterDungeon" -> hub.event.sceneDungeon();
+            case "goTown2" -> hub.event.sceneTownSquare2();
+
             default -> hub.ui.textMessage.setText("");
         }
     }

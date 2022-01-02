@@ -44,7 +44,7 @@ public class Player {
         }
 
         int currentHp = playerHp;
-        while (currentHp != 0) {
+        while (currentHp >= 0) {
             hub.ui.labelHp[currentHp].setVisible(true);
             currentHp--;
         }
@@ -54,6 +54,12 @@ public class Player {
         hub.ui.labelShield.setVisible(shield);
         hub.ui.labelCoin.setVisible(coin);
         hub.ui.labelChestArmor.setVisible(torso);
+
+        if (!knife) {
+            playerDmg = 5;
+        } else if (!torso) {
+            playerDef = 1;
+        }
     }
 
 }

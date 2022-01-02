@@ -6,6 +6,7 @@ import jaco.mp3.player.MP3Player;
 import java.io.File;
 
 public class Sound {
+
     GameHub hub;
 
     public Sound(GameHub gameHub) {
@@ -20,6 +21,7 @@ public class Sound {
     public File townMusic = new File("src/res/storage/townMusic.mp3");
     public File shopMusic = new File("src/res/storage/shopMusic.mp3");
     public File mainTheme = new File("src/res/storage/mainTheme.mp3");
+    public File bossTheme = new File("src/res/storage/bossTheme.mp3");
 
     //SOUND EFFECTS
     public File fightWin = new File("src/res/storage/fightWin.mp3");

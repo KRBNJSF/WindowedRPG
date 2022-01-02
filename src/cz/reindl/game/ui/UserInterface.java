@@ -35,6 +35,10 @@ public class UserInterface {
 
     public JLabel labelWeapon, labelChestArmor, labelShield, labelCoin, labelKnife;
 
+    //FIGHT UI
+    public JLabel labelRat, labelWolf, labelKnight;
+    public JLabel labelChest;
+
 
     public UserInterface(GameHub gameHub) {
         this.gameHub = gameHub;
@@ -90,6 +94,7 @@ public class UserInterface {
         window.setLayout(null);
         window.setResizable(false);
         window.setIconImage(logo.getImage()); //App logo settings
+        cursorIcon();
 
         textMessage = new JTextArea();
         textMessage.setText("Welcome");
@@ -199,6 +204,13 @@ public class UserInterface {
         labelObject.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                try {
+                    labelObject.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                    Thread.sleep(100);
+                    labelObject.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
             }
 
             @Override
@@ -214,6 +226,7 @@ public class UserInterface {
 
             @Override
             public void mouseEntered(MouseEvent e) {
+                labelObject.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             }
 
             @Override
@@ -226,7 +239,7 @@ public class UserInterface {
         //changeScreen(1, 0, 150, 50, 50, "mainScreen2");
     }
 
-    public void ChangeScreenButton(int screenNum, int x, int y, int width, int height, String command) { //Change screen button
+    public void changeScreenButton(int screenNum, int x, int y, int width, int height, String command) { //Change screen button
         final int[] i = {0};
         final int[] j = {0};
         JButton arrowButton = new JButton();
@@ -252,28 +265,39 @@ public class UserInterface {
     public void gameScreen() {
         //#SPAWN
         gameBackground(1, imgPath("bg/forestBg.jpg"));
-        ChangeScreenButton(1, 0, 150, 50, 50, "mainScreen2");
+        changeScreenButton(1, 0, 150, 50, 50, "mainScreen2");
         gameObject(1, 225, 295, 98, 120, imgPath("entity/Knight2.png"), "Talk", "-", "-", "talkKnight", "-", "-");
-        gameObject(1, 350, 330, 150, 180, imgPath("object/Chest.png"), "Open", "-", "-", "openChest", "-", "-");
-        gameObject(1, 0, 270, 200, 200, imgPath("object/hut.png"), "Shop", "-", "-", "shopHut", "-", "-");
         //gameObject(1, 0, 50, 300, 300, imgPath("entity/blackSmith.png"));
 
-        //#TOWN
+        //#TOWN 1 SIDE
         gameBackground(2, imgPath("bg/townSquare.png"));
-        ChangeScreenButton(2, 710, 150, 50, 50, "mainScreen1");
-        gameObject(2, 125, 205, 98, 120, imgPath("entity/Knight2.png"), "Talk", "-", "-", "talkKnight", "-", "-");
-        gameObject(2, 100, 100, 100, 100, imgPath("object/blankTransparent.png"), "Enter", "Knock", "-", "enterPub", "knock", "-");
-        gameObject(2, 240, 210, 100, 125, imgPath("object/blankTransparent.png"), "Search", "-", "-", "searchWell", "-", "-");
+        changeScreenButton(2, 710, 150, 50, 50, "mainScreen1");
+        gameObject(2, 0, 0, 98, 120, imgPath("entity/Knight2.png"), "Talk", "-", "-", "talkKnight", "-", "-");
+        gameObject(2, 100, 290, 40, 70, imgPath("object/blankTransparent.png"), "Enter", "Knock", "-", "enterPub", "knockPub", "-");
+        gameObject(2, 480, 230, 100, 170, imgPath("object/blankTransparent.png"), "Search", "-", "-", "searchWell", "-", "-");
+        gameObject(2, 230, 220, 100, 100, imgPath("object/blankTransparent.png"), "Go", "-", "-", "goTown2", "-", "-");
+
 
         //#PUB INSIDE
         gameBackground(3, imgPath("bg/tavernInside.png"));
-        ChangeScreenButton(3, 710, 150, 50, 50, "mainScreen2");
+        changeScreenButton(3, 710, 150, 50, 50, "mainScreen2");
         gameObject(3, 100, 100, 100, 100, imgPath("object/blankTransparent.png"), "Enter", "-", "-", "enterDungeon", "-", "-");
+        gameObject(3, 550, 200, 75, 75, imgPath("object/beer.png"), "Drink", "-", "-", "drinkBeer", "-", "-");
+
+        //#BLACKSMITH
+        //gameBackground(6, imgPath("bg/"));
+
+        //#TOWN 2 SIDE
+        gameBackground(5, imgPath("bg/townSquare2.png"));
+        changeScreenButton(5, 710, 150, 50, 50, "mainScreen2");
+        gameObject(5, 430, 230, 320, 200, imgPath("object/blankTransparent.png"), "Enter", "-", "-", "-", "-", "-");
 
         //#DUNGEON
         gameBackground(4, imgPath("bg/Dungeon.png"));
-        gameObject(4, 50, 56, 91, 70, imgPath("entity/Rat.png"), "Attack", "Defend", "Run", "fightEnemy", "", "");
-        gameObject(4, 150, 56, 222, 200, imgPath("entity/wolf.png"), "Attack", "Defend", "Run", "fightEnemy", "", "");
+        gameObject(4, 50, 56, 91, 70, imgPath("entity/Rat.png"), "Attack", "Defend", "Run", "fightEnemy", "", "runAway");
+        gameObject(4, 150, 56, 222, 200, imgPath("entity/wolf.png"), "Attack", "Defend", "Run", "fightEnemy2", "", "runAway");
+        gameObject(4, 350, 330, 150, 180, imgPath("object/Chest.png"), "Open", "-", "-", "openChest", "-", "-");
+
     }
 
 
@@ -306,6 +330,7 @@ public class UserInterface {
         }
     }
 
+
     public String imgPath(String imgSrc) {
         return "src/cz/reindl/game/ui/graphics/" + imgSrc;
     }
@@ -321,6 +346,22 @@ public class UserInterface {
 
     public JLabel toImage(String imgSrc) {
         return new JLabel(new ImageIcon("src/cz/reindl/game/ui/graphics/" + imgSrc));
+    }
+
+    public void cursorIcon() {
+        try {
+            window.setCursor(
+                    Toolkit
+                            .getDefaultToolkit()
+                            .createCustomCursor(
+                                    new ImageIcon(imgPath("icon/cursorMain.png")).getImage(),
+                                    new Point(0, 0),
+                                    "My cursor"
+                            )
+            );
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public ImageIcon imgIcon(String imgSrc) {
