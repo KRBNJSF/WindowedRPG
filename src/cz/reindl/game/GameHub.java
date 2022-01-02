@@ -25,6 +25,7 @@ public class GameHub {
         playMusic(sound.currentMusic, true);
 
         player.playerDefaultStats();
+        //event.loadingScreen();
         event.spawnScreen(); //First executed scene method
     }
 

@@ -30,6 +30,7 @@ public class ActionHandler implements ActionListener {
             //case "knockPub" -> hub.event;
             case "searchWell" -> hub.event.well();
             case "drinkBeer" -> hub.event.beer();
+            case "drinkLiquor" -> hub.event.liquor();
             //FIGHT SCENE
 
             case "runAway" -> {
@@ -58,6 +59,8 @@ public class ActionHandler implements ActionListener {
             case "mainScreen2" -> hub.event.sceneTownSquare();
             case "enterDungeon" -> hub.event.sceneDungeon();
             case "goTown2" -> hub.event.sceneTownSquare2();
+            case "teleport" -> hub.event.chooseLocation();
+            case "currentScreen" -> hub.event.currentScreen();
 
             default -> hub.ui.textMessage.setText("");
         }

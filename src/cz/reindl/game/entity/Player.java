@@ -24,7 +24,7 @@ public class Player {
     public void playerDefaultStats() {
         playerMaxHp = 10;
         playerHp = 4;
-        playerDmg = 3;
+        playerDmg = 2;
         playerDef = 0;
         hand = true;
         knife = false;
@@ -55,9 +55,9 @@ public class Player {
         hub.ui.labelCoin.setVisible(coin);
         hub.ui.labelChestArmor.setVisible(torso);
 
-        if (!knife) {
+        if (knife) {
             playerDmg = 5;
-        } else if (!torso) {
+        } else if (torso) {
             playerDef = 1;
         }
     }

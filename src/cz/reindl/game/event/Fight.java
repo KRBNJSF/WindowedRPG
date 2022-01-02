@@ -12,6 +12,7 @@ public class Fight {
     Random random = new Random();
     private int playerDef = 1;
     private int enemyDef = 1;
+    public int count = 0;
 
     public Fight(GameHub gameHub) {
         this.hub = gameHub;
@@ -28,23 +29,21 @@ public class Fight {
         enemies.setEntityHp(enemies.getEntityHp() - playerDmg);
         hub.ui.textMessage.append("You hit " + enemies.getEntityName() + " and gave him " + playerDmg + " dmg ; " + enemies.getEntityHp() + " HP left \n");
 
-
         if (enemies.getEntityHp() <= 0) {
+            count++;
             winScreen();
             hub.ui.textMessage.setText("You won");
-            /*int count = 0;
+
             switch (count) {
-                case 0 -> {
+                case 1 -> {
                     hub.ui.labelRat.setVisible(false);
                     hub.ui.labelWolf.setVisible(true);
-                    ++count;
                 }
-                case 1 -> {
+                case 2 -> {
                     hub.ui.labelWolf.setVisible(false);
                     hub.ui.labelKnight.setVisible(true);
-                    ++count;
                 }
-            }*/
+            }
         } else {
             int enemyDmg = (random.nextInt(enemies.getEntityDmg()) + 1) * playerDef;
             hub.player.playerHp -= enemyDmg;
@@ -58,6 +57,7 @@ public class Fight {
                 restartEnemies();
             }
         }
+
     }
 
     public void winScreen() {
@@ -78,6 +78,11 @@ public class Fight {
         System.out.println(enemies.getEntityName());
         enemies.setEntityHp(5);
         System.out.println(enemies.getEntityHp());
+    }
+
+    public void firstEncounter() {
+        hub.ui.labelRat.setVisible(true);
+        hub.ui.labelWolf.setVisible(false);
     }
 
 }

@@ -36,7 +36,8 @@ public class UserInterface {
     public JLabel labelWeapon, labelChestArmor, labelShield, labelCoin, labelKnife;
 
     //FIGHT UI
-    public JLabel labelRat, labelWolf, labelKnight;
+    public JLabel labelRat = new JLabel();
+    public JLabel labelWolf, labelKnight;
     public JLabel labelChest;
 
 
@@ -239,6 +240,77 @@ public class UserInterface {
         //changeScreen(1, 0, 150, 50, 50, "mainScreen2");
     }
 
+    public JLabel enemyObject(int screenNum, int x, int y, int width, int height, String fileName, String menuItem1, String menuItem2, String menuItem3, String menuItem1Command, String menuItem2Command, String menuItem3Command) {
+        //Menu
+        JPopupMenu popupMenu = new JPopupMenu();
+        JMenuItem[] menuItem = new JMenuItem[3]; //Rows in the popup menu
+        menuItem[0] = new JMenuItem(menuItem1);
+        menuItem[0].addActionListener(gameHub.actionHandler);
+        menuItem[0].setActionCommand(menuItem1Command);
+
+        menuItem[1] = new JMenuItem(menuItem2);
+        menuItem[1].addActionListener(gameHub.actionHandler);
+        menuItem[1].setActionCommand(menuItem2Command);
+
+        menuItem[2] = new JMenuItem(menuItem3);
+        menuItem[2].addActionListener(gameHub.actionHandler);
+        menuItem[2].setActionCommand(menuItem3Command);
+
+        popupMenu.add(menuItem[0]);
+        popupMenu.add(menuItem[1]);
+        popupMenu.add(menuItem[2]);
+
+        //Objects
+        Border border = BorderFactory.createLineBorder(Color.yellow, 2);
+        JLabel labelObject = new JLabel();
+        labelObject.setBounds(x, y, width, height);
+        labelObject.setBorder(border);
+        //labelObject.setOpaque(true); //Setting visible background of the object
+        //labelObject.setBackground(Color.yellow); //Setting opaques color
+
+        ImageIcon imgObject = new ImageIcon(fileName);
+        labelObject.setIcon(imgObject);
+
+        //Game objects actions
+        labelObject.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    labelObject.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                    Thread.sleep(100);
+                    labelObject.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    popupMenu.show(labelObject, e.getX(), e.getY()); //Cursor coordinates
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                labelObject.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+
+        panelBackground[screenNum].add(labelObject); //Adding Label to Panel
+        panelBackground[screenNum].add(labelBackground[screenNum]); //First comes the object image then background image otherwise the background will overlap the object
+        //changeScreen(1, 0, 150, 50, 50, "mainScreen2");
+        return labelObject;
+    }
+
     public void changeScreenButton(int screenNum, int x, int y, int width, int height, String command) { //Change screen button
         final int[] i = {0};
         final int[] j = {0};
@@ -262,42 +334,62 @@ public class UserInterface {
         panelBackground[screenNum].add(arrowButton);
     }
 
+    public void teleportCompass(int screenNum, int x, int y, int width, int height, String command) {
+        JButton teleportButton = new JButton();
+        teleportButton.setBounds(x, y, width, height);
+        teleportButton.setIcon(imgIcon("icon/compass.png"));
+        teleportButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        teleportButton.addActionListener(gameHub.actionHandler);
+        teleportButton.setActionCommand(command);
+
+        panelBackground[screenNum].add(teleportButton);
+    }
+
     public void gameScreen() {
         //#SPAWN
         gameBackground(1, imgPath("bg/forestBg.jpg"));
         changeScreenButton(1, 0, 150, 50, 50, "mainScreen2");
+        teleportCompass(1, 0, 0, 35, 35, "teleport");
         gameObject(1, 225, 295, 98, 120, imgPath("entity/Knight2.png"), "Talk", "-", "-", "talkKnight", "-", "-");
+
         //gameObject(1, 0, 50, 300, 300, imgPath("entity/blackSmith.png"));
 
         //#TOWN 1 SIDE
         gameBackground(2, imgPath("bg/townSquare.png"));
+        teleportCompass(2, 0, 0, 35, 35, "currentScreen");
         changeScreenButton(2, 710, 150, 50, 50, "mainScreen1");
         gameObject(2, 0, 0, 98, 120, imgPath("entity/Knight2.png"), "Talk", "-", "-", "talkKnight", "-", "-");
         gameObject(2, 100, 290, 40, 70, imgPath("object/blankTransparent.png"), "Enter", "Knock", "-", "enterPub", "knockPub", "-");
         gameObject(2, 480, 230, 100, 170, imgPath("object/blankTransparent.png"), "Search", "-", "-", "searchWell", "-", "-");
         gameObject(2, 230, 220, 100, 100, imgPath("object/blankTransparent.png"), "Go", "-", "-", "goTown2", "-", "-");
 
-
         //#PUB INSIDE
         gameBackground(3, imgPath("bg/tavernInside.png"));
+        teleportCompass(3, 0, 0, 35, 35, "currentScreen");
         changeScreenButton(3, 710, 150, 50, 50, "mainScreen2");
-        gameObject(3, 100, 100, 100, 100, imgPath("object/blankTransparent.png"), "Enter", "-", "-", "enterDungeon", "-", "-");
+        gameObject(3, 350, 150, 130, 100, imgPath("object/blankTransparent.png"), "Enter", "-", "-", "enterDungeon", "-", "-");
         gameObject(3, 550, 200, 75, 75, imgPath("object/beer.png"), "Drink", "-", "-", "drinkBeer", "-", "-");
+        gameObject(3, 540, 120, 75, 75, imgPath("object/beer.png"), "Drink", "-", "-", "drinkLiquor", "-", "-");
 
         //#BLACKSMITH
         //gameBackground(6, imgPath("bg/"));
 
         //#TOWN 2 SIDE
         gameBackground(5, imgPath("bg/townSquare2.png"));
+        teleportCompass(5, 0, 0, 35, 35, "currentScreen");
         changeScreenButton(5, 710, 150, 50, 50, "mainScreen2");
         gameObject(5, 430, 230, 320, 200, imgPath("object/blankTransparent.png"), "Enter", "-", "-", "-", "-", "-");
 
         //#DUNGEON
         gameBackground(4, imgPath("bg/Dungeon.png"));
-        gameObject(4, 50, 56, 91, 70, imgPath("entity/Rat.png"), "Attack", "Defend", "Run", "fightEnemy", "", "runAway");
-        gameObject(4, 150, 56, 222, 200, imgPath("entity/wolf.png"), "Attack", "Defend", "Run", "fightEnemy2", "", "runAway");
+        labelRat = enemyObject(4, 50, 56, 91, 70, imgPath("entity/Rat.png"), "Attack", "Defend", "Run", "fightEnemy", "", "runAway");
+        labelWolf = enemyObject(4, 150, 56, 222, 200, imgPath("entity/wolf.png"), "Attack", "Defend", "Run", "fightEnemy2", "", "runAway");
         gameObject(4, 350, 330, 150, 180, imgPath("object/Chest.png"), "Open", "-", "-", "openChest", "-", "-");
 
+        //MAP
+        gameBackground(6, imgPath("bg/map.png"));
+        teleportCompass(6, 0, 0, 35, 35, "currentScreen");
     }
 
 

@@ -2,6 +2,9 @@ package cz.reindl.game.event;
 
 import cz.reindl.game.GameHub;
 
+import javax.swing.*;
+import java.awt.*;
+
 public class Event {
 
     GameHub hub;
@@ -43,6 +46,21 @@ public class Event {
         hub.playMusic(hub.sound.currentMusic, true);
     }
 
+    public void loadingScreen() {
+        hub.ui.panelInventory.setVisible(false);
+        hub.ui.panelHp.setVisible(false);
+        hub.ui.textMessage.setVisible(false);
+
+        hub.ui.panelBackground[1].setVisible(false);
+        hub.ui.panelBackground[2].setVisible(false);
+        hub.ui.panelBackground[5].setVisible(false);
+        hub.ui.panelBackground[4].setVisible(false);
+        hub.ui.panelBackground[3].setVisible(false);
+        //hub.ui.panelBackground[6].setVisible(false);
+
+        hub.stopMusic(hub.sound.currentMusic);
+    }
+
     public void sceneTownSquare() {
         hub.ui.panelBackground[1].setVisible(false);
         hub.ui.panelBackground[2].setVisible(true);
@@ -67,11 +85,22 @@ public class Event {
         System.out.println(hub.sound.currentMusic);
     }
 
-    public void beer() { //Changing the scene
+    public void beer() {
         hub.ui.textMessage.setText("Welcome in pub");
         if (hub.player.playerHp != hub.player.playerMaxHp - 1) {
             hub.ui.textMessage.setText("You recovered 1 hp");
             hub.player.playerHp++;
+            hub.player.playerCurrentStats();
+            //hub.playMusic(hub.sound.pubGreet, false);
+        } else {
+            hub.ui.textMessage.setText("You are at full health");
+        }
+    }
+
+    public void liquor() { //Changing the scene
+        if (hub.player.playerHp != hub.player.playerMaxHp - 1) {
+            hub.ui.textMessage.setText("You recovered full hp");
+            hub.player.playerHp = hub.player.playerMaxHp - 1;
             hub.player.playerCurrentStats();
             //hub.playMusic(hub.sound.pubGreet, false);
         } else {
@@ -130,6 +159,9 @@ public class Event {
     }
 
     public void sceneDungeon() {
+        if (hub.fight.count == 0) {
+            hub.fight.firstEncounter();
+        }
         hub.stopMusic(hub.sound.currentMusic);
         hub.sound.currentMusic = hub.sound.bossTheme;
         hub.playMusic(hub.sound.currentMusic, true);
@@ -146,4 +178,21 @@ public class Event {
         hub.ui.panelBackground[5].setVisible(true);
         hub.ui.textMessage.setText("Town square 2");
     }
+
+    public void chooseLocation() {
+        hub.stopMusic(hub.sound.currentMusic);
+        hub.ui.textMessage.setText("");
+        hub.ui.panelBackground[1].setVisible(false);
+        hub.ui.panelBackground[2].setVisible(false);
+        hub.ui.panelBackground[3].setVisible(false);
+        hub.ui.panelBackground[4].setVisible(false);
+        hub.ui.panelBackground[5].setVisible(false);
+        hub.ui.panelBackground[6].setVisible(true);
+    }
+
+    public void currentScreen() {
+        hub.ui.panelBackground[6].setVisible(false);
+        hub.event.spawnScreen();
+    }
+
 }
