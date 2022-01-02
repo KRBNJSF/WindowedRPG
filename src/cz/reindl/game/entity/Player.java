@@ -23,7 +23,7 @@ public class Player {
 
     public void playerDefaultStats() {
         playerMaxHp = 10;
-        playerHp = 4;
+        playerHp = 5;
         playerDmg = 2;
         playerDef = 0;
         hand = true;

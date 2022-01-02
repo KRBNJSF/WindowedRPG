@@ -38,7 +38,6 @@ public class Event {
         hub.ui.panelBackground[5].setVisible(false);
         hub.ui.panelBackground[6].setVisible(false);
         hub.ui.textMessage.setText("Forest");
-        //hub.ui.consecutiveText("Nothing");
 
         hub.stopMusic(hub.sound.currentMusic);
         hub.sound.currentMusic = hub.sound.townMusic;
@@ -65,7 +64,7 @@ public class Event {
         hub.ui.panelBackground[2].setVisible(true);
         hub.ui.panelBackground[3].setVisible(false);
         hub.ui.panelBackground[6].setVisible(false);
-        hub.ui.textMessage.setText("Town");
+        hub.ui.textMessage.setText("Town\n");
 
         hub.stopMusic(hub.sound.currentMusic);
         hub.sound.currentMusic = hub.sound.shopMusic;
@@ -78,7 +77,7 @@ public class Event {
         hub.ui.panelBackground[3].setVisible(true);
         hub.ui.panelBackground[4].setVisible(false);
         hub.ui.panelBackground[6].setVisible(false);
-        hub.ui.textMessage.setText("Pub");
+        hub.ui.textMessage.setText("Tavern\n");
 
         hub.stopMusic(hub.sound.currentMusic);
         hub.sound.currentMusic = hub.sound.mainTheme;
@@ -87,36 +86,36 @@ public class Event {
     }
 
     public void beer() {
-        hub.ui.textMessage.setText("Welcome in pub");
+        hub.ui.textMessage.setText("Welcome in pub\n");
         if (hub.player.playerHp != hub.player.playerMaxHp - 1) {
-            hub.ui.textMessage.setText("You recovered 1 hp");
+            hub.ui.consecutiveText("You recovered 1 hp");
             hub.player.playerHp++;
             hub.player.playerCurrentStats();
             //hub.playMusic(hub.sound.pubGreet, false);
         } else {
-            hub.ui.textMessage.setText("You are at full health");
+            hub.ui.textMessage.setText("You are at full health \n");
         }
     }
 
     public void liquor() { //Changing the scene
         if (hub.player.playerHp != hub.player.playerMaxHp - 1) {
-            hub.ui.textMessage.setText("You recovered full hp");
+            hub.ui.textMessage.setText("You recovered full hp\n");
             hub.player.playerHp = hub.player.playerMaxHp - 1;
             hub.player.playerCurrentStats();
             //hub.playMusic(hub.sound.pubGreet, false);
         } else {
-            hub.ui.textMessage.setText("You are at full health");
+            hub.ui.textMessage.setText("You are at full health\n");
         }
     }
 
     public void chest() {
         if (!hub.player.knife) {
-            hub.ui.textMessage.setText("You opened the chest and found a knife!");
+            hub.ui.textMessage.setText("You opened the chest and found a knife!\n");
             hub.ui.labelWeapon.setIcon(hub.ui.imgIcon("icon/knife.png"));
             hub.player.knife = true;
             hub.player.playerCurrentStats();
         } else {
-            hub.ui.textMessage.setText("It's empty");
+            hub.ui.textMessage.setText("It's empty\n");
         }
     }
 
@@ -128,22 +127,22 @@ public class Event {
                     hub.ui.textMessage.setText("Don't even try! \n(hp - 1)");
                     hub.player.playerHp--;
                 } else if (hub.player.playerHp <= 0) {
-                    hub.ui.textMessage.setText("You died");
+                    hub.ui.textMessage.setText("You died\n");
                     hub.event.gameOverScreen(1);
                 }
             } else if (hub.player.knife) {
-                hub.ui.textMessage.setText("You won and earned shield");
+                hub.ui.textMessage.setText("You won and earned shield\n");
                 hub.player.shield = true;
             }
             hub.player.playerCurrentStats();
         } else {
-            hub.ui.textMessage.setText("Nothing happened");
+            hub.ui.textMessage.setText("Nothing happened\n");
         }
     }
 
     public void pubDoor() {
         if (!hub.player.coin) {
-            hub.ui.textMessage.setText("Coin is needed to enter");
+            hub.ui.textMessage.setText("Coin is needed to enter\n");
         } else {
             scenePubInside();
         }
@@ -151,11 +150,11 @@ public class Event {
 
     public void well() {
         if (!hub.player.coin) {
-            hub.ui.textMessage.setText("You found a coin");
+            hub.ui.textMessage.setText("You found a coin\n");
             hub.player.coin = true;
             hub.player.playerCurrentStats();
         } else {
-            hub.ui.textMessage.setText("There's nothing");
+            hub.ui.textMessage.setText("There's nothing\n");
         }
     }
 
@@ -179,7 +178,7 @@ public class Event {
         hub.ui.panelBackground[2].setVisible(false);
         hub.ui.panelBackground[5].setVisible(true);
         hub.ui.panelBackground[6].setVisible(false);
-        hub.ui.textMessage.setText("Town square 2");
+        hub.ui.textMessage.setText("Town square 2\n");
     }
 
     public void chooseLocation() {

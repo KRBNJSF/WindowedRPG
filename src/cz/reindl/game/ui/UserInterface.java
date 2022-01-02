@@ -42,27 +42,6 @@ public class UserInterface {
     public JLabel labelRat, labelWolf, labelKnight; //enemies
     public JLabel labelChest, labelChest2, labelFinalChest; //rewards
 
-    //TEXT OF CONSECUTIVE CHARACTERS
-    public Timer timer;
-    public int i;
-
-    public void consecutiveText(String text) {
-        timer = new Timer(100, e -> {
-            char[] characters = text.toCharArray();
-            int arrayNumber = characters.length;
-
-            String addedCharacter = String.valueOf(characters[i]);
-            textMessage.append(addedCharacter);
-
-            i++;
-
-            if (i == arrayNumber) {
-                i = 0;
-                timer.stop();
-            }
-        });
-    }
-
     public UserInterface(GameHub gameHub) {
         this.gameHub = gameHub;
 
@@ -120,7 +99,7 @@ public class UserInterface {
         cursorIconMain();
 
         textMessage = new JTextArea();
-        textMessage.setText("Welcome");
+        textMessage.setText("");
         textMessage.setBounds(120, 540, 760, 150); //Text position relative to frame
         textMessage.setBackground(Color.blue);
         textMessage.setForeground(Color.white);
@@ -180,12 +159,12 @@ public class UserInterface {
     public void gameBackground(int screenNum, String fileName) {
         panelBackground[screenNum] = new JPanel();
         panelBackground[screenNum].setBounds(120, 60, 760, 450);  //Panel position relative to frame
-        panelBackground[screenNum].setBackground(Color.red); //Just to make sure it's set properly
+        panelBackground[screenNum].setBackground(Color.BLACK); //Just to make sure it's set properly
         panelBackground[screenNum].setLayout(null);
         panelBackground[screenNum].setVisible(false);
         window.add(panelBackground[screenNum]);
 
-        labelBackground[screenNum] = new JLabel();
+        labelBackground[screenNum] = new JLabel("", SwingConstants.CENTER);
         labelBackground[screenNum].setBounds(0, 0, 760, 450);  //Image position relative to panel
 
         ImageIcon imgBackground = new ImageIcon(fileName);
@@ -372,6 +351,10 @@ public class UserInterface {
         JButton teleportButton = new JButton();
         teleportButton.setBounds(x, y, width, height);
         teleportButton.setIcon(imgIcon(file));
+        teleportButton.setContentAreaFilled(true);
+        teleportButton.setFocusPainted(false); //Border around image
+        teleportButton.setBorderPainted(false); //Border around button
+        teleportButton.setBackground(Color.gray);
         teleportButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         teleportButton.addActionListener(gameHub.actionHandler);
@@ -419,15 +402,17 @@ public class UserInterface {
         gameBackground(4, imgPath("bg/Dungeon.png"));
         labelRat = enemyObject(4, 50, 56, 91, 70, imgPath("entity/Rat.png"), "Attack", "Defend", "Run", "fightEnemy", "", "runAway");
         labelWolf = enemyObject(4, 150, 56, 222, 200, imgPath("entity/wolf.png"), "Attack", "Defend", "Run", "fightEnemy2", "", "runAway");
-        gameObject(4, 350, 330, 150, 180, imgPath("object/Chest.png"), "Open", "-", "-", "openChest", "-", "-");
+        labelChest = enemyObject(4, 350, 330, 150, 180, imgPath("object/Chest.png"), "Open", "-", "-", "openChest", "-", "-");
 
         //MAP
         gameBackground(6, imgPath("bg/map.png"));
         teleportCompass(6, 0, 0, 35, 35, "currentScreen", "icon/compass.png");
-        teleportCompass(6, 50, 20, 35, 35, "mainScreen1", "icon/coin.png");
-        teleportCompass(6, 50, 55, 35, 35, "mainScreen2", "icon/coin.png");
-        teleportCompass(6, 50, 90, 50, 50, "enterPub", "icon/beer.png");
-        teleportCompass(6, 50, 125, 35, 35, "goTown2", "icon/coin.png");
+        teleportCompass(6, 365, 110, 50, 50, "mainScreen1", "icon/forest.png");
+        teleportCompass(6, 365, 165, 50, 50, "mainScreen2", "icon/townEntrance.png");
+        teleportCompass(6, 365, 220, 50, 50, "enterPub", "icon/beer.png");
+        teleportCompass(6, 365, 275, 50, 50, "goTown2", "icon/forge.png");
+        gameObject(6, 0, 0, 0, 0, imgPath("object/blankTransparent.png"), "", "", "", "", "", "");
+
     }
 
 
@@ -444,22 +429,27 @@ public class UserInterface {
         }
     }
 
-    public static void printText(String text) {
-        try {
-            for (String s : text.split(" ")) {
-                for (char c : s.toCharArray()) {
-                    Thread.sleep(35);
-                    System.out.print(c);
-                }
-                System.out.print(" ");
-                Thread.sleep(60);
-            }
-            System.out.println();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
+    //TEXT OF CONSECUTIVE CHARACTERS
+    public Timer timer;
+    public int i;
 
+    public void consecutiveText(String text) {
+        timer = new Timer(100, e -> {
+            char[] characters = text.toCharArray();
+            int arrayNumber = characters.length;
+
+            String addedCharacter = String.valueOf(characters[i]);
+            textMessage.append(addedCharacter);
+
+            i++;
+
+            if (i == arrayNumber) {
+                i = 0;
+                timer.stop();
+            }
+        });
+        timer.start();
+    }
 
     public String imgPath(String imgSrc) {
         return "src/cz/reindl/game/ui/graphics/" + imgSrc;
