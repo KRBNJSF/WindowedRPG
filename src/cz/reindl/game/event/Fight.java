@@ -30,6 +30,7 @@ public class Fight {
         hub.ui.textMessage.append("You hit " + enemies.getEntityName() + " and gave him " + playerDmg + " dmg \n" + enemies.getEntityName() + ": " + enemies.getEntityHp() + " HP left \n");
 
         if (enemies.getEntityHp() <= 0) {
+            hub.player.playerCurrentStats();
             count++;
             winScreen();
             hub.ui.textMessage.setText("You won");
@@ -42,8 +43,16 @@ public class Fight {
                 case 2 -> {
                     hub.ui.labelWolf.setVisible(false);
                     hub.ui.labelKnight.setVisible(true);
+                }
+                case 3 -> {
                     hub.ui.textMessage.setText("You won chest! \n" +
                             "Look inside to find out what you got");
+                    hub.ui.labelKnight.setVisible(false);
+                    hub.ui.labelChest.setVisible(true);
+                }
+                case 4 -> {
+                    hub.ui.labelChest.setVisible(false);
+                    hub.ui.labelTroll.setVisible(true);
                 }
             }
         } else {
@@ -87,6 +96,7 @@ public class Fight {
         hub.ui.labelRat.setVisible(true);
         hub.ui.labelChest.setVisible(false);
         hub.ui.labelWolf.setVisible(false);
+        hub.ui.labelKnight.setVisible(false);
     }
 
 }

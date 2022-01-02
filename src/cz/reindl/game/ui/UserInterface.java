@@ -39,7 +39,7 @@ public class UserInterface {
     public JLabel labelWeapon, labelChestArmor, labelShield, labelQuestItem, labelCoins;
 
     //FIGHT UI
-    public JLabel labelRat, labelWolf, labelKnight; //enemies
+    public JLabel labelRat, labelWolf, labelKnight, labelTroll; //enemies
     public JLabel labelChest, labelChest2, labelFinalChest; //rewards
 
     public UserInterface(GameHub gameHub) {
@@ -101,7 +101,7 @@ public class UserInterface {
         textMessage = new JTextArea();
         textMessage.setText("");
         textMessage.setBounds(120, 540, 760, 150); //Text position relative to frame
-        textMessage.setBackground(Color.blue);
+        textMessage.setBackground(Color.BLUE); // FIXME: 02.01.2022 Set new color
         textMessage.setForeground(Color.white);
         textMessage.setEditable(false);
         textMessage.setLineWrap(true);
@@ -129,7 +129,7 @@ public class UserInterface {
 
         panelInventory = new JPanel();
         panelInventory.setBounds(650, 5, 200, 50);
-        panelInventory.setBackground(Color.GREEN);
+        panelInventory.setBackground(Color.GREEN); // FIXME: 02.01.2022 Set new color
         panelInventory.setLayout(new GridLayout(1, 5));
         panelInventory.setToolTipText("Inventory");
         window.add(panelInventory);
@@ -195,7 +195,7 @@ public class UserInterface {
         Border border = BorderFactory.createLineBorder(Color.yellow, 2);
         JLabel labelObject = new JLabel();
         labelObject.setBounds(x, y, width, height);
-        labelObject.setBorder(border);
+        // FIXME: 02.01.2022 labelObject.setBorder(border);
         //labelObject.setOpaque(true); //Setting visible background of the object
         //labelObject.setBackground(Color.yellow); //Setting opaques color
 
@@ -265,7 +265,7 @@ public class UserInterface {
         Border border = BorderFactory.createLineBorder(Color.yellow, 2);
         JLabel labelObject = new JLabel();
         labelObject.setBounds(x, y, width, height);
-        labelObject.setBorder(border);
+        // FIXME: 02.01.2022 labelObject.setBorder(border); 
         //labelObject.setOpaque(true); //Setting visible background of the object
         //labelObject.setBackground(Color.yellow); //Setting opaques color
 
@@ -368,7 +368,8 @@ public class UserInterface {
         gameBackground(1, imgPath("bg/forest.png"));
         changeScreenButton(1, 0, 150, 50, 50, "mainScreen2");
         teleportCompass(1, 0, 0, 35, 35, "teleport", "icon/compass.png");
-        gameObject(1, 225, 295, 98, 120, imgPath("entity/Knight2.png"), "Talk", "-", "-", "talkKnight", "-", "-");
+        gameObject(1, 0, 0, 0, 0, imgPath("object/blankTransparent.png"), "", "", "", "", "", "");
+
 
         //gameObject(1, 0, 50, 300, 300, imgPath("entity/blackSmith.png"));
 
@@ -376,7 +377,7 @@ public class UserInterface {
         gameBackground(2, imgPath("bg/townSquare.png"));
         teleportCompass(2, 0, 0, 35, 35, "teleport", "icon/compass.png");
         changeScreenButton(2, 710, 150, 50, 50, "mainScreen1");
-        gameObject(2, 0, 0, 98, 120, imgPath("entity/Knight2.png"), "Talk", "-", "-", "talkKnight", "-", "-");
+        gameObject(2, 620, 320, 98, 120, imgPath("entity/Knight2.png"), "Talk", "-", "-", "talkKnight", "-", "-");
         gameObject(2, 100, 290, 40, 70, imgPath("object/blankTransparent.png"), "Enter", "Knock", "-", "enterPub", "knockPub", "-");
         gameObject(2, 480, 230, 100, 170, imgPath("object/blankTransparent.png"), "Search", "-", "-", "searchWell", "-", "-");
         gameObject(2, 230, 220, 100, 100, imgPath("object/blankTransparent.png"), "Go", "-", "-", "goTown2", "-", "-");
@@ -387,21 +388,26 @@ public class UserInterface {
         changeScreenButton(3, 710, 150, 50, 50, "mainScreen2");
         gameObject(3, 350, 150, 130, 100, imgPath("object/blankTransparent.png"), "Enter", "-", "-", "enterDungeon", "-", "-");
         gameObject(3, 550, 200, 75, 75, imgPath("object/beer.png"), "Drink", "-", "-", "drinkBeer", "-", "-");
-        gameObject(3, 540, 120, 75, 75, imgPath("object/beer.png"), "Drink", "-", "-", "drinkLiquor", "-", "-");
+        gameObject(3, 230, 270, 75, 75, imgPath("object/beer.png"), "Drink", "-", "-", "drinkLiquor", "-", "-");
 
         //#BLACKSMITH
-        //gameBackground(6, imgPath("bg/"));
+        gameBackground(7, imgPath("bg/blacksmith.png"));
+        teleportCompass(7, 0, 0, 35, 35, "teleport", "icon/compass.png");
+        changeScreenButton(7, 710, 150, 50, 50, "goTown2");
+        gameObject(7, 0, 0, 0, 0, imgPath("object/blankTransparent.png"), "", "", "", "", "", "");
 
         //#TOWN 2 SIDE
         gameBackground(5, imgPath("bg/townSquare2.png"));
         teleportCompass(5, 0, 0, 35, 35, "teleport", "icon/compass.png");
         changeScreenButton(5, 710, 150, 50, 50, "mainScreen2");
-        gameObject(5, 430, 230, 320, 200, imgPath("object/blankTransparent.png"), "Enter", "-", "-", "-", "-", "-");
+        gameObject(5, 430, 230, 320, 200, imgPath("object/blankTransparent.png"), "Enter", "-", "-", "enterForge", "-", "-");
 
         //#DUNGEON
         gameBackground(4, imgPath("bg/Dungeon.png"));
-        labelRat = enemyObject(4, 50, 56, 91, 70, imgPath("entity/Rat.png"), "Attack", "Defend", "Run", "fightEnemy", "", "runAway");
-        labelWolf = enemyObject(4, 150, 56, 222, 200, imgPath("entity/wolf.png"), "Attack", "Defend", "Run", "fightEnemy2", "", "runAway");
+        //changeScreenButton(4, 710, 150, 50, 50, "enterPub");
+        labelRat = enemyObject(4, 350, 350, 91, 70, imgPath("entity/Rat.png"), "Attack", "Defend", "Run", "fightEnemy", "", "runAway");
+        labelWolf = enemyObject(4, 300, 220, 222, 200, imgPath("entity/wolf.png"), "Attack", "Defend", "Run", "fightEnemy2", "", "runAway");
+        labelKnight = enemyObject(4, 320, 56, 200, 388, imgPath("entity/warrior.png"), "Attack", "Defend", "Run", "fightEnemy3", "", "runAway");
         labelChest = enemyObject(4, 350, 330, 150, 180, imgPath("object/Chest.png"), "Open", "-", "-", "openChest", "-", "-");
 
         //MAP

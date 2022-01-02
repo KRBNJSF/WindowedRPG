@@ -1,6 +1,7 @@
 package cz.reindl.game.event;
 
 import cz.reindl.game.GameHub;
+import cz.reindl.game.entity.Enemies;
 
 public class Event {
 
@@ -40,7 +41,7 @@ public class Event {
         hub.ui.textMessage.setText("Forest");
 
         hub.stopMusic(hub.sound.currentMusic);
-        hub.sound.currentMusic = hub.sound.townMusic;
+        hub.sound.currentMusic = hub.sound.mainTheme;
         hub.playMusic(hub.sound.currentMusic, true);
     }
 
@@ -67,7 +68,7 @@ public class Event {
         hub.ui.textMessage.setText("Town\n");
 
         hub.stopMusic(hub.sound.currentMusic);
-        hub.sound.currentMusic = hub.sound.shopMusic;
+        hub.sound.currentMusic = hub.sound.townMusic;
         hub.playMusic(hub.sound.currentMusic, true);
         // FIXME: 30.12.2021 hub.playMusic(hub.sound.forge, true);
     }
@@ -80,7 +81,7 @@ public class Event {
         hub.ui.textMessage.setText("Tavern\n");
 
         hub.stopMusic(hub.sound.currentMusic);
-        hub.sound.currentMusic = hub.sound.mainTheme;
+        hub.sound.currentMusic = hub.sound.shopMusic;
         hub.playMusic(hub.sound.currentMusic, true);
         System.out.println(hub.sound.currentMusic);
     }
@@ -110,7 +111,7 @@ public class Event {
 
     public void chest() {
         if (!hub.player.knife) {
-            hub.ui.textMessage.setText("You opened the chest and found a knife!\n");
+            hub.ui.textMessage.setText("You opened the chest and found a knife!\n (max dmg + 3)");
             hub.ui.labelWeapon.setIcon(hub.ui.imgIcon("icon/knife.png"));
             hub.player.knife = true;
             hub.player.playerCurrentStats();
@@ -131,7 +132,7 @@ public class Event {
                     hub.event.gameOverScreen(1);
                 }
             } else if (hub.player.knife) {
-                hub.ui.textMessage.setText("You won and earned shield\n");
+                hub.ui.textMessage.setText("You won and earned shield\n + (Unlocked block animation)");
                 hub.player.shield = true;
             }
             hub.player.playerCurrentStats();
@@ -178,6 +179,7 @@ public class Event {
         hub.ui.panelBackground[2].setVisible(false);
         hub.ui.panelBackground[5].setVisible(true);
         hub.ui.panelBackground[6].setVisible(false);
+        hub.ui.panelBackground[7].setVisible(false);
         hub.ui.textMessage.setText("Town square 2\n");
     }
 
@@ -190,6 +192,7 @@ public class Event {
         hub.ui.panelBackground[4].setVisible(false);
         hub.ui.panelBackground[5].setVisible(false);
         hub.ui.panelBackground[6].setVisible(true);
+        hub.ui.panelBackground[7].setVisible(false);
     }
 
     public void currentScreen(int currentScreen) {
@@ -202,4 +205,13 @@ public class Event {
         }
     }
 
+    public void forgeTown() {
+        hub.ui.panelBackground[1].setVisible(false);
+        hub.ui.panelBackground[2].setVisible(false);
+        hub.ui.panelBackground[3].setVisible(false);
+        hub.ui.panelBackground[4].setVisible(false);
+        hub.ui.panelBackground[5].setVisible(false);
+        hub.ui.panelBackground[6].setVisible(false);
+        hub.ui.panelBackground[7].setVisible(true);
+    }
 }

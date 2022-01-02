@@ -59,6 +59,7 @@ public class ActionHandler implements ActionListener {
             case "mainScreen2" -> hub.event.sceneTownSquare();
             case "enterDungeon" -> hub.event.sceneDungeon();
             case "goTown2" -> hub.event.sceneTownSquare2();
+            case "enterForge" -> hub.event.forgeTown();
             case "teleport" -> hub.event.chooseLocation();
             case "currentScreen" -> hub.event.currentScreen(1); // FIXME: 02.01.2022 current screen number
 
