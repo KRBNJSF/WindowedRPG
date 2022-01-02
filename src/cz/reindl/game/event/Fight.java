@@ -27,7 +27,7 @@ public class Fight {
         int playerDmg = (random.nextInt(hub.player.playerDmg) + 1) * enemyDef;
         hub.ui.textMessage.setText("");
         enemies.setEntityHp(enemies.getEntityHp() - playerDmg);
-        hub.ui.textMessage.append("You hit " + enemies.getEntityName() + " and gave him " + playerDmg + " dmg ; " + enemies.getEntityHp() + " HP left \n");
+        hub.ui.textMessage.append("You hit " + enemies.getEntityName() + " and gave him " + playerDmg + " dmg \n" + enemies.getEntityName() + ": " + enemies.getEntityHp() + " HP left \n");
 
         if (enemies.getEntityHp() <= 0) {
             count++;
@@ -42,13 +42,15 @@ public class Fight {
                 case 2 -> {
                     hub.ui.labelWolf.setVisible(false);
                     hub.ui.labelKnight.setVisible(true);
+                    hub.ui.textMessage.setText("You won chest! \n" +
+                            "Look inside to find out what you got");
                 }
             }
         } else {
             int enemyDmg = (random.nextInt(enemies.getEntityDmg()) + 1) * playerDef;
             hub.player.playerHp -= enemyDmg;
             hub.player.playerCurrentStats();
-            hub.ui.textMessage.append(enemies.getEntityName() + " gave you " + enemyDmg + " dmg ; " + hub.player.playerHp + " HP left");
+            hub.ui.textMessage.append(enemies.getEntityName() + " gave you " + enemyDmg + " dmg \n " + "You: " + hub.player.playerHp + " HP left");
             if (hub.player.playerHp <= 0) {
                 hub.player.playerHp = 1;
                 hub.player.playerCurrentStats();
@@ -83,6 +85,7 @@ public class Fight {
 
     public void firstEncounter() {
         hub.ui.labelRat.setVisible(true);
+        hub.ui.labelChest.setVisible(false);
         hub.ui.labelWolf.setVisible(false);
     }
 
