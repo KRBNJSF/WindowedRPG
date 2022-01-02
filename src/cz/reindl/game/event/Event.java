@@ -2,9 +2,6 @@ package cz.reindl.game.event;
 
 import cz.reindl.game.GameHub;
 
-import javax.swing.*;
-import java.awt.*;
-
 public class Event {
 
     GameHub hub;
@@ -39,7 +36,9 @@ public class Event {
         hub.ui.panelBackground[1].setVisible(true);
         hub.ui.panelBackground[2].setVisible(false);
         hub.ui.panelBackground[5].setVisible(false);
+        hub.ui.panelBackground[6].setVisible(false);
         hub.ui.textMessage.setText("Forest");
+        //hub.ui.consecutiveText("Nothing");
 
         hub.stopMusic(hub.sound.currentMusic);
         hub.sound.currentMusic = hub.sound.townMusic;
@@ -56,7 +55,7 @@ public class Event {
         hub.ui.panelBackground[5].setVisible(false);
         hub.ui.panelBackground[4].setVisible(false);
         hub.ui.panelBackground[3].setVisible(false);
-        //hub.ui.panelBackground[6].setVisible(false);
+        hub.ui.panelBackground[6].setVisible(false);
 
         hub.stopMusic(hub.sound.currentMusic);
     }
@@ -65,6 +64,7 @@ public class Event {
         hub.ui.panelBackground[1].setVisible(false);
         hub.ui.panelBackground[2].setVisible(true);
         hub.ui.panelBackground[3].setVisible(false);
+        hub.ui.panelBackground[6].setVisible(false);
         hub.ui.textMessage.setText("Town");
 
         hub.stopMusic(hub.sound.currentMusic);
@@ -77,6 +77,7 @@ public class Event {
         hub.ui.panelBackground[2].setVisible(false);
         hub.ui.panelBackground[3].setVisible(true);
         hub.ui.panelBackground[4].setVisible(false);
+        hub.ui.panelBackground[6].setVisible(false);
         hub.ui.textMessage.setText("Pub");
 
         hub.stopMusic(hub.sound.currentMusic);
@@ -168,6 +169,7 @@ public class Event {
         hub.ui.panelBackground[3].setVisible(false);
         hub.ui.panelBackground[4].setVisible(true);
         hub.ui.panelBackground[5].setVisible(false);
+        hub.ui.panelBackground[6].setVisible(false);
     }
 
     public void sceneTownSquare2() {
@@ -176,11 +178,12 @@ public class Event {
         hub.playMusic(hub.sound.currentMusic, true);
         hub.ui.panelBackground[2].setVisible(false);
         hub.ui.panelBackground[5].setVisible(true);
+        hub.ui.panelBackground[6].setVisible(false);
         hub.ui.textMessage.setText("Town square 2");
     }
 
     public void chooseLocation() {
-        hub.stopMusic(hub.sound.currentMusic);
+        //hub.stopMusic(hub.sound.currentMusic);
         hub.ui.textMessage.setText("");
         hub.ui.panelBackground[1].setVisible(false);
         hub.ui.panelBackground[2].setVisible(false);
@@ -190,9 +193,14 @@ public class Event {
         hub.ui.panelBackground[6].setVisible(true);
     }
 
-    public void currentScreen() {
+    public void currentScreen(int currentScreen) {
         hub.ui.panelBackground[6].setVisible(false);
-        hub.event.spawnScreen();
+        switch (currentScreen) {
+            case 1 -> spawnScreen();
+            case 2 -> sceneTownSquare();
+            case 3 -> scenePubInside();
+            default -> spawnScreen();
+        }
     }
 
 }

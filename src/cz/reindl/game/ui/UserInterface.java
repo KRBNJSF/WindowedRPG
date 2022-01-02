@@ -5,12 +5,15 @@ import cz.reindl.game.GameHub;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
 public class UserInterface {
+
 
     GameHub gameHub;
     public JFrame window;
@@ -32,14 +35,33 @@ public class UserInterface {
     public JPanel panelHp;
     public JLabel[] labelHp = new JLabel[10];
     public JPanel panelInventory;
-
-    public JLabel labelWeapon, labelChestArmor, labelShield, labelCoin, labelKnife;
+    //items
+    public JLabel labelWeapon, labelChestArmor, labelShield, labelQuestItem, labelCoins;
 
     //FIGHT UI
-    public JLabel labelRat = new JLabel();
-    public JLabel labelWolf, labelKnight;
-    public JLabel labelChest;
+    public JLabel labelRat, labelWolf, labelKnight; //enemies
+    public JLabel labelChest, labelChest2, labelFinalChest; //rewards
 
+    //TEXT OF CONSECUTIVE CHARACTERS
+    public Timer timer;
+    public int i;
+
+    public void consecutiveText(String text) {
+        timer = new Timer(100, e -> {
+            char[] characters = text.toCharArray();
+            int arrayNumber = characters.length;
+
+            String addedCharacter = String.valueOf(characters[i]);
+            textMessage.append(addedCharacter);
+
+            i++;
+
+            if (i == arrayNumber) {
+                i = 0;
+                timer.stop();
+            }
+        });
+    }
 
     public UserInterface(GameHub gameHub) {
         this.gameHub = gameHub;
@@ -95,7 +117,7 @@ public class UserInterface {
         window.setLayout(null);
         window.setResizable(false);
         window.setIconImage(logo.getImage()); //App logo settings
-        cursorIcon();
+        cursorIconMain();
 
         textMessage = new JTextArea();
         textMessage.setText("Welcome");
@@ -139,10 +161,10 @@ public class UserInterface {
         //labelKnife.setToolTipText("Weapon");
         panelInventory.add(labelWeapon);
 
-        labelCoin = new JLabel();
-        labelCoin.setIcon(imgIcon("/icon/coin.png"));
+        labelQuestItem = new JLabel();
+        labelQuestItem.setIcon(imgIcon("/icon/coin.png"));
         //labelCoin.setToolTipText("Quest item");
-        panelInventory.add(labelCoin);
+        panelInventory.add(labelQuestItem);
 
         labelShield = new JLabel();
         labelShield.setIcon(imgIcon("/icon/shield.png"));
@@ -297,7 +319,19 @@ public class UserInterface {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                labelObject.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                try {
+                    labelObject.setCursor(
+                            Toolkit
+                                    .getDefaultToolkit()
+                                    .createCustomCursor(
+                                            new ImageIcon(imgPath("icon/cursor/cursorMain.png")).getImage(),
+                                            new Point(0, 0),
+                                            "My cursor2"
+                                    )
+                    );
+                } catch (Exception exception) {
+                    System.out.println(exception);
+                }
             }
 
             @Override
@@ -334,10 +368,10 @@ public class UserInterface {
         panelBackground[screenNum].add(arrowButton);
     }
 
-    public void teleportCompass(int screenNum, int x, int y, int width, int height, String command) {
+    public void teleportCompass(int screenNum, int x, int y, int width, int height, String command, String file) {
         JButton teleportButton = new JButton();
         teleportButton.setBounds(x, y, width, height);
-        teleportButton.setIcon(imgIcon("icon/compass.png"));
+        teleportButton.setIcon(imgIcon(file));
         teleportButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         teleportButton.addActionListener(gameHub.actionHandler);
@@ -348,16 +382,16 @@ public class UserInterface {
 
     public void gameScreen() {
         //#SPAWN
-        gameBackground(1, imgPath("bg/forestBg.jpg"));
+        gameBackground(1, imgPath("bg/forest.png"));
         changeScreenButton(1, 0, 150, 50, 50, "mainScreen2");
-        teleportCompass(1, 0, 0, 35, 35, "teleport");
+        teleportCompass(1, 0, 0, 35, 35, "teleport", "icon/compass.png");
         gameObject(1, 225, 295, 98, 120, imgPath("entity/Knight2.png"), "Talk", "-", "-", "talkKnight", "-", "-");
 
         //gameObject(1, 0, 50, 300, 300, imgPath("entity/blackSmith.png"));
 
         //#TOWN 1 SIDE
         gameBackground(2, imgPath("bg/townSquare.png"));
-        teleportCompass(2, 0, 0, 35, 35, "currentScreen");
+        teleportCompass(2, 0, 0, 35, 35, "teleport", "icon/compass.png");
         changeScreenButton(2, 710, 150, 50, 50, "mainScreen1");
         gameObject(2, 0, 0, 98, 120, imgPath("entity/Knight2.png"), "Talk", "-", "-", "talkKnight", "-", "-");
         gameObject(2, 100, 290, 40, 70, imgPath("object/blankTransparent.png"), "Enter", "Knock", "-", "enterPub", "knockPub", "-");
@@ -366,7 +400,7 @@ public class UserInterface {
 
         //#PUB INSIDE
         gameBackground(3, imgPath("bg/tavernInside.png"));
-        teleportCompass(3, 0, 0, 35, 35, "currentScreen");
+        teleportCompass(3, 0, 0, 35, 35, "teleport", "icon/compass.png");
         changeScreenButton(3, 710, 150, 50, 50, "mainScreen2");
         gameObject(3, 350, 150, 130, 100, imgPath("object/blankTransparent.png"), "Enter", "-", "-", "enterDungeon", "-", "-");
         gameObject(3, 550, 200, 75, 75, imgPath("object/beer.png"), "Drink", "-", "-", "drinkBeer", "-", "-");
@@ -377,7 +411,7 @@ public class UserInterface {
 
         //#TOWN 2 SIDE
         gameBackground(5, imgPath("bg/townSquare2.png"));
-        teleportCompass(5, 0, 0, 35, 35, "currentScreen");
+        teleportCompass(5, 0, 0, 35, 35, "teleport", "icon/compass.png");
         changeScreenButton(5, 710, 150, 50, 50, "mainScreen2");
         gameObject(5, 430, 230, 320, 200, imgPath("object/blankTransparent.png"), "Enter", "-", "-", "-", "-", "-");
 
@@ -389,7 +423,11 @@ public class UserInterface {
 
         //MAP
         gameBackground(6, imgPath("bg/map.png"));
-        teleportCompass(6, 0, 0, 35, 35, "currentScreen");
+        teleportCompass(6, 0, 0, 35, 35, "currentScreen", "icon/compass.png");
+        teleportCompass(6, 50, 20, 35, 35, "mainScreen1", "icon/coin.png");
+        teleportCompass(6, 50, 55, 35, 35, "mainScreen2", "icon/coin.png");
+        teleportCompass(6, 50, 90, 50, 50, "enterPub", "icon/beer.png");
+        teleportCompass(6, 50, 125, 35, 35, "goTown2", "icon/coin.png");
     }
 
 
@@ -440,13 +478,13 @@ public class UserInterface {
         return new JLabel(new ImageIcon("src/cz/reindl/game/ui/graphics/" + imgSrc));
     }
 
-    public void cursorIcon() {
+    public void cursorIconMain() {
         try {
             window.setCursor(
                     Toolkit
                             .getDefaultToolkit()
                             .createCustomCursor(
-                                    new ImageIcon(imgPath("icon/cursorMain.png")).getImage(),
+                                    new ImageIcon(imgPath("icon/cursor/cursorHand.png")).getImage(),
                                     new Point(0, 0),
                                     "My cursor"
                             )

@@ -4,10 +4,12 @@ import cz.reindl.game.GameHub;
 import jaco.mp3.player.MP3Player;
 
 import java.io.File;
+import java.util.Timer;
 
 public class Sound {
 
     GameHub hub;
+    Timer timer = new Timer();
 
     public Sound(GameHub gameHub) {
         this.hub = gameHub;
@@ -30,6 +32,11 @@ public class Sound {
 
     //TEXT SPEECH
     public File pubGreet = new File("src/res/storage/pubGreet.mp3");
+
+    //TEXT SOUND EFFECT
+    public void prepareText() {
+        hub.ui.textMessage.setText("");
+    }
 
     //MUSIC SETTINGS
     public void setFile(File name) {

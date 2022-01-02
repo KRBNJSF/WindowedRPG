@@ -54,6 +54,7 @@ public class Fight {
                 hub.player.playerCurrentStats();
                 hub.event.gameOverScreen(4);
                 hub.event.gameOverScreen(3);
+                hub.event.gameOverScreen(6);
                 restartEnemies();
             }
         }

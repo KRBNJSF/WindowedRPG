@@ -60,7 +60,7 @@ public class ActionHandler implements ActionListener {
             case "enterDungeon" -> hub.event.sceneDungeon();
             case "goTown2" -> hub.event.sceneTownSquare2();
             case "teleport" -> hub.event.chooseLocation();
-            case "currentScreen" -> hub.event.currentScreen();
+            case "currentScreen" -> hub.event.currentScreen(1); // FIXME: 02.01.2022 current screen number
 
             default -> hub.ui.textMessage.setText("");
         }

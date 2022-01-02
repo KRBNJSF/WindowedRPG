@@ -32,6 +32,8 @@ public class Player {
         coin = false;
         torso = false;
 
+        hub.ui.labelWeapon.setIcon(hub.ui.imgIcon("icon/hand.png"));
+
         playerCurrentStats();
     }
 
@@ -52,7 +54,7 @@ public class Player {
         //PLAYER ITEMS CHECK
         hub.ui.labelWeapon.setVisible(hand);
         hub.ui.labelShield.setVisible(shield);
-        hub.ui.labelCoin.setVisible(coin);
+        hub.ui.labelQuestItem.setVisible(coin);
         hub.ui.labelChestArmor.setVisible(torso);
 
         if (knife) {
