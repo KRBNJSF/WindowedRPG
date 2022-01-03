@@ -10,12 +10,18 @@ public class Player {
     public int playerHp;
     public int playerDmg;
     public int playerDef;
+    public int playerCoins;
 
-    public boolean knife;
-    public boolean shield;
-    public boolean coin;
     public boolean hand;
+    public boolean knife;
+
+    public boolean shield;
+
     public boolean torso;
+
+    public boolean coin;
+    public boolean key;
+
 
     public Player(GameHub gameHub) {
         this.hub = gameHub;
@@ -26,13 +32,16 @@ public class Player {
         playerHp = 5;
         playerDmg = 2;
         playerDef = 0;
+        playerCoins = 0;
         hand = true;
         knife = false;
         shield = false;
-        coin = false;
         torso = false;
+        coin = false;
+        key = false;
 
         hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/hand.png"));
+        hub.ui.labelQuestItem.setIcon(hub.ui.jarImg("icon/coin.png"));
 
         playerCurrentStats();
     }
@@ -45,6 +54,7 @@ public class Player {
             i++;
         }
 
+        //Setting visible hearth icons equal to player's HP
         int currentHp = playerHp;
         while (currentHp >= 0) {
             hub.ui.labelHp[currentHp].setVisible(true);
@@ -58,9 +68,13 @@ public class Player {
         hub.ui.labelChestArmor.setVisible(torso);
 
         if (knife) {
-            playerDmg = 5;
-        } else if (torso) {
-            playerDef = 1;
+            playerDmg += 2;
+        }
+        if (torso) {
+            playerDef += 1;
+        }
+        if (shield) {
+            playerDef += 2;
         }
     }
 

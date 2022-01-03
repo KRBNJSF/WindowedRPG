@@ -53,8 +53,18 @@ public class Fight {
                     hub.ui.labelChest.setVisible(true);
                 }
                 case 4 -> {
+                    hub.fight.setEnemy(Enemies.OGRE);
                     hub.ui.labelChest.setVisible(false);
-                    hub.ui.labelTroll.setVisible(true);
+                    hub.ui.labelOgre.setVisible(true);
+                }
+                case 5 -> {
+                    hub.fight.setEnemy(Enemies.WIZARD);
+                    hub.ui.labelOgre.setVisible(false);
+                    hub.ui.labelWizard.setVisible(true);
+                }
+                case 6 -> {
+                    hub.ui.labelWizard.setVisible(false);
+                    //hub.ui.label.setVisible(true);
                 }
             }
         } else {
@@ -81,10 +91,11 @@ public class Fight {
     }
 
     public void restartEnemies() {
-        Enemies.WOLF.setEntityHp(5);
-        Enemies.TROLL.setEntityHp(5);
         Enemies.RAT.setEntityHp(5);
+        Enemies.WOLF.setEntityHp(5);
         Enemies.KNIGHT.setEntityHp(5);
+        Enemies.OGRE.setEntityHp(5);
+        Enemies.WIZARD.setEntityHp(5);
         Enemies.MIRROR.setEntityHp(5);
     }
 
@@ -99,6 +110,8 @@ public class Fight {
         hub.ui.labelChest.setVisible(false);
         hub.ui.labelWolf.setVisible(false);
         hub.ui.labelKnight.setVisible(false);
+        hub.ui.labelOgre.setVisible(false);
+        hub.ui.labelWizard.setVisible(false);
     }
 
 }

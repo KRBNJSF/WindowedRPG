@@ -21,6 +21,8 @@ public class UserInterface {
     public JLabel[] labelBackground = new JLabel[20];
 
     public String noAction = "-";
+    public Border border = BorderFactory.createLineBorder(Color.yellow, 2);
+    public JLabel moneyCount;
 
     public Font fontBold, fontRegular, fontRpg;
     public Font font;
@@ -40,8 +42,9 @@ public class UserInterface {
     public JLabel labelWeapon, labelChestArmor, labelShield, labelQuestItem, labelCoins;
 
     //FIGHT UI
-    public JLabel labelRat, labelWolf, labelKnight, labelTroll; //enemies
+    public JLabel labelRat, labelWolf, labelKnight, labelOgre, labelWizard; //enemies
     public JLabel labelChest, labelChest2, labelFinalChest; //rewards
+    public int money = 0;
 
     public UserInterface(GameHub gameHub) {
         this.gameHub = gameHub;
@@ -117,7 +120,7 @@ public class UserInterface {
         panelHp = new JPanel();
         panelHp.setBounds(120, 5, 320, 50);
         panelHp.setBackground(Color.green);
-        panelHp.setLayout(new GridLayout(1, 5)); //Equipment grid
+        panelHp.setLayout(new GridLayout(1, 5)); //HP grid
         panelHp.setToolTipText("HealthPoints");
         window.add(panelHp);
         //Image img = imgIcon("/icon/heath.png").getImage().getScaledInstance(10, 10, Image.SCALE_DEFAULT); //Image scaling to my preferred size
@@ -131,7 +134,7 @@ public class UserInterface {
         panelInventory = new JPanel();
         panelInventory.setBounds(650, 5, 200, 50);
         panelInventory.setBackground(Color.GREEN); // FIXME: 02.01.2022 Set new color
-        panelInventory.setLayout(new GridLayout(1, 5));
+        panelInventory.setLayout(new GridLayout(1, 6)); //Equipment grid
         panelInventory.setToolTipText("Inventory");
         window.add(panelInventory);
 
@@ -155,6 +158,15 @@ public class UserInterface {
         labelChestArmor.setIcon(jarImg("/icon/chestArmor.png"));
         //labelChestArmor.setToolTipText("Torso");
         panelInventory.add(labelChestArmor);
+
+        labelCoins = new JLabel();
+        labelCoins.setIcon(jarImg("icon/currency.png"));
+        labelCoins.setToolTipText("Currency");
+        panelInventory.add(labelCoins);
+
+        moneyCount = new JLabel();
+        moneyCount.setText(String.valueOf(money));
+        panelInventory.add(moneyCount);
     }
 
     public void gameBackground(int screenNum, String fileName) {
@@ -193,10 +205,9 @@ public class UserInterface {
         popupMenu.add(menuItem[2]);
 
         //Objects
-        Border border = BorderFactory.createLineBorder(Color.yellow, 2);
         JLabel labelObject = new JLabel();
         labelObject.setBounds(x, y, width, height);
-        // FIXME: 02.01.2022 labelObject.setBorder(border);
+        labelObject.setBorder(border);
         //labelObject.setOpaque(true); //Setting visible background of the object
         //labelObject.setBackground(Color.yellow); //Setting opaques color
 
@@ -281,9 +292,13 @@ public class UserInterface {
                     if (gameHub.fight.count == 0) {
                         gameHub.fight.setEnemy(Enemies.RAT);
                     } else if (gameHub.fight.count == 3) {
+                        gameHub.player.playerCurrentStats();
                         if (gameHub.player.knife) {
+                            gameHub.player.playerCurrentStats();
                             gameHub.fight.setEnemy(Enemies.KNIGHT);
                             textMessage.setText("You went back in tavern"); // FIXME: 03.01.2022 Player needs to open the chest otherwise he can't leave the dungeon
+                        } else {
+                            textMessage.setText("Open the chest!");
                         }
                     }
                     gameHub.fight.attack();
@@ -401,6 +416,8 @@ public class UserInterface {
         gameObject(3, 350, 150, 130, 100, ("object/blankTransparent.png"), "Enter", "-", "-", "enterDungeon", "-", "-");
         gameObject(3, 550, 200, 75, 75, ("object/beer.png"), "Drink", "-", "-", "drinkBeer", "-", "-");
         gameObject(3, 230, 270, 75, 75, ("object/beer.png"), "Drink", "-", "-", "drinkLiquor", "-", "-");
+        gameObject(3, 560, 100, 150, 208, ("entity/innkeeper.png"), "Talk", "Menu", "-", "talkBartender", "tavernMenu", "-");
+        gameObject(3, 360, 250, 92, 190, ("entity/dwarf.png"), "Talk", "-", "-", "getQuest", "-", "-");
 
         //#BLACKSMITH
         gameBackground(7, "bg/blacksmith.png");
@@ -419,7 +436,9 @@ public class UserInterface {
         //changeScreenButton(4, 710, 150, 50, 50, "enterPub");
         labelRat = enemyObject(4, 350, 350, 91, 70, ("entity/Rat.png"), "Attack", "Defend", "Run", "fightEnemy", "", "runAway");
         labelWolf = enemyObject(4, 300, 220, 222, 200, ("entity/wolf.png"), "Attack", "Defend", "Run", "fightEnemy2", "", "runAway");
-        labelKnight = enemyObject(4, 320, 56, 200, 388, ("entity/warrior.png"), "Attack", "Defend", "Run", "fightEnemy3", "", "runAway");
+        labelKnight = enemyObject(4, 320, 56, 200, 388, ("entity/warrior.png"), "Attack", "Defend", "Run", "fightEnemy2", "", "runAway");
+        labelOgre = enemyObject(4, 320, 56, 200, 388, ("entity/ogre.png"), "Attack", "Defend", "Run", "fightEnemy2", "", "runAway");
+        labelWizard = enemyObject(4, 320, 100, 120, 300, ("entity/wizard.png"), "Attack", "Defend", "Run", "fightEnemy2", "-", "runAway");
         labelChest = enemyObject(4, 350, 330, 150, 180, ("object/Chest.png"), "Open", "-", "-", "openChest", "-", "-");
 
         //MAP

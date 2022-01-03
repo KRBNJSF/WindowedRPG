@@ -31,6 +31,7 @@ public class ActionHandler implements ActionListener {
             case "searchWell" -> hub.event.well();
             case "drinkBeer" -> hub.event.beer();
             case "drinkLiquor" -> hub.event.liquor();
+            case "getQuest" -> hub.event.quests();
             //FIGHT SCENE
 
             case "runAway" -> {
@@ -45,7 +46,7 @@ public class ActionHandler implements ActionListener {
                 hub.fight.attack();
             }
             case "fightEnemy4" -> {
-                hub.fight.setEnemy(Enemies.MIRROR);
+                hub.fight.setEnemy(Enemies.MIRROR); // FIXME: 03.01.2022 Delete
                 hub.fight.attack();
             }
             //Location changes

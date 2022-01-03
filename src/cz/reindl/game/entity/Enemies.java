@@ -4,11 +4,12 @@ import cz.reindl.game.GameHub;
 
 public enum Enemies {
 
-    KNIGHT("Knight", 5, 3, 0, false),
     RAT("Rat", 5, 3, 0, true),
     WOLF("Wolf", 5, 3, 0, false),
-    MIRROR("You", 5, 3, 0, false),
-    TROLL("Troll", 5, 3, 0, false);
+    KNIGHT("Knight", 5, 3, 0, false),
+    OGRE("Ogre", 5, 3, 0, false),
+    WIZARD("Wizard", 5, 3, 0, false),
+    MIRROR("You", 5, 3, 0, false);
 
     public String entityName;
     public int entityHp;

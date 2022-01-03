@@ -1,11 +1,11 @@
 package cz.reindl.game.event;
 
 import cz.reindl.game.GameHub;
-import cz.reindl.game.entity.Enemies;
 
 public class Event {
 
     GameHub hub;
+    private int count = 0;
 
     public Event(GameHub gameHub) {
         this.hub = gameHub;
@@ -112,11 +112,30 @@ public class Event {
     public void chest() {
         if (!hub.player.knife) {
             hub.ui.textMessage.setText("You opened the chest and found a knife!\n (max dmg + 3)");
-            hub.ui.labelWeapon.setIcon(hub.ui.imgIcon("icon/knife.png"));
+            hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/knife.png"));
             hub.player.knife = true;
             hub.player.playerCurrentStats();
         } else {
             hub.ui.textMessage.setText("It's empty\n");
+        }
+    }
+
+    public void quests() {
+        switch (count) {
+            case 0 -> {
+                if (!hub.player.key) {
+                    hub.ui.textMessage.setText("You retrieved a skeleton key! \nYou: ");
+                    hub.ui.consecutiveText("What's the key for?");
+                    hub.ui.labelQuestItem.setIcon(hub.ui.jarImg("icon/skeletonKey.png"));
+                    hub.player.key = true;
+                    hub.player.playerCurrentStats();
+                    count++;
+                    hub.ui.moneyCount.setText(String.valueOf(++hub.ui.money));
+                }
+            }
+            case 1 -> {
+                hub.ui.textMessage.setText("Hmm?");
+            }
         }
     }
 
@@ -160,16 +179,20 @@ public class Event {
     }
 
     public void sceneDungeon() {
-        if (hub.fight.count == 0) {
-            hub.fight.firstEncounter();
+        if (hub.player.key) {
+            if (hub.fight.count == 0) {
+                hub.fight.firstEncounter();
+            }
+            hub.stopMusic(hub.sound.currentMusic);
+            hub.sound.currentMusic = hub.sound.bossTheme;
+            hub.playMusic(hub.sound.currentMusic, true);
+            hub.ui.panelBackground[3].setVisible(false);
+            hub.ui.panelBackground[4].setVisible(true);
+            hub.ui.panelBackground[5].setVisible(false);
+            hub.ui.panelBackground[6].setVisible(false);
+        } else {
+            hub.ui.textMessage.setText("Door is locked with a strange-looking lock. It looks almost like a skull.");
         }
-        hub.stopMusic(hub.sound.currentMusic);
-        hub.sound.currentMusic = hub.sound.bossTheme;
-        hub.playMusic(hub.sound.currentMusic, true);
-        hub.ui.panelBackground[3].setVisible(false);
-        hub.ui.panelBackground[4].setVisible(true);
-        hub.ui.panelBackground[5].setVisible(false);
-        hub.ui.panelBackground[6].setVisible(false);
     }
 
     public void sceneTownSquare2() {
