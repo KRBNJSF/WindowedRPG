@@ -17,6 +17,7 @@
 - <b>Fixed: </b><br>
   Few bugs
 - <b>Needs to be added: </b><br>
+  .jar version<br>
   Game currency<br>
   Quest to retrieve skeleton key that leads to dungeons<br>
   Shop at blacksmiths<br>
