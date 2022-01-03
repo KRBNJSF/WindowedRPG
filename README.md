@@ -27,3 +27,4 @@
 - <b>Needs to be fixed: </b><br>
   After defeating an enemy and retrieving chest you can't leave the dungeon until you loot the chest<br>
   Sound effects and music<br>
+  Sound effects during fight and attacking animation<br>
