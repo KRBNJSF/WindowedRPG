@@ -18,7 +18,7 @@
   Few bugs
 - <b>Needs to be added: </b><br>
   Game currency<br>
-  Quest to retrieve skeleton key that leads to dugeons<br>
+  Quest to retrieve skeleton key that leads to dungeons<br>
   Shop at blacksmiths<br>
   More items<br>
   Shield and armor implemented to fight<br>
