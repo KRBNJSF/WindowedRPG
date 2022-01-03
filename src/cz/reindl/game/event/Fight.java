@@ -37,10 +37,12 @@ public class Fight {
 
             switch (count) {
                 case 1 -> {
+                    hub.fight.setEnemy(Enemies.WOLF);
                     hub.ui.labelRat.setVisible(false);
                     hub.ui.labelWolf.setVisible(true);
                 }
                 case 2 -> {
+                    hub.fight.setEnemy(Enemies.KNIGHT);
                     hub.ui.labelWolf.setVisible(false);
                     hub.ui.labelKnight.setVisible(true);
                 }

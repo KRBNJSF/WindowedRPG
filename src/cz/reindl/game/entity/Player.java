@@ -32,7 +32,7 @@ public class Player {
         coin = false;
         torso = false;
 
-        hub.ui.labelWeapon.setIcon(hub.ui.imgIcon("icon/hand.png"));
+        hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/hand.png"));
 
         playerCurrentStats();
     }
