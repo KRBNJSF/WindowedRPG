@@ -64,4 +64,18 @@ public class Utilities {
         return new ImageIcon(imgPath(imgSrc));
     }
 
+    public void buttonType(int screenNum, int x, int y, int width, int height, String command) {
+        JButton buttonIcon = new JButton();
+        buttonIcon.setBounds(x, y, width, height);
+        buttonIcon.setContentAreaFilled(true);
+        buttonIcon.setFocusPainted(false); //Border around image
+        buttonIcon.setBorderPainted(false); //Border around button
+        buttonIcon.setBackground(Color.gray);
+
+        buttonIcon.addActionListener(hub.actionHandler);
+        buttonIcon.setActionCommand(command);
+
+        hub.ui.panelBackground[screenNum].add(buttonIcon);
+    }
+
 }

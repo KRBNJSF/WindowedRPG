@@ -13,10 +13,9 @@ import java.io.IOException;
 
 public class UserInterface {
 
-
     GameHub gameHub;
     public JFrame window;
-    public JTextArea textMessage;
+    public JTextArea textMessage, textInfo;
     public JPanel[] panelBackground = new JPanel[20];
     public JLabel[] labelBackground = new JLabel[20];
 
@@ -104,15 +103,16 @@ public class UserInterface {
 
         textMessage = new JTextArea();
         textMessage.setText("");
-        textMessage.setBounds(120, 540, 760, 150); //Text position relative to frame
+        textMessage.setBounds(120, 540, 760, 60); //Text position relative to frame
         textMessage.setBackground(Color.BLUE); // FIXME: 02.01.2022 Set new color
         textMessage.setForeground(Color.white);
         textMessage.setEditable(false);
         textMessage.setLineWrap(true);
         textMessage.setWrapStyleWord(true);
-        validateFont();
         textMessage.setFont(setFont(fontRpg, "font/Ancient.ttf"));
         window.add(textMessage);
+
+        textInfo();
     }
 
     public void playerStats() {
@@ -162,11 +162,14 @@ public class UserInterface {
         labelCoins = new JLabel();
         labelCoins.setIcon(jarImg("icon/currency.png"));
         labelCoins.setToolTipText("Currency");
+        labelCoins.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 15));
         panelInventory.add(labelCoins);
 
         moneyCount = new JLabel();
         moneyCount.setText(String.valueOf(0));
-        panelInventory.add(moneyCount);
+        labelCoins.add(moneyCount);
+
+        //JOptionPane.showMessageDialog(null, labelCoins); //Inspection window
     }
 
     public void gameBackground(int screenNum, String fileName) {
@@ -421,7 +424,7 @@ public class UserInterface {
         return labelObject;
     }
 
-    public void changeScreenButton(int screenNum, int x, int y, int width, int height, String command) { //Change screen button
+    public void changeScreenButton(int screenNum, int x, int y, int width, int height, String command, String text) { //Change screen button
         final int[] i = {0};
         final int[] j = {0};
         JButton arrowButton = new JButton();
@@ -430,6 +433,7 @@ public class UserInterface {
         arrowButton.setContentAreaFilled(true);
         arrowButton.setFocusPainted(false);
         arrowButton.setBorderPainted(false);
+        arrowButton.setToolTipText(text);
         arrowButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         if (x > 200) {
             arrowButton.setIcon(jarImg("icon/arrowRight.png"));
@@ -444,27 +448,29 @@ public class UserInterface {
         panelBackground[screenNum].add(arrowButton);
     }
 
-    public void teleportCompass(int screenNum, int x, int y, int width, int height, String command, String file) {
-        JButton teleportButton = new JButton();
-        teleportButton.setBounds(x, y, width, height);
-        teleportButton.setIcon(jarImg(file));
-        teleportButton.setContentAreaFilled(true);
-        teleportButton.setFocusPainted(false); //Border around image
-        teleportButton.setBorderPainted(false); //Border around button
-        teleportButton.setBackground(Color.gray);
-        teleportButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    public void buttonIcon(int screenNum, int x, int y, int width, int height, String command, String file, String text) {
+        JButton buttonIcon = new JButton();
+        buttonIcon.setBounds(x, y, width, height);
+        buttonIcon.setIcon(jarImg(file));
+        buttonIcon.setContentAreaFilled(true);
+        buttonIcon.setFocusPainted(false); //Border around image
+        buttonIcon.setBorderPainted(false); //Border around button
+        buttonIcon.setBackground(Color.gray);
+        buttonIcon.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        buttonIcon.setToolTipText(text);
 
-        teleportButton.addActionListener(gameHub.actionHandler);
-        teleportButton.setActionCommand(command);
+        buttonIcon.addActionListener(gameHub.actionHandler);
+        buttonIcon.setActionCommand(command);
 
-        panelBackground[screenNum].add(teleportButton);
+        panelBackground[screenNum].add(buttonIcon);
     }
 
     public void gameScreen() {
         //#SPAWN
         gameBackground(1, "bg/forest.png");
-        changeScreenButton(1, 0, 150, 50, 50, "mainScreen2");
-        teleportCompass(1, 0, 0, 35, 35, "teleport", "icon/compass.png");
+        changeScreenButton(1, 0, 150, 50, 50, "mainScreen2", "Town");
+        buttonIcon(1, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map");
+        buttonType(1, 757, 0, 3, 3, "am");
         gameObject(1, 0, 0, 0, 0, "object/blankTransparent.png", "", "", "", "", "", "");
 
 
@@ -472,8 +478,8 @@ public class UserInterface {
 
         //#TOWN 1 SIDE
         gameBackground(2, "bg/townSquare.png");
-        teleportCompass(2, 0, 0, 35, 35, "teleport", "icon/compass.png");
-        changeScreenButton(2, 710, 150, 50, 50, "mainScreen1");
+        buttonIcon(2, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map");
+        changeScreenButton(2, 710, 150, 50, 50, "mainScreen1", "Forest");
         gameObject(2, 620, 320, 98, 120, ("entity/Knight2.png"), "Talk", "-", "-", "talkKnight", "-", "-");
         gameObject(2, 100, 290, 40, 70, ("object/blankTransparent.png"), "Enter", "Knock", "-", "enterPub", "knockPub", "-");
         gameObject(2, 480, 230, 100, 170, ("object/blankTransparent.png"), "Search", "-", "-", "searchWell", "-", "-");
@@ -481,24 +487,24 @@ public class UserInterface {
 
         //#PUB INSIDE
         gameBackground(3, "bg/tavernInside.png");
-        teleportCompass(3, 0, 0, 35, 35, "teleport", "icon/compass.png");
-        changeScreenButton(3, 710, 150, 50, 50, "mainScreen2");
+        buttonIcon(3, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map");
+        changeScreenButton(3, 710, 150, 50, 50, "mainScreen2", "Town");
         gameObject(3, 350, 150, 130, 100, ("object/blankTransparent.png"), "Enter", "-", "-", "enterDungeon", "-", "-");
         labelBeer = shopObject(3, 150, 200, 75, 75, ("object/beer.png"), "Drink", "-", "-", "drinkBeer", "-", "-");
         labelLiquor = shopObject(3, 230, 270, 75, 75, ("object/beer.png"), "Drink", "-", "-", "drinkLiquor", "-", "-");
-        gameObject(3, 560, 100, 150, 208, ("entity/innkeeper.png"), "Talk", "Menu", "-", "talkBartender", "tavernMenu", "-");
-        gameObject(3, 360, 250, 92, 190, ("entity/dwarf.png"), "Talk", "-", "-", "getQuest", "-", "-");
+        gameObject(3, 560, 100, 150, 208, ("entity/innkeeper.png"), "Menu", "Talk", "-", "tavernMenu", "talkBartender", "-");
+        gameObject(3, 360, 250, 92, 190, ("entity/dwarf.png"), "Talk", "-", "Arena", "getQuest", "-", "-");
 
         //#BLACKSMITH
         gameBackground(7, "bg/blacksmith.png");
-        teleportCompass(7, 0, 0, 35, 35, "teleport", "icon/compass.png");
-        changeScreenButton(7, 710, 150, 50, 50, "goTown2");
+        buttonIcon(7, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map");
+        changeScreenButton(7, 710, 150, 50, 50, "goTown2", "Forge");
         gameObject(7, 0, 0, 0, 0, ("object/blankTransparent.png"), "", "", "", "", "", "");
 
         //#TOWN 2 SIDE
         gameBackground(5, "bg/townSquare2.png");
-        teleportCompass(5, 0, 0, 35, 35, "teleport", "icon/compass.png");
-        changeScreenButton(5, 710, 150, 50, 50, "mainScreen2");
+        buttonIcon(5, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map");
+        changeScreenButton(5, 710, 150, 50, 50, "mainScreen2", "Town");
         gameObject(5, 430, 230, 320, 200, ("object/blankTransparent.png"), "Enter", "-", "-", "enterForge", "-", "-");
 
         //#DUNGEON
@@ -511,13 +517,21 @@ public class UserInterface {
         labelWizard = enemyObject(4, 320, 100, 120, 300, ("entity/wizard.png"), "Attack", "Defend", "Run", "fightEnemy2", "-", "runAway");
         labelChest = enemyObject(4, 350, 330, 150, 180, ("object/Chest.png"), "Open", "-", "-", "openChest", "-", "-");
 
+        //TAVERN SHOP
+        gameBackground(8, "bg/map.png");
+        changeScreenButton(8, 710, 150, 50, 50, "enterPub", "Pub");
+        buttonIcon(8, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map");
+        buttonIcon(8, 365, 165, 50, 50, "buyBeer", "icon/beer.png", "Price: 1 coin : Adds 1 HP when drank");
+        buttonIcon(8, 365, 220, 50, 50, "buyLiquor", "icon/liquor.png", "Price: 10 coins : Adds 10 HP when drank");
+        gameObject(8, 0, 0, 0, 0, ("object/blankTransparent.png"), "", "", "", "", "", "");
+
         //MAP
         gameBackground(6, "bg/map.png");
-        teleportCompass(6, 0, 0, 35, 35, "currentScreen", "icon/compass.png");
-        teleportCompass(6, 365, 110, 50, 50, "mainScreen1", "icon/forest.png");
-        teleportCompass(6, 365, 165, 50, 50, "mainScreen2", "icon/townEntrance.png");
-        teleportCompass(6, 365, 220, 50, 50, "enterPub", "icon/beer.png");
-        teleportCompass(6, 365, 275, 50, 50, "goTown2", "icon/forge.png");
+        buttonIcon(6, 0, 0, 35, 35, "currentScreen", "icon/compass.png", "Teleportation map");
+        buttonIcon(6, 365, 110, 50, 50, "mainScreen1", "icon/forest.png", "Forest");
+        buttonIcon(6, 365, 165, 50, 50, "mainScreen2", "icon/townEntrance.png", "Town");
+        buttonIcon(6, 365, 220, 50, 50, "enterPub", "icon/beer.png", "Tavern");
+        buttonIcon(6, 365, 275, 50, 50, "goTown2", "icon/forge.png", "Forge");
         gameObject(6, 0, 0, 0, 0, ("object/blankTransparent.png"), "", "", "", "", "", "");
 
     }
@@ -525,6 +539,32 @@ public class UserInterface {
 
     //UTILITIES
 
+    public void buttonType(int screenNum, int x, int y, int width, int height, String command) {
+        JButton buttonIcon = new JButton();
+        buttonIcon.setBounds(x, y, width, height);
+        buttonIcon.setContentAreaFilled(true);
+        buttonIcon.setFocusPainted(false); //Border around image
+        buttonIcon.setBorderPainted(false); //Border around button
+        buttonIcon.setBackground(Color.gray);
+
+        buttonIcon.addActionListener(gameHub.actionHandler);
+        buttonIcon.setActionCommand(command);
+
+        panelBackground[screenNum].add(buttonIcon);
+    }
+
+    public void textInfo() {
+        textInfo = new JTextArea();
+        textInfo.setText("");
+        textInfo.setBounds(120, 600, 760, 60); //Text position relative to frame
+        textInfo.setBackground(Color.RED); // FIXME: 02.01.2022 Set new color
+        textInfo.setForeground(Color.white);
+        textInfo.setEditable(false);
+        textInfo.setLineWrap(true);
+        textInfo.setWrapStyleWord(true);
+        textInfo.setFont(setFont(fontRegular, "font/Regular.ttf"));
+        window.add(textInfo);
+    }
 
     public void validateFont() { //Validating custom font
         try {
@@ -541,21 +581,25 @@ public class UserInterface {
     public int i;
 
     public void consecutiveText(String text) {
-        timer = new Timer(100, e -> {
+        timer = new Timer(30, e -> {
             char[] characters = text.toCharArray();
             int arrayNumber = characters.length;
 
             String addedCharacter = String.valueOf(characters[i]);
-            textMessage.append(addedCharacter);
+            if (characters.length <= characters[i]) { // FIXME: 05.01.2022 IF characters >= characters[i] -> timer.stop(), to working state
+                textInfo.append(addedCharacter);
+                i++;
+            } else {
+                timer.stop();
+            }
 
-            i++;
-
-            if (i == arrayNumber) {
+            if (i >= arrayNumber) {
                 i = 0;
                 timer.stop();
             }
         });
         timer.start();
+        textInfo.setText("");
     }
 
     public String imgPath(String imgSrc) {

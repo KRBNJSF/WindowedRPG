@@ -18,7 +18,7 @@ public class GameHub {
     public Event event = new Event(this);
     public Sound sound = new Sound(this);
     public Fight fight = new Fight(this);
-    public Utilities utilities = new Utilities(this);
+    public Utilities utils = new Utilities(this);
 
     public GameHub() {
         sound.currentMusic = sound.townMusic;

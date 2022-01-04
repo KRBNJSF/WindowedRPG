@@ -47,6 +47,7 @@ public class Player {
         liquor = false;
 
         hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/hand.png"));
+        hub.ui.labelQuestItem.setIcon(hub.ui.jarImg("icon/coin.png"));
         hub.ui.moneyCount.setText(String.valueOf(playerCoins));
         hub.event.questCount = 0;
 

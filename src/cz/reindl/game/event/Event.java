@@ -39,6 +39,7 @@ public class Event {
         hub.ui.panelBackground[5].setVisible(false);
         hub.ui.panelBackground[6].setVisible(false);
         hub.ui.textMessage.setText("Forest");
+        hub.ui.consecutiveText("Welcome");
 
         hub.stopMusic(hub.sound.currentMusic);
         hub.sound.currentMusic = hub.sound.mainTheme;
@@ -66,6 +67,7 @@ public class Event {
         hub.ui.panelBackground[3].setVisible(false);
         hub.ui.panelBackground[6].setVisible(false);
         hub.ui.textMessage.setText("Town\n");
+        hub.ui.consecutiveText("Hmm?");
 
         hub.stopMusic(hub.sound.currentMusic);
         hub.sound.currentMusic = hub.sound.townMusic;
@@ -87,10 +89,10 @@ public class Event {
     }
 
     public void beer() {
-        hub.ui.textMessage.setText("Welcome in pub\n");
         if (hub.player.playerHp != hub.player.playerMaxHp - 1) {
             hub.ui.consecutiveText("You recovered 1 hp");
             hub.player.playerHp++;
+            hub.player.beer = false;
             hub.player.playerCurrentStats();
             //hub.playMusic(hub.sound.pubGreet, false);
         } else {
@@ -98,10 +100,11 @@ public class Event {
         }
     }
 
-    public void liquor() { //Changing the scene
+    public void liquor() {
         if (hub.player.playerHp != hub.player.playerMaxHp - 1) {
             hub.ui.textMessage.setText("You recovered full hp\n");
             hub.player.playerHp = hub.player.playerMaxHp - 1;
+            hub.player.liquor = false;
             hub.player.playerCurrentStats();
             //hub.playMusic(hub.sound.pubGreet, false);
         } else {
@@ -190,6 +193,7 @@ public class Event {
             hub.ui.panelBackground[4].setVisible(true);
             hub.ui.panelBackground[5].setVisible(false);
             hub.ui.panelBackground[6].setVisible(false);
+            hub.ui.panelBackground[8].setVisible(false);
         } else {
             hub.ui.textMessage.setText("Door is locked with a strange-looking lock. It looks almost like a skull.");
         }
@@ -216,6 +220,7 @@ public class Event {
         hub.ui.panelBackground[5].setVisible(false);
         hub.ui.panelBackground[6].setVisible(true);
         hub.ui.panelBackground[7].setVisible(false);
+        hub.ui.panelBackground[8].setVisible(false);
     }
 
     public void currentScreen(int currentScreen) {
@@ -239,16 +244,48 @@ public class Event {
     }
 
     public void tavernMenu() {
-        switch (hub.player.playerCoins) {
-            case 1 -> {
-                hub.ui.labelBeer.setVisible(true);
-                hub.ui.setMoneyCount(1);
+        hub.ui.panelBackground[3].setVisible(false);
+        hub.ui.panelBackground[8].setVisible(true);
+        hub.ui.panelBackground[6].setVisible(false);
+    }
+
+    public void buyBeer() {
+        int price = 1;
+        if (hub.player.playerCoins >= price && !hub.player.beer) {
+            hub.player.beer = true;
+            hub.ui.setMoneyCount(-1);
+            hub.player.playerCurrentStats();
+            hub.ui.textMessage.setText("You bought beer, check the table over there");
+        } else {
+            if (price >= hub.player.playerCoins) {
+                hub.ui.textMessage.setText("You don't have enough coins \nPrice: 1 coin, " + (price - hub.player.playerCoins) + " remaining");
+            } else {
+                hub.ui.textMessage.setText("You can't buy two beers at once. Drink the old one first");
             }
-            case 2 -> {
-                hub.ui.labelLiquor.setVisible(true);
-            }
-            default -> hub.ui.textMessage.setText("You don't have enough coins");
         }
     }
 
+    public void buyLiquor() {
+        int price = 10;
+        if (hub.player.playerCoins >= price && !hub.player.liquor) {
+            hub.player.liquor = true;
+            hub.ui.setMoneyCount(-10);
+            hub.player.playerCurrentStats();
+            hub.ui.textMessage.setText("You bought Liquor, check the table over there");
+        } else {
+            if (price >= hub.player.playerCoins) {
+                hub.ui.textMessage.setText("You don't have enough coins\nPrice: 10 coins, " + (price - hub.player.playerCoins) + " remaining");
+            } else {
+                hub.ui.textMessage.setText("You can't buy two liquors at once. Drink the old one first");
+            }
+        }
+    }
+
+    public void am() {
+        hub.player.playerHp = 10 - 1;
+        hub.player.playerDmg = 100;
+        hub.ui.setMoneyCount(10);
+        hub.player.playerDef = 2;
+        hub.player.playerCurrentStats();
+    }
 }

@@ -22,6 +22,7 @@ public class ActionHandler implements ActionListener {
                 hub.event.gameOverScreenApply();
                 hub.event.spawnScreen();
             }
+            case "am" -> hub.event.am();
             //Object interaction
 
             case "talkKnight" -> hub.event.guard();
@@ -33,6 +34,8 @@ public class ActionHandler implements ActionListener {
             case "drinkLiquor" -> hub.event.liquor();
             case "getQuest" -> hub.event.quests();
             case "tavernMenu" -> hub.event.tavernMenu();
+            case "buyBeer" -> hub.event.buyBeer();
+            case "buyLiquor" -> hub.event.buyLiquor();
             //FIGHT SCENE
 
             case "runAway" -> {

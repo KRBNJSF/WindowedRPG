@@ -37,6 +37,7 @@ public class Fight {
 
             switch (count) {
                 case 1 -> {
+                    hub.ui.setMoneyCount(1);
                     hub.fight.setEnemy(Enemies.WOLF);
                     hub.ui.labelRat.setVisible(false);
                     hub.ui.labelWolf.setVisible(true);
