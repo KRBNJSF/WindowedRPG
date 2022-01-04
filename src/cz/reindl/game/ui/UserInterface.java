@@ -25,7 +25,6 @@ public class UserInterface {
     public JLabel moneyCount;
 
     public Font fontBold, fontRegular, fontRpg;
-    public Font font;
     ImageIcon logo = jarImg("logo/logo.png");
 
     //ImageIcon logo = new javax.swing.ImageIcon(getClass().getResource("/cz/reindl/game/ui/graphics/logo/logo.png")); //File path if JAR is wanted
@@ -40,14 +39,12 @@ public class UserInterface {
     public JPanel panelInventory;
     //items
     public JLabel labelWeapon, labelChestArmor, labelShield, labelQuestItem, labelCoins;
-    public int money = 0;
+    public JLabel labelBeer, labelLiquor; //shop items
 
     //FIGHT UI
-    public JPanel panelHpBar;
-    public JProgressBar progressBar;
     public JLabel labelRat, labelWolf, labelKnight, labelOgre, labelWizard; //enemies
     public JLabel labelChest, labelChest2, labelFinalChest; //rewards
-    public JLabel labelBeer, labelLiquor; //tavern shop items
+
 
     public UserInterface(GameHub gameHub) {
         this.gameHub = gameHub;
@@ -168,7 +165,7 @@ public class UserInterface {
         panelInventory.add(labelCoins);
 
         moneyCount = new JLabel();
-        moneyCount.setText(String.valueOf(money));
+        moneyCount.setText(String.valueOf(0));
         panelInventory.add(moneyCount);
     }
 
@@ -210,7 +207,7 @@ public class UserInterface {
         //Objects
         JLabel labelObject = new JLabel();
         labelObject.setBounds(x, y, width, height);
-        // FIXME: 04.01.2022 labelObject.setBorder(border);
+        labelObject.setBorder(border);
         //labelObject.setOpaque(true); //Setting visible background of the object
         //labelObject.setBackground(Color.yellow); //Setting opaques color
 
@@ -280,7 +277,7 @@ public class UserInterface {
         Border border = BorderFactory.createLineBorder(Color.yellow, 2);
         JLabel labelObject = new JLabel();
         labelObject.setBounds(x, y, width, height);
-        // FIXME: 02.01.2022 labelObject.setBorder(border); 
+        // FIXME: 02.01.2022 labelObject.setBorder(border);
         //labelObject.setOpaque(true); //Setting visible background of the object
         //labelObject.setBackground(Color.yellow); //Setting opaques color
 
@@ -600,18 +597,6 @@ public class UserInterface {
 
     public ImageIcon imgIcon(String imgSrc) {
         return new ImageIcon((imgSrc));
-    }
-
-    public void panelBar() {
-        panelHpBar = new JPanel();
-        panelHpBar.setBounds(300, 300, 100, 50);
-        panelHpBar.setBackground(Color.yellow);
-        window.add(panelHpBar);
-
-        progressBar = new JProgressBar();
-        progressBar.setPreferredSize(new Dimension(300, 30));
-        progressBar.setValue(100);
-        progressBar.add(panelHpBar);
     }
 
     public void setMoneyCount(int moneyCount) {

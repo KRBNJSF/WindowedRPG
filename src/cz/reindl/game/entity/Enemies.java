@@ -16,7 +16,6 @@ public enum Enemies {
     public int entityDmg;
     public int entityDefense;
     public boolean visibility;
-    public GameHub hub;
 
     Enemies(boolean visibility) {
         this.visibility = visibility;

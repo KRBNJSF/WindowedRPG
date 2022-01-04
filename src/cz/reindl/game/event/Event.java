@@ -5,7 +5,7 @@ import cz.reindl.game.GameHub;
 public class Event {
 
     GameHub hub;
-    private int count = 0;
+    public int questCount = 0;
 
     public Event(GameHub gameHub) {
         this.hub = gameHub;
@@ -121,7 +121,7 @@ public class Event {
     }
 
     public void quests() {
-        switch (count) {
+        switch (questCount) {
             case 0 -> {
                 if (!hub.player.key) {
                     hub.ui.textMessage.setText("You retrieved a skeleton key! \nYou: ");
@@ -129,8 +129,8 @@ public class Event {
                     hub.ui.labelQuestItem.setIcon(hub.ui.jarImg("icon/skeletonKey.png"));
                     hub.player.key = true;
                     hub.player.playerCurrentStats();
-                    count++;
-                    hub.ui.moneyCount.setText(String.valueOf(++hub.player.playerCoins));
+                    questCount++;
+                    hub.ui.setMoneyCount(1);
                 }
             }
             case 1 -> {
