@@ -92,7 +92,7 @@ public class UserInterface {
 
     public void mainField() {
         window = new JFrame("Windowed RPG");
-        window.setSize(1024, 768);
+        window.setSize(1024, 800); //1024, 768
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.getContentPane().setBackground(Color.BLACK);
         window.setLocationRelativeTo(null); //Center window
