@@ -32,6 +32,7 @@ public class ActionHandler implements ActionListener {
             case "drinkBeer" -> hub.event.beer();
             case "drinkLiquor" -> hub.event.liquor();
             case "getQuest" -> hub.event.quests();
+            case "tavernMenu" -> hub.event.tavernMenu();
             //FIGHT SCENE
 
             case "runAway" -> {

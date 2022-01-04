@@ -40,11 +40,14 @@ public class UserInterface {
     public JPanel panelInventory;
     //items
     public JLabel labelWeapon, labelChestArmor, labelShield, labelQuestItem, labelCoins;
+    public int money = 0;
 
     //FIGHT UI
+    public JPanel panelHpBar;
+    public JProgressBar progressBar;
     public JLabel labelRat, labelWolf, labelKnight, labelOgre, labelWizard; //enemies
     public JLabel labelChest, labelChest2, labelFinalChest; //rewards
-    public int money = 0;
+    public JLabel labelBeer, labelLiquor; //tavern shop items
 
     public UserInterface(GameHub gameHub) {
         this.gameHub = gameHub;
@@ -207,7 +210,7 @@ public class UserInterface {
         //Objects
         JLabel labelObject = new JLabel();
         labelObject.setBounds(x, y, width, height);
-        labelObject.setBorder(border);
+        // FIXME: 04.01.2022 labelObject.setBorder(border);
         //labelObject.setOpaque(true); //Setting visible background of the object
         //labelObject.setBackground(Color.yellow); //Setting opaques color
 
@@ -351,6 +354,76 @@ public class UserInterface {
         return labelObject;
     }
 
+    public JLabel shopObject(int screenNum, int x, int y, int width, int height, String fileName, String menuItem1, String menuItem2, String menuItem3, String menuItem1Command, String menuItem2Command, String menuItem3Command) {
+        //Menu
+        JPopupMenu popupMenu = new JPopupMenu();
+        JMenuItem[] menuItem = new JMenuItem[3]; //Rows in the popup menu
+        menuItem[0] = new JMenuItem(menuItem1);
+        menuItem[0].addActionListener(gameHub.actionHandler);
+        menuItem[0].setActionCommand(menuItem1Command);
+
+        menuItem[1] = new JMenuItem(menuItem2);
+        menuItem[1].addActionListener(gameHub.actionHandler);
+        menuItem[1].setActionCommand(menuItem2Command);
+
+        menuItem[2] = new JMenuItem(menuItem3);
+        menuItem[2].addActionListener(gameHub.actionHandler);
+        menuItem[2].setActionCommand(menuItem3Command);
+
+        popupMenu.add(menuItem[0]);
+        popupMenu.add(menuItem[1]);
+        popupMenu.add(menuItem[2]);
+
+        //Objects
+        JLabel labelObject = new JLabel();
+        labelObject.setBounds(x, y, width, height);
+        // FIXME: 04.01.2022 labelObject.setBorder(border);
+        //labelObject.setOpaque(true); //Setting visible background of the object
+        //labelObject.setBackground(Color.yellow); //Setting opaques color
+
+        ImageIcon imgObject = jarImg(fileName);
+        labelObject.setIcon(imgObject);
+
+        //Game objects actions
+        labelObject.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    labelObject.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                    Thread.sleep(100);
+                    labelObject.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    popupMenu.show(labelObject, e.getX(), e.getY()); //Cursor coordinates
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                labelObject.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+
+        panelBackground[screenNum].add(labelObject); //Adding Label to Panel
+        panelBackground[screenNum].add(labelBackground[screenNum]); //First comes the object image then background image otherwise the background will overlap the object
+        //changeScreen(1, 0, 150, 50, 50, "mainScreen2");
+        return labelObject;
+    }
+
     public void changeScreenButton(int screenNum, int x, int y, int width, int height, String command) { //Change screen button
         final int[] i = {0};
         final int[] j = {0};
@@ -414,8 +487,8 @@ public class UserInterface {
         teleportCompass(3, 0, 0, 35, 35, "teleport", "icon/compass.png");
         changeScreenButton(3, 710, 150, 50, 50, "mainScreen2");
         gameObject(3, 350, 150, 130, 100, ("object/blankTransparent.png"), "Enter", "-", "-", "enterDungeon", "-", "-");
-        gameObject(3, 550, 200, 75, 75, ("object/beer.png"), "Drink", "-", "-", "drinkBeer", "-", "-");
-        gameObject(3, 230, 270, 75, 75, ("object/beer.png"), "Drink", "-", "-", "drinkLiquor", "-", "-");
+        labelBeer = shopObject(3, 150, 200, 75, 75, ("object/beer.png"), "Drink", "-", "-", "drinkBeer", "-", "-");
+        labelLiquor = shopObject(3, 230, 270, 75, 75, ("object/beer.png"), "Drink", "-", "-", "drinkLiquor", "-", "-");
         gameObject(3, 560, 100, 150, 208, ("entity/innkeeper.png"), "Talk", "Menu", "-", "talkBartender", "tavernMenu", "-");
         gameObject(3, 360, 250, 92, 190, ("entity/dwarf.png"), "Talk", "-", "-", "getQuest", "-", "-");
 
@@ -527,6 +600,23 @@ public class UserInterface {
 
     public ImageIcon imgIcon(String imgSrc) {
         return new ImageIcon((imgSrc));
+    }
+
+    public void panelBar() {
+        panelHpBar = new JPanel();
+        panelHpBar.setBounds(300, 300, 100, 50);
+        panelHpBar.setBackground(Color.yellow);
+        window.add(panelHpBar);
+
+        progressBar = new JProgressBar();
+        progressBar.setPreferredSize(new Dimension(300, 30));
+        progressBar.setValue(100);
+        progressBar.add(panelHpBar);
+    }
+
+    public void setMoneyCount(int moneyCount) {
+        gameHub.player.playerCoins += moneyCount;
+        gameHub.ui.moneyCount.setText(String.valueOf(gameHub.player.playerCoins));
     }
 
 }

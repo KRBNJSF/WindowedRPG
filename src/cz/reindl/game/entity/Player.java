@@ -22,6 +22,9 @@ public class Player {
     public boolean coin;
     public boolean key;
 
+    public boolean beer;
+    public boolean liquor;
+
 
     public Player(GameHub gameHub) {
         this.hub = gameHub;
@@ -39,9 +42,12 @@ public class Player {
         torso = false;
         coin = false;
         key = false;
+        beer = false;
+        liquor = false;
 
         hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/hand.png"));
         hub.ui.labelQuestItem.setIcon(hub.ui.jarImg("icon/coin.png"));
+        hub.ui.moneyCount.setText(String.valueOf(0));
 
         playerCurrentStats();
     }
@@ -66,6 +72,8 @@ public class Player {
         hub.ui.labelShield.setVisible(shield);
         hub.ui.labelQuestItem.setVisible(coin);
         hub.ui.labelChestArmor.setVisible(torso);
+        hub.ui.labelBeer.setVisible(beer);
+        hub.ui.labelLiquor.setVisible(liquor);
 
         if (knife) {
             playerDmg += 2;

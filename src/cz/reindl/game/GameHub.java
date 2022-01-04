@@ -24,9 +24,10 @@ public class GameHub {
         sound.currentMusic = sound.townMusic;
         playMusic(sound.currentMusic, true);
 
-        player.playerDefaultStats();
         //event.loadingScreen();
+        //ui.panelBar();
         event.spawnScreen(); //First executed scene method
+        player.playerDefaultStats();
     }
 
     public void playMusic(File file, Boolean loop) {

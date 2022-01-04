@@ -130,7 +130,7 @@ public class Event {
                     hub.player.key = true;
                     hub.player.playerCurrentStats();
                     count++;
-                    hub.ui.moneyCount.setText(String.valueOf(++hub.ui.money));
+                    hub.ui.moneyCount.setText(String.valueOf(++hub.player.playerCoins));
                 }
             }
             case 1 -> {
@@ -237,4 +237,18 @@ public class Event {
         hub.ui.panelBackground[6].setVisible(false);
         hub.ui.panelBackground[7].setVisible(true);
     }
+
+    public void tavernMenu() {
+        switch (hub.player.playerCoins) {
+            case 1 -> {
+                hub.ui.labelBeer.setVisible(true);
+                hub.ui.setMoneyCount(1);
+            }
+            case 2 -> {
+                hub.ui.labelLiquor.setVisible(true);
+            }
+            default -> hub.ui.textMessage.setText("You don't have enough coins");
+        }
+    }
+
 }
