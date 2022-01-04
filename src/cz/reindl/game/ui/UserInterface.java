@@ -144,22 +144,22 @@ public class UserInterface {
         //ITEMS
         labelWeapon = new JLabel();
         labelWeapon.setIcon(jarImg("/icon/hand.png"));
-        //labelKnife.setToolTipText("Weapon");
+        labelWeapon.setToolTipText("Weapon");
         panelInventory.add(labelWeapon);
 
         labelQuestItem = new JLabel();
         labelQuestItem.setIcon(jarImg("/icon/coin.png"));
-        //labelCoin.setToolTipText("Quest item");
+        labelQuestItem.setToolTipText("Quest item");
         panelInventory.add(labelQuestItem);
 
         labelShield = new JLabel();
         labelShield.setIcon(jarImg("/icon/shield.png"));
-        //labelShield.setToolTipText("Shield");
+        labelShield.setToolTipText("Shield");
         panelInventory.add(labelShield);
 
         labelChestArmor = new JLabel();
         labelChestArmor.setIcon(jarImg("/icon/chestArmor.png"));
-        //labelChestArmor.setToolTipText("Torso");
+        labelChestArmor.setToolTipText("Torso");
         panelInventory.add(labelChestArmor);
 
         labelCoins = new JLabel();
