@@ -63,6 +63,7 @@ public class Event {
 
     public void sceneTownSquare() {
         hub.ui.panelBackground[1].setVisible(false);
+        //hub.ui.setLoadingScreen(1);
         hub.ui.panelBackground[2].setVisible(true);
         hub.ui.panelBackground[3].setVisible(false);
         hub.ui.panelBackground[6].setVisible(false);

@@ -28,10 +28,13 @@ public class Fight {
         hub.ui.textMessage.setText("");
         enemies.setEntityHp(enemies.getEntityHp() - playerDmg);
         hub.ui.textMessage.append("You hit " + enemies.getEntityName() + " and gave him " + playerDmg + " dmg \n" + enemies.getEntityName() + ": " + enemies.getEntityHp() + " HP left \n");
+        hub.barCheck.bar.setString(String.valueOf(enemies.getEntityHp()));
+        hub.barCheck.bar.setValue(enemies.getEntityHp());
 
         if (enemies.getEntityHp() <= 0) {
             hub.player.playerCurrentStats();
             count++;
+            hub.barCheck.button.setVisible(false);
             winScreen();
             hub.ui.textMessage.setText("You won");
 
@@ -43,27 +46,32 @@ public class Fight {
                     hub.ui.labelWolf.setVisible(true);
                 }
                 case 2 -> {
+                    hub.ui.setMoneyCount(1);
                     hub.fight.setEnemy(Enemies.KNIGHT);
                     hub.ui.labelWolf.setVisible(false);
                     hub.ui.labelKnight.setVisible(true);
                 }
                 case 3 -> {
+                    hub.ui.setMoneyCount(1);
                     hub.ui.textMessage.setText("You won chest! \n" +
                             "Look inside to find out what you got");
                     hub.ui.labelKnight.setVisible(false);
                     hub.ui.labelChest.setVisible(true);
                 }
                 case 4 -> {
+                    hub.ui.setMoneyCount(1);
                     hub.fight.setEnemy(Enemies.OGRE);
                     hub.ui.labelChest.setVisible(false);
                     hub.ui.labelOgre.setVisible(true);
                 }
                 case 5 -> {
+                    hub.ui.setMoneyCount(1);
                     hub.fight.setEnemy(Enemies.WIZARD);
                     hub.ui.labelOgre.setVisible(false);
                     hub.ui.labelWizard.setVisible(true);
                 }
                 case 6 -> {
+                    hub.ui.setMoneyCount(1);
                     hub.ui.labelWizard.setVisible(false);
                     //hub.ui.label.setVisible(true);
                 }

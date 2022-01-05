@@ -5,9 +5,11 @@ import cz.reindl.game.event.Event;
 import cz.reindl.game.entity.Player;
 import cz.reindl.game.event.Fight;
 import cz.reindl.game.ui.UserInterface;
+import cz.reindl.game.utils.ProgressBarCheck;
 import cz.reindl.game.utils.Utilities;
 import res.Sound;
 
+import javax.swing.plaf.ProgressBarUI;
 import java.io.File;
 
 public class GameHub {
@@ -19,15 +21,17 @@ public class GameHub {
     public Sound sound = new Sound(this);
     public Fight fight = new Fight(this);
     public Utilities utils = new Utilities(this);
+    public ProgressBarCheck barCheck = new ProgressBarCheck(this);
 
     public GameHub() {
         sound.currentMusic = sound.townMusic;
         playMusic(sound.currentMusic, true);
 
         //event.loadingScreen();
-        //ui.panelBar();
-        event.spawnScreen(); //First executed scene method
+        //ui.setLoadingScreen(1);
         player.playerDefaultStats();
+        barCheck.progressBarCheck();
+        event.spawnScreen(); //First executed scene method
     }
 
     public void playMusic(File file, Boolean loop) {

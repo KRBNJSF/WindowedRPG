@@ -18,6 +18,7 @@ public class UserInterface {
     public JTextArea textMessage, textInfo;
     public JPanel[] panelBackground = new JPanel[20];
     public JLabel[] labelBackground = new JLabel[20];
+    JProgressBar bar;
 
     public String noAction = "-";
     public Border border = BorderFactory.createLineBorder(Color.yellow, 2);
@@ -29,7 +30,7 @@ public class UserInterface {
     //ImageIcon logo = new javax.swing.ImageIcon(getClass().getResource("/cz/reindl/game/ui/graphics/logo/logo.png")); //File path if JAR is wanted
     //ImageIcon logo = new ImageIcon("src/cz/reindl/game/ui/graphics/logo/logo.png");
 
-    public JLabel labelTitle;
+    public JLabel labelTitle, labelLoadingText;
     public JButton restartButton;
 
     //PLAYER UI
@@ -51,8 +52,8 @@ public class UserInterface {
         mainField();
         playerStats();
         gameOverScreen();
+        loadingScreen();
         gameScreen();
-
         window.setVisible(true);
     }
 
@@ -63,7 +64,7 @@ public class UserInterface {
         labelTitle.setBounds(0, 0, 1024, 768);
         labelTitle.setForeground(Color.red);
         labelTitle.setFont(new Font("Times New Roman", Font.PLAIN, 70));
-        labelTitle.setBorder(border);
+        //labelTitle.setBorder(border);
         labelTitle.setVisible(false);
         window.add(labelTitle);
 
@@ -111,7 +112,6 @@ public class UserInterface {
         textMessage.setWrapStyleWord(true);
         textMessage.setFont(setFont(fontRpg, "font/Ancient.ttf"));
         window.add(textMessage);
-
         textInfo();
     }
 
@@ -477,6 +477,7 @@ public class UserInterface {
         //gameObject(1, 0, 50, 300, 300, imgPath("entity/blackSmith.png"));
 
         //#TOWN 1 SIDE
+
         gameBackground(2, "bg/townSquare.png");
         buttonIcon(2, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map");
         changeScreenButton(2, 710, 150, 50, 50, "mainScreen1", "Forest");
@@ -510,6 +511,7 @@ public class UserInterface {
         //#DUNGEON
         gameBackground(4, "bg/Dungeon.png");
         //changeScreenButton(4, 710, 150, 50, 50, "enterPub");
+        //setBar(1, "f", 5);
         labelRat = enemyObject(4, 350, 350, 91, 70, ("entity/Rat.png"), "Attack", "Defend", "Run", "fightEnemy", "", "runAway");
         labelWolf = enemyObject(4, 300, 220, 222, 200, ("entity/wolf.png"), "Attack", "Defend", "Run", "fightEnemy2", "", "runAway");
         labelKnight = enemyObject(4, 320, 56, 200, 388, ("entity/warrior.png"), "Attack", "Defend", "Run", "fightEnemy2", "", "runAway");
@@ -646,6 +648,80 @@ public class UserInterface {
     public void setMoneyCount(int moneyCount) {
         gameHub.player.playerCoins += moneyCount;
         gameHub.ui.moneyCount.setText(String.valueOf(gameHub.player.playerCoins));
+    }
+
+    public void setBar(int screenNum, String name, int hp) {
+        JProgressBar bar = new JProgressBar();
+        bar.setValue(0); //Percentage of bar
+        bar.setBounds(300, 200, 300, 50);
+        bar.setStringPainted(true); //Paints the percentage of bar
+        bar.setFont(new Font("MV Boli", Font.BOLD, 25));
+        bar.setForeground(Color.RED);
+        bar.setBackground(Color.BLACK);
+
+        int counter = hp;
+        while (counter > 0) {
+            bar.setValue(counter);
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            counter -= 1;
+        }
+        bar.setString("Done");
+
+        panelBackground[screenNum].add(bar);
+    }
+
+    public void loadingScreen() {
+        bar = new JProgressBar();
+        labelLoadingText = new JLabel("Loading", JLabel.CENTER);
+        labelLoadingText.setBounds(0, 0, 1024, 768);
+        labelLoadingText.setForeground(Color.red);
+        labelLoadingText.setFont(new Font("Times New Roman", Font.PLAIN, 70));
+        labelLoadingText.setVisible(false);
+        window.add(labelLoadingText);
+
+        bar.setValue(0); //Percentage of bar
+        bar.setBounds(350, 500, 300, 50);
+        bar.setStringPainted(true); //Paints the percentage of bar
+        bar.setFont(new Font("MV Boli", Font.BOLD, 25));
+        bar.setForeground(Color.RED);
+        bar.setBackground(Color.BLACK);
+        bar.setVisible(false);
+        window.add(bar);
+    }
+
+    public void setLoadingScreen(int currentScreen) {
+        bar.setValue(0);
+        gameHub.ui.panelBackground[currentScreen].setVisible(false);
+        gameHub.ui.panelInventory.setVisible(false);
+        gameHub.ui.panelHp.setVisible(false);
+        gameHub.ui.textMessage.setVisible(false);
+
+        gameHub.stopMusic(gameHub.sound.currentMusic);
+        gameHub.playMusic(gameHub.sound.bossTheme, false);
+
+        int counter = bar.getValue();
+        while (counter <= 100) {
+            labelLoadingText.setVisible(true);
+            bar.setVisible(true);
+            bar.setValue(counter);
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            counter += 1;
+        }
+        bar.setString("Done");
+
+        labelLoadingText.setVisible(false);
+        bar.setVisible(false);
+        gameHub.ui.panelInventory.setVisible(true);
+        gameHub.ui.panelHp.setVisible(true);
+        gameHub.ui.textMessage.setVisible(true);
     }
 
 }
