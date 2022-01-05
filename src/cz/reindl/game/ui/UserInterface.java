@@ -81,7 +81,7 @@ public class UserInterface {
 
     public Font setFont(Font font, String pathName) {
         try {
-            font = Font.createFont(Font.TRUETYPE_FONT, new File(path(pathName))).deriveFont(30f);
+            font = Font.createFont(Font.TRUETYPE_FONT, new File(path(pathName))).deriveFont(25f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(path(pathName))));
         } catch (IOException | FontFormatException e) {
@@ -103,7 +103,7 @@ public class UserInterface {
 
         textMessage = new JTextArea();
         textMessage.setText("");
-        textMessage.setBounds(120, 540, 760, 60); //Text position relative to frame
+        textMessage.setBounds(120, 515, 760, 120); //Text position relative to frame
         textMessage.setBackground(Color.BLUE); // FIXME: 02.01.2022 Set new color
         textMessage.setForeground(Color.white);
         textMessage.setEditable(false);
@@ -210,7 +210,7 @@ public class UserInterface {
         //Objects
         JLabel labelObject = new JLabel();
         labelObject.setBounds(x, y, width, height);
-        labelObject.setBorder(border);
+        //labelObject.setBorder(border);
         //labelObject.setOpaque(true); //Setting visible background of the object
         //labelObject.setBackground(Color.yellow); //Setting opaques color
 
@@ -480,7 +480,7 @@ public class UserInterface {
         gameBackground(2, "bg/townSquare.png");
         buttonIcon(2, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map");
         changeScreenButton(2, 710, 150, 50, 50, "mainScreen1", "Forest");
-        gameObject(2, 620, 320, 98, 120, ("entity/Knight2.png"), "Talk", "-", "-", "talkKnight", "-", "-");
+        gameObject(2, 620, 320, 115, 141, ("entity/Knight2.png"), "Talk", "-", "-", "talkKnight", "-", "-");
         gameObject(2, 100, 290, 40, 70, ("object/blankTransparent.png"), "Enter", "Knock", "-", "enterPub", "knockPub", "-");
         gameObject(2, 480, 230, 100, 170, ("object/blankTransparent.png"), "Search", "-", "-", "searchWell", "-", "-");
         gameObject(2, 230, 220, 100, 100, ("object/blankTransparent.png"), "Go", "-", "-", "goTown2", "-", "-");
@@ -493,7 +493,7 @@ public class UserInterface {
         labelBeer = shopObject(3, 150, 200, 75, 75, ("object/beer.png"), "Drink", "-", "-", "drinkBeer", "-", "-");
         labelLiquor = shopObject(3, 230, 270, 75, 75, ("object/beer.png"), "Drink", "-", "-", "drinkLiquor", "-", "-");
         gameObject(3, 560, 100, 150, 208, ("entity/innkeeper.png"), "Menu", "Talk", "-", "tavernMenu", "talkBartender", "-");
-        gameObject(3, 360, 250, 92, 190, ("entity/dwarf.png"), "Talk", "-", "Arena", "getQuest", "-", "-");
+        gameObject(3, 360, 250, 111, 205, ("entity/dwarf.png"), "Talk", "-", "Arena", "getQuest", "-", "-");
 
         //#BLACKSMITH
         gameBackground(7, "bg/blacksmith.png");
@@ -556,8 +556,8 @@ public class UserInterface {
     public void textInfo() {
         textInfo = new JTextArea();
         textInfo.setText("");
-        textInfo.setBounds(120, 600, 760, 60); //Text position relative to frame
-        textInfo.setBackground(Color.RED); // FIXME: 02.01.2022 Set new color
+        textInfo.setBounds(120, 640, 760, 120); //Text position relative to frame
+        textInfo.setBackground(Color.BLACK); // FIXME: 02.01.2022 Set new color
         textInfo.setForeground(Color.white);
         textInfo.setEditable(false);
         textInfo.setLineWrap(true);

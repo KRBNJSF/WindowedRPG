@@ -127,7 +127,7 @@ public class Event {
         switch (questCount) {
             case 0 -> {
                 if (!hub.player.key) {
-                    hub.ui.textMessage.setText("You retrieved a skeleton key! \nYou: ");
+                    hub.ui.textMessage.setText("You retrieved a skeleton key!");
                     hub.ui.consecutiveText("What's the key for?");
                     hub.ui.labelQuestItem.setIcon(hub.ui.jarImg("icon/skeletonKey.png"));
                     hub.player.key = true;
