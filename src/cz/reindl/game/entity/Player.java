@@ -25,6 +25,11 @@ public class Player {
     public boolean beer;
     public boolean liquor;
 
+    public boolean mapItem1;
+    public boolean mapItem2;
+    public boolean mapItem3;
+    public boolean mapItem4;
+
 
     public Player(GameHub gameHub) {
         this.hub = gameHub;
@@ -32,7 +37,7 @@ public class Player {
 
     public void playerDefaultStats() {
         playerMaxHp = 10;
-        playerHp = 5;
+        playerHp = 9; // FIXME: 06.01.2022 Set to 5 and fix Hearth label img
         playerDmg = 2;
         playerDef = 0;
         playerCoins = 0;
@@ -46,10 +51,16 @@ public class Player {
         beer = false;
         liquor = false;
 
+        mapItem1 = true;
+        mapItem2 = false;
+        mapItem3 = false;
+        mapItem4 = false;
+
         hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/hand.png"));
         hub.ui.labelQuestItem.setIcon(hub.ui.jarImg("icon/coin.png"));
         hub.ui.moneyCount.setText(String.valueOf(playerCoins));
         hub.event.questCount = 0;
+        hub.fight.count = 0;
 
         playerCurrentStats();
     }
@@ -74,8 +85,14 @@ public class Player {
         hub.ui.labelShield.setVisible(shield);
         hub.ui.labelQuestItem.setVisible(coin);
         hub.ui.labelChestArmor.setVisible(torso);
+
         hub.ui.labelBeer.setVisible(beer);
         hub.ui.labelLiquor.setVisible(liquor);
+
+        hub.ui.buttonMapItem1.setVisible(mapItem1);
+        hub.ui.buttonMapItem2.setVisible(mapItem2);
+        hub.ui.buttonMapItem3.setVisible(mapItem3);
+        hub.ui.buttonMapItem4.setVisible(mapItem4);
 
         if (knife) {
             playerDmg += 2;

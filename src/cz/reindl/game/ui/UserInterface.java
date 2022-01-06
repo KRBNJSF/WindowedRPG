@@ -15,6 +15,7 @@ public class UserInterface {
 
     GameHub gameHub;
     public JFrame window;
+    public Container container; //Never used
     public JTextArea textMessage, textInfo;
     public JPanel[] panelBackground = new JPanel[20];
     public JLabel[] labelBackground = new JLabel[20];
@@ -39,11 +40,14 @@ public class UserInterface {
     public JPanel panelInventory;
     //items
     public JLabel labelWeapon, labelChestArmor, labelShield, labelQuestItem, labelCoins;
+    public JButton buttonMapItem1, buttonMapItem2, buttonMapItem3, buttonMapItem4;
     public JLabel labelBeer, labelLiquor; //shop items
 
     //FIGHT UI
     public JLabel labelRat, labelWolf, labelKnight, labelOgre, labelWizard; //enemies
     public JLabel labelChest, labelChest2, labelFinalChest; //rewards
+    public JPanel panelHeathBar;
+    public JProgressBar healthBarProgress;
 
 
     public UserInterface(GameHub gameHub) {
@@ -113,6 +117,20 @@ public class UserInterface {
         textMessage.setFont(setFont(fontRpg, "font/Ancient.ttf"));
         window.add(textMessage);
         textInfo();
+
+        panelHeathBar = new JPanel();
+        panelHeathBar.setBounds(100, 100, 200, 50);
+        panelHeathBar.setBackground(Color.BLUE);
+
+        healthBarProgress = new JProgressBar();
+        healthBarProgress.setMinimum(0);
+        healthBarProgress.setStringPainted(true); //Paints the percentage of bar
+        healthBarProgress.setPreferredSize(new Dimension(200, 50));
+        healthBarProgress.setForeground(Color.RED);
+        healthBarProgress.setBackground(Color.BLACK);
+        healthBarProgress.setFont(new Font("MV Boli", Font.BOLD, 25));
+        panelHeathBar.add(healthBarProgress);
+        window.add(panelHeathBar);
     }
 
     public void playerStats() {
@@ -295,14 +313,14 @@ public class UserInterface {
                     if (gameHub.fight.count == 0) {
                         gameHub.fight.setEnemy(Enemies.RAT);
                     } else if (gameHub.fight.count == 3) {
+                        gameHub.event.chest();
                         gameHub.player.playerCurrentStats();
-                        if (gameHub.player.knife) {
+                       /* if (gameHub.player.knife) {
                             gameHub.player.playerCurrentStats();
-                            gameHub.fight.setEnemy(Enemies.KNIGHT);
-                            textMessage.setText("You went back in tavern"); // FIXME: 03.01.2022 Player needs to open the chest otherwise he can't leave the dungeon
+                            textMessage.setText("You went back in tavern");
                         } else {
                             textMessage.setText("Open the chest!");
-                        }
+                        }*/
                     }
                     gameHub.fight.attack();
                 }
@@ -328,18 +346,34 @@ public class UserInterface {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                try {
-                    labelObject.setCursor(
-                            Toolkit
-                                    .getDefaultToolkit()
-                                    .createCustomCursor(
-                                            jarImg("icon/cursor/cursorSword.png").getImage(),
-                                            new Point(0, 0),
-                                            "My cursor2"
-                                    )
-                    );
-                } catch (Exception exception) {
-                    System.out.println(exception);
+                if (gameHub.fight.count == 3) {
+                    try {
+                        labelObject.setCursor(
+                                Toolkit
+                                        .getDefaultToolkit()
+                                        .createCustomCursor(
+                                                jarImg("icon/cursor/cursor.png").getImage(),
+                                                new Point(0, 0),
+                                                "My cursor3"
+                                        )
+                        );
+                    } catch (Exception exception) {
+                        System.out.println(exception);
+                    }
+                } else {
+                    try {
+                        labelObject.setCursor(
+                                Toolkit
+                                        .getDefaultToolkit()
+                                        .createCustomCursor(
+                                                jarImg("icon/cursor/cursorSword.png").getImage(),
+                                                new Point(0, 0),
+                                                "My cursor2"
+                                        )
+                        );
+                    } catch (Exception exception) {
+                        System.out.println(exception);
+                    }
                 }
             }
 
@@ -448,7 +482,7 @@ public class UserInterface {
         panelBackground[screenNum].add(arrowButton);
     }
 
-    public void buttonIcon(int screenNum, int x, int y, int width, int height, String command, String file, String text) {
+    public JButton buttonIcon(int screenNum, int x, int y, int width, int height, String command, String file, String text) {
         JButton buttonIcon = new JButton();
         buttonIcon.setBounds(x, y, width, height);
         buttonIcon.setIcon(jarImg(file));
@@ -463,6 +497,7 @@ public class UserInterface {
         buttonIcon.setActionCommand(command);
 
         panelBackground[screenNum].add(buttonIcon);
+        return buttonIcon;
     }
 
     public void gameScreen() {
@@ -530,10 +565,10 @@ public class UserInterface {
         //MAP
         gameBackground(6, "bg/map.png");
         buttonIcon(6, 0, 0, 35, 35, "currentScreen", "icon/compass.png", "Teleportation map");
-        buttonIcon(6, 365, 110, 50, 50, "mainScreen1", "icon/forest.png", "Forest");
-        buttonIcon(6, 365, 165, 50, 50, "mainScreen2", "icon/townEntrance.png", "Town");
-        buttonIcon(6, 365, 220, 50, 50, "enterPub", "icon/beer.png", "Tavern");
-        buttonIcon(6, 365, 275, 50, 50, "goTown2", "icon/forge.png", "Forge");
+        buttonMapItem1 = buttonIcon(6, 365, 110, 50, 50, "mainScreen1", "icon/forest.png", "Forest");
+        buttonMapItem2 = buttonIcon(6, 365, 165, 50, 50, "mainScreen2", "icon/townEntrance.png", "Town");
+        buttonMapItem3 = buttonIcon(6, 365, 220, 50, 50, "enterPub", "icon/beer.png", "Tavern");
+        buttonMapItem4 = buttonIcon(6, 365, 275, 50, 50, "goTown2", "icon/forge.png", "Forge");
         gameObject(6, 0, 0, 0, 0, ("object/blankTransparent.png"), "", "", "", "", "", "");
 
     }

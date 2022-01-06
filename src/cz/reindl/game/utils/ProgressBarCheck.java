@@ -9,6 +9,7 @@ import java.util.Random;
 
 public class ProgressBarCheck {
 
+    //JProgressBar functionality and use test
     GameHub hub;
     JFrame window = new JFrame();
     public JProgressBar bar = new JProgressBar(0, 5); //Minimum and maximum value of bar

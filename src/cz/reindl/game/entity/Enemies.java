@@ -4,17 +4,18 @@ import cz.reindl.game.GameHub;
 
 public enum Enemies {
 
-    RAT("Rat", 5, 3, 0, true),
-    WOLF("Wolf", 5, 3, 0, false),
-    KNIGHT("Knight", 5, 3, 0, false),
-    OGRE("Ogre", 5, 3, 0, false),
-    WIZARD("Wizard", 5, 3, 0, false),
-    MIRROR("You", 5, 3, 0, false);
+    RAT("Rat", 2, 3, 0, 2, true),
+    WOLF("Wolf", 4, 3, 0, 4, false),
+    KNIGHT("Knight", 5, 3, 0, 5, false),
+    OGRE("Ogre", 5, 3, 0, 5, false),
+    WIZARD("Wizard", 5, 3, 0, 5, false),
+    MIRROR("You", 5, 3, 0, 5, false);
 
     public String entityName;
     public int entityHp;
     public int entityDmg;
     public int entityDefense;
+    public int entityMaxHp;
     public boolean visibility;
 
     Enemies(boolean visibility) {
@@ -29,11 +30,12 @@ public enum Enemies {
         this.visibility = visibility;
     }
 
-    Enemies(String entityName, int entityHp, int entityDmg, int entityDefense, boolean visibility) {
+    Enemies(String entityName, int entityHp, int entityDmg, int entityDefense, int entityMaxHp, boolean visibility) {
         this.entityName = entityName;
         this.entityHp = entityHp;
         this.entityDmg = entityDmg;
         this.entityDefense = entityDefense;
+        this.entityMaxHp = entityMaxHp;
         this.visibility = visibility;
     }
 

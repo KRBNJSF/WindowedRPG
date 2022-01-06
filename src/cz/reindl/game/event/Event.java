@@ -13,6 +13,7 @@ public class Event {
 
     public void gameOverScreen(int currentScreen) {
         hub.ui.panelBackground[currentScreen].setVisible(false);
+        hub.ui.panelHeathBar.setVisible(false);
         hub.ui.panelInventory.setVisible(false);
         hub.ui.panelHp.setVisible(false);
         hub.ui.textMessage.setVisible(false);
@@ -30,10 +31,10 @@ public class Event {
     }
 
     public void spawnScreen() {
+        hub.ui.panelHeathBar.setVisible(false);
         hub.ui.panelInventory.setVisible(true);
         hub.ui.panelHp.setVisible(true);
         hub.ui.textMessage.setVisible(true);
-
         hub.ui.panelBackground[1].setVisible(true);
         hub.ui.panelBackground[2].setVisible(false);
         hub.ui.panelBackground[5].setVisible(false);
@@ -62,6 +63,8 @@ public class Event {
     }
 
     public void sceneTownSquare() {
+        hub.ui.panelHeathBar.setVisible(false);
+        hub.player.mapItem2 = true;
         hub.ui.panelBackground[1].setVisible(false);
         //hub.ui.setLoadingScreen(1);
         hub.ui.panelBackground[2].setVisible(true);
@@ -74,9 +77,12 @@ public class Event {
         hub.sound.currentMusic = hub.sound.townMusic;
         hub.playMusic(hub.sound.currentMusic, true);
         // FIXME: 30.12.2021 hub.playMusic(hub.sound.forge, true);
+        hub.player.playerCurrentStats();
     }
 
     public void scenePubInside() {
+        hub.ui.panelHeathBar.setVisible(false);
+        hub.player.mapItem3 = true;
         hub.ui.panelBackground[2].setVisible(false);
         hub.ui.panelBackground[3].setVisible(true);
         hub.ui.panelBackground[4].setVisible(false);
@@ -87,6 +93,7 @@ public class Event {
         hub.sound.currentMusic = hub.sound.shopMusic;
         hub.playMusic(hub.sound.currentMusic, true);
         System.out.println(hub.sound.currentMusic);
+        hub.player.playerCurrentStats();
     }
 
     public void beer() {
@@ -115,10 +122,12 @@ public class Event {
 
     public void chest() {
         if (!hub.player.knife) {
+            hub.ui.setMoneyCount(100);
             hub.ui.textMessage.setText("You opened the chest and found a knife!\n (max dmg + 3)");
             hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/knife.png"));
             hub.player.knife = true;
             hub.player.playerCurrentStats();
+            hub.event.scenePubInside();
         } else {
             hub.ui.textMessage.setText("It's empty\n");
         }
@@ -184,6 +193,7 @@ public class Event {
 
     public void sceneDungeon() {
         if (hub.player.key) {
+            hub.ui.panelHeathBar.setVisible(true);
             if (hub.fight.count == 0) {
                 hub.fight.firstEncounter();
             }
@@ -201,6 +211,8 @@ public class Event {
     }
 
     public void sceneTownSquare2() {
+        hub.ui.panelHeathBar.setVisible(false);
+        hub.player.mapItem4 = true;
         hub.stopMusic(hub.sound.currentMusic);
         hub.sound.currentMusic = hub.sound.forge;
         hub.playMusic(hub.sound.currentMusic, true);
@@ -209,9 +221,11 @@ public class Event {
         hub.ui.panelBackground[6].setVisible(false);
         hub.ui.panelBackground[7].setVisible(false);
         hub.ui.textMessage.setText("Town square 2\n");
+        hub.player.playerCurrentStats();
     }
 
     public void chooseLocation() {
+        hub.ui.panelHeathBar.setVisible(false);
         //hub.stopMusic(hub.sound.currentMusic);
         hub.ui.textMessage.setText("");
         hub.ui.panelBackground[1].setVisible(false);
@@ -235,6 +249,7 @@ public class Event {
     }
 
     public void forgeTown() {
+        hub.ui.panelHeathBar.setVisible(false);
         hub.ui.panelBackground[1].setVisible(false);
         hub.ui.panelBackground[2].setVisible(false);
         hub.ui.panelBackground[3].setVisible(false);

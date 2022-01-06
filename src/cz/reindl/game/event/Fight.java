@@ -24,56 +24,68 @@ public class Fight {
 
     public void attack() {
         hub.player.playerCurrentStats();
+        hub.ui.healthBarProgress.setMaximum(enemies.entityMaxHp);
         int playerDmg = (random.nextInt(hub.player.playerDmg) + 1) * enemyDef;
         hub.ui.textMessage.setText("");
         enemies.setEntityHp(enemies.getEntityHp() - playerDmg);
         hub.ui.textMessage.append("You hit " + enemies.getEntityName() + " and gave him " + playerDmg + " dmg \n" + enemies.getEntityName() + ": " + enemies.getEntityHp() + " HP left \n");
-        hub.barCheck.bar.setString(String.valueOf(enemies.getEntityHp()));
-        hub.barCheck.bar.setValue(enemies.getEntityHp());
+        hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp);
+        hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
 
         if (enemies.getEntityHp() <= 0) {
             hub.player.playerCurrentStats();
             count++;
-            hub.barCheck.button.setVisible(false);
-            winScreen();
-            hub.ui.textMessage.setText("You won");
+            //TEST BAR hub.barCheck.button.setVisible(false);
 
             switch (count) {
                 case 1 -> {
-                    hub.ui.setMoneyCount(1);
+                    hub.ui.setMoneyCount(10);
                     hub.fight.setEnemy(Enemies.WOLF);
+                    hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
+                    hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp);
+                    //hub.ui.healthBarProgress.setMaximum(enemies.entityMaxHp);
                     hub.ui.labelRat.setVisible(false);
                     hub.ui.labelWolf.setVisible(true);
+                    winScreen();
                 }
                 case 2 -> {
-                    hub.ui.setMoneyCount(1);
+                    hub.ui.setMoneyCount(20);
                     hub.fight.setEnemy(Enemies.KNIGHT);
+                    hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
+                    hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp);
                     hub.ui.labelWolf.setVisible(false);
                     hub.ui.labelKnight.setVisible(true);
+                    winScreen();
                 }
                 case 3 -> {
-                    hub.ui.setMoneyCount(1);
                     hub.ui.textMessage.setText("You won chest! \n" +
                             "Look inside to find out what you got");
                     hub.ui.labelKnight.setVisible(false);
                     hub.ui.labelChest.setVisible(true);
                 }
                 case 4 -> {
-                    hub.ui.setMoneyCount(1);
+                    hub.ui.setMoneyCount(50);
                     hub.fight.setEnemy(Enemies.OGRE);
+                    hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
+                    hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp);
                     hub.ui.labelChest.setVisible(false);
                     hub.ui.labelOgre.setVisible(true);
+                    winScreen();
                 }
                 case 5 -> {
-                    hub.ui.setMoneyCount(1);
+                    hub.ui.setMoneyCount(50);
                     hub.fight.setEnemy(Enemies.WIZARD);
+                    hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
+                    hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp);
                     hub.ui.labelOgre.setVisible(false);
                     hub.ui.labelWizard.setVisible(true);
+                    winScreen();
                 }
                 case 6 -> {
-                    hub.ui.setMoneyCount(1);
+                    hub.ui.setMoneyCount(100);
                     hub.ui.labelWizard.setVisible(false);
                     //hub.ui.label.setVisible(true);
+                    winScreen();
                 }
             }
         } else {
@@ -100,17 +112,19 @@ public class Fight {
     }
 
     public void restartEnemies() {
-        Enemies.RAT.setEntityHp(5);
-        Enemies.WOLF.setEntityHp(5);
-        Enemies.KNIGHT.setEntityHp(5);
-        Enemies.OGRE.setEntityHp(5);
-        Enemies.WIZARD.setEntityHp(5);
-        Enemies.MIRROR.setEntityHp(5);
+        Enemies.RAT.setEntityHp(Enemies.RAT.entityMaxHp);
+        Enemies.WOLF.setEntityHp(Enemies.WOLF.entityMaxHp);
+        Enemies.KNIGHT.setEntityHp(Enemies.KNIGHT.entityMaxHp);
+        Enemies.OGRE.setEntityHp(Enemies.OGRE.entityMaxHp);
+        Enemies.WIZARD.setEntityHp(Enemies.WIZARD.entityMaxHp);
+        Enemies.MIRROR.setEntityHp(Enemies.MIRROR.entityMaxHp);
     }
 
     public void restartEnemyHp() {
         System.out.println(enemies.getEntityName());
-        enemies.setEntityHp(5);
+        enemies.setEntityHp(enemies.entityMaxHp);
+        hub.ui.healthBarProgress.setValue(enemies.entityMaxHp);
+        hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp);
         System.out.println(enemies.getEntityHp());
     }
 
@@ -121,6 +135,10 @@ public class Fight {
         hub.ui.labelKnight.setVisible(false);
         hub.ui.labelOgre.setVisible(false);
         hub.ui.labelWizard.setVisible(false);
+
+        hub.ui.healthBarProgress.setMaximum(Enemies.RAT.entityMaxHp);
+        hub.ui.healthBarProgress.setValue(Enemies.RAT.entityMaxHp);
+        hub.ui.healthBarProgress.setString(Enemies.RAT.entityHp + "/" + Enemies.RAT.entityMaxHp);
     }
 
 }

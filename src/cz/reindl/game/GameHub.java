@@ -29,9 +29,10 @@ public class GameHub {
 
         //event.loadingScreen();
         //ui.setLoadingScreen(1);
-        player.playerDefaultStats();
-        barCheck.progressBarCheck();
+
+        //barCheck.progressBarCheck();
         event.spawnScreen(); //First executed scene method
+        player.playerDefaultStats();
     }
 
     public void playMusic(File file, Boolean loop) {
