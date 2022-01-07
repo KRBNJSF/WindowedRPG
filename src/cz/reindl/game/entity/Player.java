@@ -14,6 +14,7 @@ public class Player {
     public int playerCoins;
 
     public boolean hand;
+    public boolean knife;
     public boolean sword;
 
     public boolean shield;
@@ -44,6 +45,7 @@ public class Player {
         playerDef = 0;
         playerCoins = 0;
         hand = true;
+        knife = false;
         sword = false;
         shield = false;
         torso = false;
@@ -97,7 +99,10 @@ public class Player {
         hub.ui.buttonMapItem4.setVisible(mapItem4);
 
         if (sword) {
-            playerDmg += 2;
+            playerDmg = 4;
+        }
+        if (knife) {
+            playerDmg = 3;
         }
         if (torso) {
             playerDef += 20;

@@ -132,7 +132,7 @@ public class Event {
             hub.sound.currentSoundEffect = hub.sound.chestOpen;
             hub.playSoundEffect(hub.sound.currentSoundEffect, false);
             hub.ui.setMoneyCount(100);
-            hub.ui.textMessage.setText("You opened the chest and found a sword!\n (max dmg + 3)");
+            hub.ui.textMessage.setText("You opened the chest and found a sword!\n (max dmg + 2)");
             hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/sword.png"));
             hub.player.sword = true;
             hub.player.playerCurrentStats();

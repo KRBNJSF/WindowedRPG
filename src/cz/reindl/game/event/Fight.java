@@ -68,7 +68,7 @@ public class Fight {
             switch (count) {
                 case 1 -> {
                     hub.sound.currentSoundEffect = hub.sound.wolfAttack;
-                    hub.ui.panelHeathBar.setBounds(hub.ui.labelWolf.getX(), hub.ui.labelWolf.getY(), 200, 50);
+                    hub.ui.panelHeathBar.setBounds(hub.ui.labelWolf.getX() + 105, hub.ui.labelWolf.getY() + 15, 200, 50);
                     hub.playSoundEffect(hub.sound.moneyEarn, false);
                     hub.ui.setMoneyCount(10);
                     hub.fight.setEnemy(Enemies.WOLF);
@@ -81,7 +81,7 @@ public class Fight {
                 }
                 case 2 -> {
                     hub.sound.currentSoundEffect = hub.sound.swordSlash;
-                    hub.ui.panelHeathBar.setBounds(hub.ui.labelKnight.getX(), hub.ui.labelKnight.getY(), 200, 50);
+                    hub.ui.panelHeathBar.setBounds(hub.ui.labelKnight.getX() + 105, hub.ui.labelKnight.getY() + 15, 200, 50);
                     hub.playSoundEffect(hub.sound.moneyEarn, false);
                     hub.ui.setMoneyCount(20);
                     hub.fight.setEnemy(Enemies.KNIGHT);
@@ -101,7 +101,7 @@ public class Fight {
                     hub.ui.panelHeathBar.setVisible(false);
                 }
                 case 4 -> {
-                    hub.ui.panelHeathBar.setBounds(hub.ui.labelOgre.getX(), hub.ui.labelOgre.getY(), 200, 50);
+                    hub.ui.panelHeathBar.setBounds(hub.ui.labelOgre.getX() + 105, hub.ui.labelOgre.getY() + 15, 200, 50);
                     hub.playSoundEffect(hub.sound.moneyEarn, false);
                     hub.ui.setMoneyCount(50);
                     hub.fight.setEnemy(Enemies.OGRE);
@@ -113,7 +113,7 @@ public class Fight {
                 }
                 case 5 -> {
                     hub.sound.currentSoundEffect = hub.sound.fireBall;
-                    hub.ui.panelHeathBar.setBounds(hub.ui.labelWizard.getX(), hub.ui.labelWizard.getY(), 200, 50);
+                    hub.ui.panelHeathBar.setBounds(hub.ui.labelWizard.getX() + 105, hub.ui.labelWizard.getY() + 15, 200, 50);
                     hub.playSoundEffect(hub.sound.moneyEarn, false);
                     hub.ui.setMoneyCount(50);
                     hub.fight.setEnemy(Enemies.WIZARD);
