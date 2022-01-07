@@ -49,6 +49,16 @@ public class ActionHandler implements ActionListener {
             case "fightEnemy2" -> {
                 hub.fight.attack();
             }
+            case "defend1" -> {
+                hub.fight.setEnemy(Enemies.RAT);
+                hub.fight.defend();
+            }
+            case "defend" -> {
+                hub.fight.defend();
+            }
+            case "specialAttack" -> {
+                hub.fight.specialAttack();
+            }
             case "fightEnemy4" -> {
                 hub.fight.setEnemy(Enemies.MIRROR); // FIXME: 03.01.2022 Delete
                 hub.fight.attack();

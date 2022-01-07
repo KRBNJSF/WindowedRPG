@@ -38,7 +38,7 @@ public class UserInterface {
     public JPanel panelHp;
     public JLabel[] labelHp = new JLabel[10];
     public JPanel panelInventory;
-    public JLabel labelInventory;
+    public JLabel labelInventory, labelHpBg;
     //items
     public JLabel labelWeapon, labelChestArmor, labelShield, labelQuestItem, labelCoins;
     public JButton buttonMapItem1, buttonMapItem2, buttonMapItem3, buttonMapItem4;
@@ -159,39 +159,45 @@ public class UserInterface {
         //panelInventory.setOpaque(false); // FIXME: 07.01.2022
         panelInventory.setLayout(new GridLayout(1, 6)); //Equipment grid
         panelInventory.setToolTipText("Inventory");
-        window.add(panelInventory);
+        //window.add(panelInventory);
 
         labelInventory = new JLabel("", SwingConstants.CENTER);
-        labelInventory.setBounds(650, 5, 200, 50);  //Image position relative to panel
+        labelInventory.setBounds(650, 5, 200, 50);
         labelInventory.setIcon(jarImg("panels/inventoryPanel.png"));
-        panelInventory.add(labelInventory);
+        labelInventory.setLayout(new GridLayout(1, 6));
+        labelInventory.setToolTipText("Inventory");
+        window.add(labelInventory);
 
         //ITEMS
         labelWeapon = new JLabel();
         labelWeapon.setIcon(jarImg("/icon/hand.png"));
         labelWeapon.setToolTipText("Weapon");
-        panelInventory.add(labelWeapon);
+        labelInventory.add(labelWeapon);
 
         labelQuestItem = new JLabel();
         labelQuestItem.setIcon(jarImg("/icon/coin.png"));
         labelQuestItem.setToolTipText("Quest item");
-        panelInventory.add(labelQuestItem);
+        labelQuestItem.setVisible(false);
+        labelInventory.add(labelQuestItem);
+
 
         labelShield = new JLabel();
         labelShield.setIcon(jarImg("/icon/shield.png"));
         labelShield.setToolTipText("Shield");
-        panelInventory.add(labelShield);
+        labelShield.setVisible(false);
+        labelInventory.add(labelShield);
 
         labelChestArmor = new JLabel();
         labelChestArmor.setIcon(jarImg("/icon/chestArmor.png"));
         labelChestArmor.setToolTipText("Torso");
-        panelInventory.add(labelChestArmor);
+        labelChestArmor.setVisible(false);
+        labelInventory.add(labelChestArmor);
 
         labelCoins = new JLabel();
         labelCoins.setIcon(jarImg("icon/currency.png"));
         labelCoins.setToolTipText("Currency");
         labelCoins.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 15));
-        panelInventory.add(labelCoins);
+        labelInventory.add(labelCoins);
 
         moneyCount = new JLabel();
         moneyCount.setText(String.valueOf(0));
@@ -328,6 +334,7 @@ public class UserInterface {
                     if (gameHub.fight.count == 0) {
                         gameHub.fight.setEnemy(Enemies.RAT);
                     } else if (gameHub.fight.count == 3) {
+                        gameHub.sound.currentSoundEffect = gameHub.sound.chestOpen;
                         gameHub.event.chest();
                         gameHub.player.playerCurrentStats();
                        /* if (gameHub.player.knife) {
@@ -363,7 +370,7 @@ public class UserInterface {
             public void mouseEntered(MouseEvent e) {
                 if (gameHub.fight.count == 3) {
                     setCursorIcon(labelObject, "icon/cursor/cursorGet.png", "cursorGet");
-                } else if (!gameHub.player.knife) {
+                } else if (!gameHub.player.sword) {
                     setCursorIcon(labelObject, "icon/cursor/cursorPunch.png", "cursorPunch");
                 } else {
                     setCursorIcon(labelObject, "icon/cursor/cursorSword.png", "cursorSword");
@@ -514,11 +521,11 @@ public class UserInterface {
         gameBackground(4, "bg/Dungeon.png");
         //changeScreenButton(4, 710, 150, 50, 50, "enterPub");
         //setBar(1, "f", 5);
-        labelRat = enemyObject(4, 350, 350, 91, 70, ("entity/Rat.png"), "Attack", "Defend", "Special Attack", "Run Away", "fightEnemy", "", "specialAttack", "runAway");
-        labelWolf = enemyObject(4, 300, 220, 222, 200, ("entity/wolf.png"), "Attack", "Defend", "Special Attack", "Run Away", "fightEnemy2", "", "specialAttack", "runAway");
-        labelKnight = enemyObject(4, 320, 56, 200, 388, ("entity/warrior.png"), "Attack", "Defend", "Special Attack", "Run Away", "fightEnemy2", "", "specialAttack", "runAway");
-        labelOgre = enemyObject(4, 320, 56, 200, 388, ("entity/ogre.png"), "Attack", "Defend", "Special Attack", "Run Away", "fightEnemy2", "", "specialAttack", "runAway");
-        labelWizard = enemyObject(4, 320, 100, 120, 300, ("entity/wizard.png"), "Attack", "Defend", "Special Attack", "Run Away", "fightEnemy2", "-", "specialAttack", "runAway");
+        labelRat = enemyObject(4, 350, 350, 91, 70, ("entity/Rat.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy", "defend1", "specialAttack", "runAway");
+        labelWolf = enemyObject(4, 300, 220, 222, 200, ("entity/wolf.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
+        labelKnight = enemyObject(4, 320, 56, 200, 388, ("entity/warrior.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
+        labelOgre = enemyObject(4, 320, 56, 200, 388, ("entity/ogre.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
+        labelWizard = enemyObject(4, 320, 100, 120, 300, ("entity/wizard.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
         labelChest = enemyObject(4, 350, 330, 150, 180, ("object/Chest.png"), "Open", "-", "-", "-", "openChest", "-", "-", "-");
 
         //TAVERN SHOP

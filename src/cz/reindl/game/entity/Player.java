@@ -7,13 +7,14 @@ public class Player {
     GameHub hub;
 
     public int playerMaxHp;
-    public int playerHp;
+    public double playerHp;
     public int playerDmg;
     public int playerDef;
+    public int playerMaxDef;
     public int playerCoins;
 
     public boolean hand;
-    public boolean knife;
+    public boolean sword;
 
     public boolean shield;
 
@@ -39,10 +40,11 @@ public class Player {
         playerMaxHp = 10;
         playerHp = 9; // FIXME: 06.01.2022 Set to 5 and fix Hearth label img
         playerDmg = 2;
+        playerMaxDef = 50;
         playerDef = 0;
         playerCoins = 0;
         hand = true;
-        knife = false;
+        sword = false;
         shield = false;
         torso = false;
         coin = false;
@@ -74,9 +76,9 @@ public class Player {
         }
 
         //Setting visible hearth icons equal to player's HP
-        int currentHp = playerHp;
+        double currentHp = playerHp;
         while (currentHp >= 0) { // FIXME: 07.01.2022 >0 -> 9HP, >=0 -> 10HP but it's actually 9
-            hub.ui.labelHp[currentHp].setVisible(true);
+            hub.ui.labelHp[(int) currentHp].setVisible(true);
             currentHp--;
         }
 
@@ -94,14 +96,14 @@ public class Player {
         hub.ui.buttonMapItem3.setVisible(mapItem3);
         hub.ui.buttonMapItem4.setVisible(mapItem4);
 
-        if (knife) {
+        if (sword) {
             playerDmg += 2;
         }
         if (torso) {
-            playerDef += 1;
+            playerDef += 20;
         }
         if (shield) {
-            playerDef += 2;
+            playerDef += 10;
         }
     }
 

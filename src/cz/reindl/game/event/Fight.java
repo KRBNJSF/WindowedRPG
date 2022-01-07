@@ -3,6 +3,8 @@ package cz.reindl.game.event;
 import cz.reindl.game.GameHub;
 import cz.reindl.game.entity.Enemies;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Random;
 
 public class Fight {
@@ -10,8 +12,9 @@ public class Fight {
     GameHub hub;
     Enemies enemies;
     Random random = new Random();
-    private int playerDef = 1;
+    private double playerDefPercent = 1;
     private int enemyDef = 1;
+    public double defChance;
     public int count = 0;
 
     public Fight(GameHub gameHub) {
@@ -23,20 +26,40 @@ public class Fight {
     }
 
     public void attack() {
-        hub.player.playerCurrentStats();
-        if (hub.player.knife) {
-            hub.playSoundEffect(hub.sound.swordSlash, false);
-        } else if (hub.player.hand) {
-            hub.playSoundEffect(hub.sound.punch, false);
+        checkArmor();
+        if (defChance == 1) {
+            hub.player.playerCurrentStats();
+            if (hub.player.sword) {
+                hub.playSoundEffect(hub.sound.swordSlash, false);
+            } else if (hub.player.hand) {
+                hub.playSoundEffect(hub.sound.punch, false);
+            }
+            hub.ui.healthBarProgress.setMaximum(enemies.entityMaxHp);
+            int playerDmg = (random.nextInt(hub.player.playerDmg) + 1) * enemyDef;
+            hub.ui.textMessage.setText("");
+            enemies.setEntityHp(enemies.getEntityHp() - playerDmg);
+            hub.ui.textMessage.append("You hit " + enemies.getEntityName() + " and gave him " + playerDmg + " dmg \n" + enemies.getEntityName() + ": " + enemies.getEntityHp() + " HP left \n");
+            hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
+            hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
+        } else {
+            hub.player.playerCurrentStats();
+            if (hub.player.sword) {
+                if (count > 3) {
+                    hub.playSoundEffect(hub.sound.swordSlash, false);
+                } else {
+                    hub.sound.currentSoundEffect = hub.sound.chestOpen;
+                }
+            } else if (hub.player.hand) {
+                hub.playSoundEffect(hub.sound.punch, false);
+            }
+            hub.ui.healthBarProgress.setMaximum(enemies.entityMaxHp);
+            int playerDmg = (random.nextInt(hub.player.playerDmg) + 1) * enemyDef;
+            hub.ui.textMessage.setText("");
+            enemies.setEntityHp(enemies.getEntityHp() - playerDmg);
+            hub.ui.textMessage.append("You hit " + enemies.getEntityName() + " and gave him " + playerDmg + " dmg \n" + enemies.getEntityName() + ": " + enemies.getEntityHp() + " HP left \n");
+            hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
+            hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
         }
-        hub.ui.healthBarProgress.setMaximum(enemies.entityMaxHp);
-        int playerDmg = (random.nextInt(hub.player.playerDmg) + 1) * enemyDef;
-        hub.ui.textMessage.setText("");
-        enemies.setEntityHp(enemies.getEntityHp() - playerDmg);
-        hub.ui.textMessage.append("You hit " + enemies.getEntityName() + " and gave him " + playerDmg + " dmg \n" + enemies.getEntityName() + ": " + enemies.getEntityHp() + " HP left \n");
-        hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
-        hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
-
         if (enemies.getEntityHp() <= 0) {
             hub.player.playerCurrentStats();
             count++;
@@ -44,7 +67,9 @@ public class Fight {
 
             switch (count) {
                 case 1 -> {
+                    hub.sound.currentSoundEffect = hub.sound.wolfAttack;
                     hub.ui.panelHeathBar.setBounds(hub.ui.labelWolf.getX(), hub.ui.labelWolf.getY(), 200, 50);
+                    hub.playSoundEffect(hub.sound.moneyEarn, false);
                     hub.ui.setMoneyCount(10);
                     hub.fight.setEnemy(Enemies.WOLF);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
@@ -55,7 +80,9 @@ public class Fight {
                     winScreen();
                 }
                 case 2 -> {
+                    hub.sound.currentSoundEffect = hub.sound.swordSlash;
                     hub.ui.panelHeathBar.setBounds(hub.ui.labelKnight.getX(), hub.ui.labelKnight.getY(), 200, 50);
+                    hub.playSoundEffect(hub.sound.moneyEarn, false);
                     hub.ui.setMoneyCount(20);
                     hub.fight.setEnemy(Enemies.KNIGHT);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
@@ -65,14 +92,17 @@ public class Fight {
                     winScreen();
                 }
                 case 3 -> {
+                    hub.sound.currentSoundEffect = hub.sound.chestOpen;
                     hub.ui.textMessage.setText("You won chest! \n" +
                             "Look inside to find out what you got");
+                    hub.playSoundEffect(hub.sound.moneyEarnMore, false);
                     hub.ui.labelKnight.setVisible(false);
                     hub.ui.labelChest.setVisible(true);
                     hub.ui.panelHeathBar.setVisible(false);
                 }
                 case 4 -> {
                     hub.ui.panelHeathBar.setBounds(hub.ui.labelOgre.getX(), hub.ui.labelOgre.getY(), 200, 50);
+                    hub.playSoundEffect(hub.sound.moneyEarn, false);
                     hub.ui.setMoneyCount(50);
                     hub.fight.setEnemy(Enemies.OGRE);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
@@ -82,7 +112,9 @@ public class Fight {
                     winScreen();
                 }
                 case 5 -> {
+                    hub.sound.currentSoundEffect = hub.sound.fireBall;
                     hub.ui.panelHeathBar.setBounds(hub.ui.labelWizard.getX(), hub.ui.labelWizard.getY(), 200, 50);
+                    hub.playSoundEffect(hub.sound.moneyEarn, false);
                     hub.ui.setMoneyCount(50);
                     hub.fight.setEnemy(Enemies.WIZARD);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
@@ -99,7 +131,8 @@ public class Fight {
                 }
             }
         } else {
-            int enemyDmg = (random.nextInt(enemies.getEntityDmg()) + 1) * playerDef;
+            hub.playSoundEffect(hub.sound.currentSoundEffect, false);
+            double enemyDmg = (random.nextInt(enemies.getEntityDmg()) + 1) * playerDefPercent;
             hub.player.playerHp -= enemyDmg;
             hub.player.playerCurrentStats();
             hub.ui.textMessage.append(enemies.getEntityName() + " gave you " + enemyDmg + " dmg \n " + "You: " + hub.player.playerHp + " HP left");
@@ -139,6 +172,7 @@ public class Fight {
     }
 
     public void firstEncounter() {
+        hub.sound.currentSoundEffect = hub.sound.ratBite;
         hub.ui.labelRat.setVisible(true);
         hub.ui.labelChest.setVisible(false);
         hub.ui.labelWolf.setVisible(false);
@@ -152,4 +186,59 @@ public class Fight {
         hub.ui.healthBarProgress.setString(Enemies.RAT.entityHp + "/" + Enemies.RAT.entityMaxHp + "HP");
     }
 
+    public void checkArmor() {
+        if (hub.player.playerDef >= hub.player.playerMaxDef) {
+            playerDefPercent = 0.5;
+        } else if (hub.player.playerDef <= 10 && hub.player.playerDef > 1) {
+            playerDefPercent = 0.9;
+        } else if (hub.player.playerDef <= 20) {
+            playerDefPercent = 0.8;
+        } else if (hub.player.playerDef <= 30) {
+            playerDefPercent = 0.7;
+        } else if (hub.player.playerDef <= 40) {
+            playerDefPercent = 0.6;
+        } else playerDefPercent = 1;
+    }
+
+    public void defend() {
+        DecimalFormat df = new DecimalFormat("#.###");
+        df.setRoundingMode(RoundingMode.CEILING);
+
+        defChance = random.nextDouble(1);
+        if (defChance >= 0.9) {
+            if (defChance == 1) {
+                attack();
+            }
+            if (hub.player.playerHp < hub.player.playerMaxHp - 1) {
+                hub.playSoundEffect(hub.sound.healEffect, false);
+                hub.ui.textMessage.setText("");
+                hub.ui.textMessage.append("You gained 1HP");
+                hub.player.playerHp += 1;
+            } else {
+                hub.playSoundEffect(hub.sound.coinWin, false);
+                hub.ui.textMessage.setText("");
+                hub.ui.textMessage.append("You gained 10 coins");
+                hub.ui.setMoneyCount(10);
+            }
+        } else {
+            hub.ui.textMessage.setText("");
+            double enemyDmg = (random.nextInt(enemies.getEntityDmg()) + 1) * playerDefPercent;
+            System.out.println(enemies.getEntityName() + " " + df.format(enemyDmg));
+            hub.player.playerHp -= enemyDmg;
+            hub.player.playerCurrentStats();
+            hub.ui.textMessage.append(enemies.getEntityName() + " gave you " + enemyDmg + " dmg \n " + "You: " + hub.player.playerHp + " HP left");
+            if (hub.player.playerHp <= 0) {
+                hub.player.playerHp = 1;
+                hub.player.playerCurrentStats();
+                hub.event.gameOverScreen(4);
+                hub.event.gameOverScreen(3);
+                hub.event.gameOverScreen(6);
+                restartEnemies();
+            }
+        }
+    }
+
+    public void specialAttack() {
+        hub.ui.textMessage.setText("coming soon");
+    }
 }

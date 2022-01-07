@@ -31,6 +31,17 @@ public class Sound {
     public File forge = new File("src/res/storage/forge.mp3");
     public File swordSlash = new File("src/res/storage/swordSlash.mp3");
     public File punch = new File("src/res/storage/punch.mp3");
+    public File moneyEarn = new File("src/res/storage/moneyEarn.mp3");
+    public File coinWin = new File("src/res/storage/coinWin.mp3");
+    public File moneyEarnMore = new File("src/res/storage/moneyEarnMore.mp3");
+    public File healEffect = new File("src/res/storage/healEffect.mp3");
+    public File fullHealEffect = new File("src/res/storage/fullHealEffect.mp3");
+    public File daggerHit = new File("src/res/storage/daggerHit.mp3");
+    public File ratBite = new File("src/res/storage/ratBite.mp3");
+    public File wolfAttack = new File("src/res/storage/wolfAttack.mp3");
+    public File fireBall = new File("src/res/storage/fireBall.mp3");
+    public File chestOpen = new File("src/res/storage/chestOpen.mp3");
+    public File finalChestOpen = new File("src/res/storage/finalChestOpen.mp3");
     //CHARACTERS SPEECH
 
     //TEXT SPEECH

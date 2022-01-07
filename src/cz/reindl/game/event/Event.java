@@ -15,6 +15,7 @@ public class Event {
         hub.ui.panelBackground[currentScreen].setVisible(false);
         hub.ui.panelHeathBar.setVisible(false);
         hub.ui.panelInventory.setVisible(false);
+        hub.ui.labelInventory.setVisible(false);
         hub.ui.panelHp.setVisible(false);
         hub.ui.textMessage.setVisible(false);
         hub.ui.labelTitle.setVisible(true);
@@ -27,6 +28,7 @@ public class Event {
     public void gameOverScreenApply() {
         hub.ui.labelTitle.setVisible(false);
         hub.ui.restartButton.setVisible(false);
+        hub.ui.labelInventory.setVisible(true);
         hub.player.playerDefaultStats();
     }
 
@@ -114,6 +116,7 @@ public class Event {
 
     public void liquor() {
         if (hub.player.playerHp != hub.player.playerMaxHp - 1) {
+            hub.playSoundEffect(hub.sound.fullHealEffect, false);
             hub.ui.textMessage.setText("You recovered full hp\n");
             hub.player.playerHp = hub.player.playerMaxHp - 1;
             hub.player.liquor = false;
@@ -125,11 +128,13 @@ public class Event {
     }
 
     public void chest() {
-        if (!hub.player.knife) {
+        if (!hub.player.sword) {
+            hub.sound.currentSoundEffect = hub.sound.chestOpen;
+            hub.playSoundEffect(hub.sound.currentSoundEffect, false);
             hub.ui.setMoneyCount(100);
-            hub.ui.textMessage.setText("You opened the chest and found a knife!\n (max dmg + 3)");
+            hub.ui.textMessage.setText("You opened the chest and found a sword!\n (max dmg + 3)");
             hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/sword.png"));
-            hub.player.knife = true;
+            hub.player.sword = true;
             hub.player.playerCurrentStats();
             hub.event.scenePubInside();
         } else {
@@ -141,6 +146,7 @@ public class Event {
         switch (questCount) {
             case 0 -> {
                 if (!hub.player.key) {
+                    hub.playSoundEffect(hub.sound.moneyEarn, false);
                     hub.ui.textMessage.setText("You retrieved a skeleton key!");
                     hub.ui.consecutiveText("What's the key for?");
                     hub.ui.labelQuestItem.setIcon(hub.ui.jarImg("icon/skeletonKey.png"));
@@ -159,7 +165,7 @@ public class Event {
     public void guard() {
         //hub.ui.textMessage.setText("Hello there");
         if (!hub.player.shield) {
-            if (!hub.player.knife) {
+            if (!hub.player.sword) {
                 if (hub.player.playerHp >= 1) {
                     hub.ui.textMessage.setText("Don't even try! \n(hp - 1)");
                     hub.player.playerHp--;
@@ -167,7 +173,7 @@ public class Event {
                     hub.ui.textMessage.setText("You died\n");
                     hub.event.gameOverScreen(1);
                 }
-            } else if (hub.player.knife) {
+            } else if (hub.player.sword) {
                 hub.ui.textMessage.setText("You won and earned shield\n + (Unlocked block animation)");
                 hub.player.shield = true;
             }
@@ -311,7 +317,7 @@ public class Event {
         hub.player.playerHp = 10 - 1;
         hub.player.playerDmg = 100;
         hub.ui.setMoneyCount(10);
-        hub.player.playerDef = 2;
+        hub.player.playerDef = 50;
         hub.player.playerCurrentStats();
     }
 }
