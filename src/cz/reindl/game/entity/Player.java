@@ -67,7 +67,7 @@ public class Player {
 
     public void playerCurrentStats() {
         //REMOVING HEARTH ICONS
-        int i = 1;
+        int i = 0;
         while (i < 10) {
             hub.ui.labelHp[i].setVisible(false);
             i++;
@@ -75,7 +75,7 @@ public class Player {
 
         //Setting visible hearth icons equal to player's HP
         int currentHp = playerHp;
-        while (currentHp >= 0) {
+        while (currentHp >= 0) { // FIXME: 07.01.2022 >0 -> 9HP, >=0 -> 10HP but it's actually 9
             hub.ui.labelHp[currentHp].setVisible(true);
             currentHp--;
         }

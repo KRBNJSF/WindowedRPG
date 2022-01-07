@@ -37,8 +37,10 @@ public class Event {
         hub.ui.textMessage.setVisible(true);
         hub.ui.panelBackground[1].setVisible(true);
         hub.ui.panelBackground[2].setVisible(false);
+        hub.ui.panelBackground[3].setVisible(false);
         hub.ui.panelBackground[5].setVisible(false);
         hub.ui.panelBackground[6].setVisible(false);
+        hub.ui.panelBackground[8].setVisible(false);
         hub.ui.textMessage.setText("Forest");
         hub.ui.consecutiveText("Welcome");
 
@@ -70,6 +72,7 @@ public class Event {
         hub.ui.panelBackground[2].setVisible(true);
         hub.ui.panelBackground[3].setVisible(false);
         hub.ui.panelBackground[6].setVisible(false);
+        hub.ui.panelBackground[8].setVisible(false);
         hub.ui.textMessage.setText("Town\n");
         hub.ui.consecutiveText("Hmm?");
 
@@ -87,6 +90,7 @@ public class Event {
         hub.ui.panelBackground[3].setVisible(true);
         hub.ui.panelBackground[4].setVisible(false);
         hub.ui.panelBackground[6].setVisible(false);
+        hub.ui.panelBackground[8].setVisible(false);
         hub.ui.textMessage.setText("Tavern\n");
 
         hub.stopMusic(hub.sound.currentMusic);
@@ -124,7 +128,7 @@ public class Event {
         if (!hub.player.knife) {
             hub.ui.setMoneyCount(100);
             hub.ui.textMessage.setText("You opened the chest and found a knife!\n (max dmg + 3)");
-            hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/knife.png"));
+            hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/sword.png"));
             hub.player.knife = true;
             hub.player.playerCurrentStats();
             hub.event.scenePubInside();
@@ -217,9 +221,11 @@ public class Event {
         hub.sound.currentMusic = hub.sound.forge;
         hub.playMusic(hub.sound.currentMusic, true);
         hub.ui.panelBackground[2].setVisible(false);
+        hub.ui.panelBackground[3].setVisible(false);
         hub.ui.panelBackground[5].setVisible(true);
         hub.ui.panelBackground[6].setVisible(false);
         hub.ui.panelBackground[7].setVisible(false);
+        hub.ui.panelBackground[8].setVisible(false);
         hub.ui.textMessage.setText("Town square 2\n");
         hub.player.playerCurrentStats();
     }
@@ -257,12 +263,16 @@ public class Event {
         hub.ui.panelBackground[5].setVisible(false);
         hub.ui.panelBackground[6].setVisible(false);
         hub.ui.panelBackground[7].setVisible(true);
+        hub.ui.panelBackground[8].setVisible(false);
     }
 
     public void tavernMenu() {
         hub.ui.panelBackground[3].setVisible(false);
+        hub.ui.panelBackground[2].setVisible(false);
+        hub.ui.panelBackground[4].setVisible(false);
         hub.ui.panelBackground[8].setVisible(true);
         hub.ui.panelBackground[6].setVisible(false);
+        hub.ui.panelBackground[5].setVisible(false);
     }
 
     public void buyBeer() {

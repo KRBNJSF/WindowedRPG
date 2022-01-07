@@ -24,12 +24,17 @@ public class Fight {
 
     public void attack() {
         hub.player.playerCurrentStats();
+        if (hub.player.knife) {
+            hub.playSoundEffect(hub.sound.swordSlash, false);
+        } else if (hub.player.hand) {
+            hub.playSoundEffect(hub.sound.punch, false);
+        }
         hub.ui.healthBarProgress.setMaximum(enemies.entityMaxHp);
         int playerDmg = (random.nextInt(hub.player.playerDmg) + 1) * enemyDef;
         hub.ui.textMessage.setText("");
         enemies.setEntityHp(enemies.getEntityHp() - playerDmg);
         hub.ui.textMessage.append("You hit " + enemies.getEntityName() + " and gave him " + playerDmg + " dmg \n" + enemies.getEntityName() + ": " + enemies.getEntityHp() + " HP left \n");
-        hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp);
+        hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
         hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
 
         if (enemies.getEntityHp() <= 0) {
@@ -39,20 +44,22 @@ public class Fight {
 
             switch (count) {
                 case 1 -> {
+                    hub.ui.panelHeathBar.setBounds(hub.ui.labelWolf.getX(), hub.ui.labelWolf.getY(), 200, 50);
                     hub.ui.setMoneyCount(10);
                     hub.fight.setEnemy(Enemies.WOLF);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
-                    hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp);
+                    hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
                     //hub.ui.healthBarProgress.setMaximum(enemies.entityMaxHp);
                     hub.ui.labelRat.setVisible(false);
                     hub.ui.labelWolf.setVisible(true);
                     winScreen();
                 }
                 case 2 -> {
+                    hub.ui.panelHeathBar.setBounds(hub.ui.labelKnight.getX(), hub.ui.labelKnight.getY(), 200, 50);
                     hub.ui.setMoneyCount(20);
                     hub.fight.setEnemy(Enemies.KNIGHT);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
-                    hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp);
+                    hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
                     hub.ui.labelWolf.setVisible(false);
                     hub.ui.labelKnight.setVisible(true);
                     winScreen();
@@ -62,21 +69,24 @@ public class Fight {
                             "Look inside to find out what you got");
                     hub.ui.labelKnight.setVisible(false);
                     hub.ui.labelChest.setVisible(true);
+                    hub.ui.panelHeathBar.setVisible(false);
                 }
                 case 4 -> {
+                    hub.ui.panelHeathBar.setBounds(hub.ui.labelOgre.getX(), hub.ui.labelOgre.getY(), 200, 50);
                     hub.ui.setMoneyCount(50);
                     hub.fight.setEnemy(Enemies.OGRE);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
-                    hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp);
+                    hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
                     hub.ui.labelChest.setVisible(false);
                     hub.ui.labelOgre.setVisible(true);
                     winScreen();
                 }
                 case 5 -> {
+                    hub.ui.panelHeathBar.setBounds(hub.ui.labelWizard.getX(), hub.ui.labelWizard.getY(), 200, 50);
                     hub.ui.setMoneyCount(50);
                     hub.fight.setEnemy(Enemies.WIZARD);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
-                    hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp);
+                    hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
                     hub.ui.labelOgre.setVisible(false);
                     hub.ui.labelWizard.setVisible(true);
                     winScreen();
@@ -136,9 +146,10 @@ public class Fight {
         hub.ui.labelOgre.setVisible(false);
         hub.ui.labelWizard.setVisible(false);
 
+        hub.ui.panelHeathBar.setBounds(hub.ui.labelRat.getX() + 50, hub.ui.labelRat.getY() - 20, 200, 30);
         hub.ui.healthBarProgress.setMaximum(Enemies.RAT.entityMaxHp);
         hub.ui.healthBarProgress.setValue(Enemies.RAT.entityMaxHp);
-        hub.ui.healthBarProgress.setString(Enemies.RAT.entityHp + "/" + Enemies.RAT.entityMaxHp);
+        hub.ui.healthBarProgress.setString(Enemies.RAT.entityHp + "/" + Enemies.RAT.entityMaxHp + "HP");
     }
 
 }

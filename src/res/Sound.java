@@ -15,7 +15,8 @@ public class Sound {
         this.hub = gameHub;
     }
 
-    MP3Player player;
+    MP3Player musicPlayer;
+    MP3Player soundEffectPlayer;
     public File currentMusic;
     public File currentSoundEffect;
 
@@ -28,6 +29,8 @@ public class Sound {
     //SOUND EFFECTS
     public File fightWin = new File("src/res/storage/fightWin.mp3");
     public File forge = new File("src/res/storage/forge.mp3");
+    public File swordSlash = new File("src/res/storage/swordSlash.mp3");
+    public File punch = new File("src/res/storage/punch.mp3");
     //CHARACTERS SPEECH
 
     //TEXT SPEECH
@@ -41,22 +44,43 @@ public class Sound {
     //MUSIC SETTINGS
     public void setFile(File name) {
         try {
-            player = new MP3Player(name);
+            musicPlayer = new MP3Player(name);
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
     public void playSound(File name) {
-        player.play();
+        musicPlayer.play();
     }
 
     public void loopSound(Boolean loop) {
-        player.setRepeat(loop);
+        musicPlayer.setRepeat(loop);
     }
 
     public void stopSound(File name) {
-        player.stop();
+        musicPlayer.stop();
+    }
+
+    //SOUND EFFECTS SETTINGS
+    public void setSoundEffect(File name) {
+        try {
+            soundEffectPlayer = new MP3Player(name);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void playSoundEffect(File name) {
+        soundEffectPlayer.play();
+    }
+
+    public void loopSoundEffect(Boolean loop) {
+        soundEffectPlayer.setRepeat(loop);
+    }
+
+    public void stopSoundEffect(File name) {
+        soundEffectPlayer.stop();
     }
 
 }

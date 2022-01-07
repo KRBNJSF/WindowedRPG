@@ -28,13 +28,14 @@ public class GameHub {
         playMusic(sound.currentMusic, true);
 
         //event.loadingScreen();
-        //ui.setLoadingScreen(1);
+        ui.setLoadingScreen(1);
 
         //barCheck.progressBarCheck();
         event.spawnScreen(); //First executed scene method
         player.playerDefaultStats();
     }
 
+    //MUSIC
     public void playMusic(File file, Boolean loop) {
         sound.setFile(file);
         sound.playSound(file);
@@ -43,6 +44,17 @@ public class GameHub {
 
     public void stopMusic(File file) {
         sound.stopSound(file);
+    }
+
+    //SOUND EFFECTS
+    public void playSoundEffect(File file, Boolean loop) {
+        sound.setSoundEffect(file);
+        sound.playSoundEffect(file);
+        sound.loopSoundEffect(loop);
+    }
+
+    public void stopSoundEffect(File file) {
+        sound.stopSoundEffect(file);
     }
 
 }

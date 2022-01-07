@@ -38,6 +38,7 @@ public class UserInterface {
     public JPanel panelHp;
     public JLabel[] labelHp = new JLabel[10];
     public JPanel panelInventory;
+    public JLabel labelInventory;
     //items
     public JLabel labelWeapon, labelChestArmor, labelShield, labelQuestItem, labelCoins;
     public JButton buttonMapItem1, buttonMapItem2, buttonMapItem3, buttonMapItem4;
@@ -119,13 +120,14 @@ public class UserInterface {
         textInfo();
 
         panelHeathBar = new JPanel();
-        panelHeathBar.setBounds(100, 100, 200, 50);
+        panelHeathBar.setBounds(100, 100, 200, 30);
         panelHeathBar.setBackground(Color.BLUE);
+        panelHeathBar.setOpaque(false);
 
         healthBarProgress = new JProgressBar();
         healthBarProgress.setMinimum(0);
         healthBarProgress.setStringPainted(true); //Paints the percentage of bar
-        healthBarProgress.setPreferredSize(new Dimension(200, 50));
+        healthBarProgress.setPreferredSize(new Dimension(200, 30));
         healthBarProgress.setForeground(Color.RED);
         healthBarProgress.setBackground(Color.BLACK);
         healthBarProgress.setFont(new Font("MV Boli", Font.BOLD, 25));
@@ -138,6 +140,7 @@ public class UserInterface {
         panelHp = new JPanel();
         panelHp.setBounds(120, 5, 320, 50);
         panelHp.setBackground(Color.green);
+        //panelHp.setOpaque(false);
         panelHp.setLayout(new GridLayout(1, 5)); //HP grid
         panelHp.setToolTipText("HealthPoints");
         window.add(panelHp);
@@ -149,12 +152,19 @@ public class UserInterface {
             panelHp.add(labelHp[i]);
         }
 
+        //INVENTORY
         panelInventory = new JPanel();
         panelInventory.setBounds(650, 5, 200, 50);
-        panelInventory.setBackground(Color.GREEN); // FIXME: 02.01.2022 Set new color
+        panelInventory.setBackground(Color.GREEN);
+        //panelInventory.setOpaque(false); // FIXME: 07.01.2022
         panelInventory.setLayout(new GridLayout(1, 6)); //Equipment grid
         panelInventory.setToolTipText("Inventory");
         window.add(panelInventory);
+
+        labelInventory = new JLabel("", SwingConstants.CENTER);
+        labelInventory.setBounds(650, 5, 200, 50);  //Image position relative to panel
+        labelInventory.setIcon(jarImg("panels/inventoryPanel.png"));
+        panelInventory.add(labelInventory);
 
         //ITEMS
         labelWeapon = new JLabel();
@@ -261,7 +271,7 @@ public class UserInterface {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                labelObject.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                setCursorIcon(labelObject, "icon/cursor/cursorGet.png", "cursorGet");
             }
 
             @Override
@@ -274,10 +284,10 @@ public class UserInterface {
         //changeScreen(1, 0, 150, 50, 50, "mainScreen2");
     }
 
-    public JLabel enemyObject(int screenNum, int x, int y, int width, int height, String fileName, String menuItem1, String menuItem2, String menuItem3, String menuItem1Command, String menuItem2Command, String menuItem3Command) {
+    public JLabel enemyObject(int screenNum, int x, int y, int width, int height, String fileName, String menuItem1, String menuItem2, String menuItem3, String menuItem4, String menuItem1Command, String menuItem2Command, String menuItem3Command, String menuItem4Command) {
         //Menu
         JPopupMenu popupMenu = new JPopupMenu();
-        JMenuItem[] menuItem = new JMenuItem[3]; //Rows in the popup menu
+        JMenuItem[] menuItem = new JMenuItem[4]; //Rows in the popup menu
         menuItem[0] = new JMenuItem(menuItem1);
         menuItem[0].addActionListener(gameHub.actionHandler);
         menuItem[0].setActionCommand(menuItem1Command);
@@ -290,9 +300,14 @@ public class UserInterface {
         menuItem[2].addActionListener(gameHub.actionHandler);
         menuItem[2].setActionCommand(menuItem3Command);
 
+        menuItem[3] = new JMenuItem(menuItem4);
+        menuItem[3].addActionListener(gameHub.actionHandler);
+        menuItem[3].setActionCommand(menuItem4Command);
+
         popupMenu.add(menuItem[0]);
         popupMenu.add(menuItem[1]);
         popupMenu.add(menuItem[2]);
+        popupMenu.add(menuItem[3]);
 
         //Objects
         Border border = BorderFactory.createLineBorder(Color.yellow, 2);
@@ -347,33 +362,11 @@ public class UserInterface {
             @Override
             public void mouseEntered(MouseEvent e) {
                 if (gameHub.fight.count == 3) {
-                    try {
-                        labelObject.setCursor(
-                                Toolkit
-                                        .getDefaultToolkit()
-                                        .createCustomCursor(
-                                                jarImg("icon/cursor/cursor.png").getImage(),
-                                                new Point(0, 0),
-                                                "My cursor3"
-                                        )
-                        );
-                    } catch (Exception exception) {
-                        System.out.println(exception);
-                    }
+                    setCursorIcon(labelObject, "icon/cursor/cursorGet.png", "cursorGet");
+                } else if (!gameHub.player.knife) {
+                    setCursorIcon(labelObject, "icon/cursor/cursorPunch.png", "cursorPunch");
                 } else {
-                    try {
-                        labelObject.setCursor(
-                                Toolkit
-                                        .getDefaultToolkit()
-                                        .createCustomCursor(
-                                                jarImg("icon/cursor/cursorSword.png").getImage(),
-                                                new Point(0, 0),
-                                                "My cursor2"
-                                        )
-                        );
-                    } catch (Exception exception) {
-                        System.out.println(exception);
-                    }
+                    setCursorIcon(labelObject, "icon/cursor/cursorSword.png", "cursorSword");
                 }
             }
 
@@ -389,31 +382,10 @@ public class UserInterface {
     }
 
     public JLabel shopObject(int screenNum, int x, int y, int width, int height, String fileName, String menuItem1, String menuItem2, String menuItem3, String menuItem1Command, String menuItem2Command, String menuItem3Command) {
-        //Menu
-        JPopupMenu popupMenu = new JPopupMenu();
-        JMenuItem[] menuItem = new JMenuItem[3]; //Rows in the popup menu
-        menuItem[0] = new JMenuItem(menuItem1);
-        menuItem[0].addActionListener(gameHub.actionHandler);
-        menuItem[0].setActionCommand(menuItem1Command);
-
-        menuItem[1] = new JMenuItem(menuItem2);
-        menuItem[1].addActionListener(gameHub.actionHandler);
-        menuItem[1].setActionCommand(menuItem2Command);
-
-        menuItem[2] = new JMenuItem(menuItem3);
-        menuItem[2].addActionListener(gameHub.actionHandler);
-        menuItem[2].setActionCommand(menuItem3Command);
-
-        popupMenu.add(menuItem[0]);
-        popupMenu.add(menuItem[1]);
-        popupMenu.add(menuItem[2]);
-
         //Objects
         JLabel labelObject = new JLabel();
         labelObject.setBounds(x, y, width, height);
-        // FIXME: 04.01.2022 labelObject.setBorder(border);
-        //labelObject.setOpaque(true); //Setting visible background of the object
-        //labelObject.setBackground(Color.yellow); //Setting opaques color
+        //labelObject.setBorder(border);
 
         ImageIcon imgObject = jarImg(fileName);
         labelObject.setIcon(imgObject);
@@ -422,20 +394,17 @@ public class UserInterface {
         labelObject.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                try {
-                    labelObject.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                    Thread.sleep(100);
-                    labelObject.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
+                if (labelObject == labelBeer) {
+                    gameHub.event.beer();
+                }
+                if (labelObject == labelLiquor) {
+                    gameHub.event.liquor();
                 }
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
-                if (SwingUtilities.isRightMouseButton(e)) {
-                    popupMenu.show(labelObject, e.getX(), e.getY()); //Cursor coordinates
-                }
+
             }
 
             @Override
@@ -444,7 +413,7 @@ public class UserInterface {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                labelObject.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                setCursorIcon(labelObject, "icon/cursor/cursorGet.png", "cursorGet");
             }
 
             @Override
@@ -468,7 +437,6 @@ public class UserInterface {
         arrowButton.setFocusPainted(false);
         arrowButton.setBorderPainted(false);
         arrowButton.setToolTipText(text);
-        arrowButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         if (x > 200) {
             arrowButton.setIcon(jarImg("icon/arrowRight.png"));
             arrowButton.addActionListener(l -> System.out.println("Right arrow button clicked " + ++i[0] + " times"));
@@ -490,7 +458,6 @@ public class UserInterface {
         buttonIcon.setFocusPainted(false); //Border around image
         buttonIcon.setBorderPainted(false); //Border around button
         buttonIcon.setBackground(Color.gray);
-        buttonIcon.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         buttonIcon.setToolTipText(text);
 
         buttonIcon.addActionListener(gameHub.actionHandler);
@@ -526,8 +493,8 @@ public class UserInterface {
         buttonIcon(3, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map");
         changeScreenButton(3, 710, 150, 50, 50, "mainScreen2", "Town");
         gameObject(3, 350, 150, 130, 100, ("object/blankTransparent.png"), "Enter", "-", "-", "enterDungeon", "-", "-");
-        labelBeer = shopObject(3, 150, 200, 75, 75, ("object/beer.png"), "Drink", "-", "-", "drinkBeer", "-", "-");
-        labelLiquor = shopObject(3, 230, 270, 75, 75, ("object/beer.png"), "Drink", "-", "-", "drinkLiquor", "-", "-");
+        labelBeer = shopObject(3, 150, 270, 96, 105, ("object/fullBeer.png"), "Drink", "-", "-", "drinkBeer", "-", "-");
+        labelLiquor = shopObject(3, 230, 270, 52, 80, ("object/liquor.png"), "Drink", "-", "-", "drinkLiquor", "-", "-");
         gameObject(3, 560, 100, 150, 208, ("entity/innkeeper.png"), "Menu", "Talk", "-", "tavernMenu", "talkBartender", "-");
         gameObject(3, 360, 250, 111, 205, ("entity/dwarf.png"), "Talk", "-", "Arena", "getQuest", "-", "-");
 
@@ -547,12 +514,12 @@ public class UserInterface {
         gameBackground(4, "bg/Dungeon.png");
         //changeScreenButton(4, 710, 150, 50, 50, "enterPub");
         //setBar(1, "f", 5);
-        labelRat = enemyObject(4, 350, 350, 91, 70, ("entity/Rat.png"), "Attack", "Defend", "Run", "fightEnemy", "", "runAway");
-        labelWolf = enemyObject(4, 300, 220, 222, 200, ("entity/wolf.png"), "Attack", "Defend", "Run", "fightEnemy2", "", "runAway");
-        labelKnight = enemyObject(4, 320, 56, 200, 388, ("entity/warrior.png"), "Attack", "Defend", "Run", "fightEnemy2", "", "runAway");
-        labelOgre = enemyObject(4, 320, 56, 200, 388, ("entity/ogre.png"), "Attack", "Defend", "Run", "fightEnemy2", "", "runAway");
-        labelWizard = enemyObject(4, 320, 100, 120, 300, ("entity/wizard.png"), "Attack", "Defend", "Run", "fightEnemy2", "-", "runAway");
-        labelChest = enemyObject(4, 350, 330, 150, 180, ("object/Chest.png"), "Open", "-", "-", "openChest", "-", "-");
+        labelRat = enemyObject(4, 350, 350, 91, 70, ("entity/Rat.png"), "Attack", "Defend", "Special Attack", "Run Away", "fightEnemy", "", "specialAttack", "runAway");
+        labelWolf = enemyObject(4, 300, 220, 222, 200, ("entity/wolf.png"), "Attack", "Defend", "Special Attack", "Run Away", "fightEnemy2", "", "specialAttack", "runAway");
+        labelKnight = enemyObject(4, 320, 56, 200, 388, ("entity/warrior.png"), "Attack", "Defend", "Special Attack", "Run Away", "fightEnemy2", "", "specialAttack", "runAway");
+        labelOgre = enemyObject(4, 320, 56, 200, 388, ("entity/ogre.png"), "Attack", "Defend", "Special Attack", "Run Away", "fightEnemy2", "", "specialAttack", "runAway");
+        labelWizard = enemyObject(4, 320, 100, 120, 300, ("entity/wizard.png"), "Attack", "Defend", "Special Attack", "Run Away", "fightEnemy2", "-", "specialAttack", "runAway");
+        labelChest = enemyObject(4, 350, 330, 150, 180, ("object/Chest.png"), "Open", "-", "-", "-", "openChest", "-", "-", "-");
 
         //TAVERN SHOP
         gameBackground(8, "bg/map.png");
@@ -676,6 +643,38 @@ public class UserInterface {
         }
     }
 
+    public void setCursorIcon(JLabel label, String path, String name) {
+        try {
+            label.setCursor(
+                    Toolkit
+                            .getDefaultToolkit()
+                            .createCustomCursor(
+                                    jarImg(path).getImage(),
+                                    new Point(0, 0),
+                                    name
+                            )
+            );
+        } catch (Exception exception) {
+            System.out.println(exception);
+        }
+    }
+
+    public void setCursorIconButton(JButton button, String path, String name) {
+        try {
+            button.setCursor(
+                    Toolkit
+                            .getDefaultToolkit()
+                            .createCustomCursor(
+                                    jarImg(path).getImage(),
+                                    new Point(0, 0),
+                                    name
+                            )
+            );
+        } catch (Exception exception) {
+            System.out.println(exception);
+        }
+    }
+
     public ImageIcon imgIcon(String imgSrc) {
         return new ImageIcon((imgSrc));
     }
@@ -685,44 +684,20 @@ public class UserInterface {
         gameHub.ui.moneyCount.setText(String.valueOf(gameHub.player.playerCoins));
     }
 
-    public void setBar(int screenNum, String name, int hp) {
-        JProgressBar bar = new JProgressBar();
-        bar.setValue(0); //Percentage of bar
-        bar.setBounds(300, 200, 300, 50);
-        bar.setStringPainted(true); //Paints the percentage of bar
-        bar.setFont(new Font("MV Boli", Font.BOLD, 25));
-        bar.setForeground(Color.RED);
-        bar.setBackground(Color.BLACK);
-
-        int counter = hp;
-        while (counter > 0) {
-            bar.setValue(counter);
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            counter -= 1;
-        }
-        bar.setString("Done");
-
-        panelBackground[screenNum].add(bar);
-    }
-
     public void loadingScreen() {
         bar = new JProgressBar();
-        labelLoadingText = new JLabel("Loading", JLabel.CENTER);
-        labelLoadingText.setBounds(0, 0, 1024, 768);
-        labelLoadingText.setForeground(Color.red);
-        labelLoadingText.setFont(new Font("Times New Roman", Font.PLAIN, 70));
+        labelLoadingText = new JLabel("Loading...", JLabel.CENTER);
+        labelLoadingText.setBounds(0, 190, 1024, 768);
+        labelLoadingText.setForeground(Color.white);
+        labelLoadingText.setFont(new Font("Times New Roman", Font.BOLD, 20));
         labelLoadingText.setVisible(false);
         window.add(labelLoadingText);
 
         bar.setValue(0); //Percentage of bar
-        bar.setBounds(350, 500, 300, 50);
+        bar.setBounds(162, 600, 700, 20);
         bar.setStringPainted(true); //Paints the percentage of bar
-        bar.setFont(new Font("MV Boli", Font.BOLD, 25));
-        bar.setForeground(Color.RED);
+        bar.setFont(new Font("MV Boli", Font.BOLD, 15));
+        bar.setForeground(Color.CYAN);
         bar.setBackground(Color.BLACK);
         bar.setVisible(false);
         window.add(bar);
@@ -731,6 +706,7 @@ public class UserInterface {
     public void setLoadingScreen(int currentScreen) {
         bar.setValue(0);
         gameHub.ui.panelBackground[currentScreen].setVisible(false);
+        gameHub.ui.panelHeathBar.setVisible(false);
         gameHub.ui.panelInventory.setVisible(false);
         gameHub.ui.panelHp.setVisible(false);
         gameHub.ui.textMessage.setVisible(false);
@@ -744,7 +720,7 @@ public class UserInterface {
             bar.setVisible(true);
             bar.setValue(counter);
             try {
-                Thread.sleep(50);
+                Thread.sleep(5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -752,11 +728,17 @@ public class UserInterface {
         }
         bar.setString("Done");
 
+        pressKey();
+
         labelLoadingText.setVisible(false);
         bar.setVisible(false);
         gameHub.ui.panelInventory.setVisible(true);
         gameHub.ui.panelHp.setVisible(true);
         gameHub.ui.textMessage.setVisible(true);
+    }
+
+    public void pressKey() {
+
     }
 
 }
