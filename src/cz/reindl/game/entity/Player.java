@@ -44,6 +44,7 @@ public class Player {
         playerMaxDef = 50;
         playerDef = 0;
         playerCoins = 0;
+
         hand = true;
         knife = false;
         sword = false;
@@ -61,6 +62,7 @@ public class Player {
         mapItem4 = false;
 
         hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/hand.png"));
+        hub.ui.labelWeapon.setName("Hand +0 DMG");
         hub.ui.labelQuestItem.setIcon(hub.ui.jarImg("icon/coin.png"));
         hub.ui.moneyCount.setText(String.valueOf(playerCoins));
         hub.event.questCount = 0;
@@ -97,9 +99,11 @@ public class Player {
         hub.ui.buttonMapItem2.setVisible(mapItem2);
         hub.ui.buttonMapItem3.setVisible(mapItem3);
         hub.ui.buttonMapItem4.setVisible(mapItem4);
+        hub.ui.buttonKnife.setVisible(!knife);
+        hub.ui.buttonTorso.setVisible(!torso);
 
         if (sword) {
-            playerDmg = 4;
+            playerDmg = 5;
         }
         if (knife) {
             playerDmg = 3;

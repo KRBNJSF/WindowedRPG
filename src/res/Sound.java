@@ -42,6 +42,7 @@ public class Sound {
     public File fireBall = new File("src/res/storage/fireBall.mp3");
     public File chestOpen = new File("src/res/storage/chestOpen.mp3");
     public File finalChestOpen = new File("src/res/storage/finalChestOpen.mp3");
+    public File maceHit = new File("src/res/storage/maceHit.mp3");
     //CHARACTERS SPEECH
 
     //TEXT SPEECH

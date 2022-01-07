@@ -20,6 +20,7 @@ public class Event {
         hub.ui.textMessage.setVisible(false);
         hub.ui.labelTitle.setVisible(true);
         hub.ui.restartButton.setVisible(true);
+        hub.ui.textStats.setVisible(false);
 
         hub.stopMusic(hub.sound.currentMusic);
         hub.playMusic(hub.sound.fightWin, false);
@@ -37,12 +38,14 @@ public class Event {
         hub.ui.panelInventory.setVisible(true);
         hub.ui.panelHp.setVisible(true);
         hub.ui.textMessage.setVisible(true);
+        hub.ui.textStats.setVisible(false);
         hub.ui.panelBackground[1].setVisible(true);
         hub.ui.panelBackground[2].setVisible(false);
         hub.ui.panelBackground[3].setVisible(false);
         hub.ui.panelBackground[5].setVisible(false);
         hub.ui.panelBackground[6].setVisible(false);
         hub.ui.panelBackground[8].setVisible(false);
+        hub.ui.panelBackground[9].setVisible(false);
         hub.ui.textMessage.setText("Forest");
         hub.ui.consecutiveText("Welcome");
 
@@ -55,6 +58,7 @@ public class Event {
         hub.ui.panelInventory.setVisible(false);
         hub.ui.panelHp.setVisible(false);
         hub.ui.textMessage.setVisible(false);
+        hub.ui.textStats.setVisible(false);
 
         hub.ui.panelBackground[1].setVisible(false);
         hub.ui.panelBackground[2].setVisible(false);
@@ -62,12 +66,14 @@ public class Event {
         hub.ui.panelBackground[4].setVisible(false);
         hub.ui.panelBackground[3].setVisible(false);
         hub.ui.panelBackground[6].setVisible(false);
+        hub.ui.panelBackground[9].setVisible(false);
 
         hub.stopMusic(hub.sound.currentMusic);
     }
 
     public void sceneTownSquare() {
         hub.ui.panelHeathBar.setVisible(false);
+        hub.ui.textStats.setVisible(false);
         hub.player.mapItem2 = true;
         hub.ui.panelBackground[1].setVisible(false);
         //hub.ui.setLoadingScreen(1);
@@ -75,6 +81,7 @@ public class Event {
         hub.ui.panelBackground[3].setVisible(false);
         hub.ui.panelBackground[6].setVisible(false);
         hub.ui.panelBackground[8].setVisible(false);
+        hub.ui.panelBackground[9].setVisible(false);
         hub.ui.textMessage.setText("Town\n");
         hub.ui.consecutiveText("Hmm?");
 
@@ -87,12 +94,14 @@ public class Event {
 
     public void scenePubInside() {
         hub.ui.panelHeathBar.setVisible(false);
+        hub.ui.textStats.setVisible(false);
         hub.player.mapItem3 = true;
         hub.ui.panelBackground[2].setVisible(false);
         hub.ui.panelBackground[3].setVisible(true);
         hub.ui.panelBackground[4].setVisible(false);
         hub.ui.panelBackground[6].setVisible(false);
         hub.ui.panelBackground[8].setVisible(false);
+        hub.ui.panelBackground[9].setVisible(false);
         hub.ui.textMessage.setText("Tavern\n");
 
         hub.stopMusic(hub.sound.currentMusic);
@@ -108,7 +117,7 @@ public class Event {
             hub.player.playerHp++;
             hub.player.beer = false;
             hub.player.playerCurrentStats();
-            //hub.playMusic(hub.sound.pubGreet, false);
+            hub.playSoundEffect(hub.sound.healEffect, false);
         } else {
             hub.ui.textMessage.setText("You are at full health \n");
         }
@@ -134,6 +143,7 @@ public class Event {
             hub.ui.setMoneyCount(100);
             hub.ui.textMessage.setText("You opened the chest and found a sword!\n (max dmg + 2)");
             hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/sword.png"));
+            hub.ui.labelWeapon.setName("Sword +3 DMG");
             hub.player.sword = true;
             hub.player.playerCurrentStats();
             hub.event.scenePubInside();
@@ -215,6 +225,8 @@ public class Event {
             hub.ui.panelBackground[5].setVisible(false);
             hub.ui.panelBackground[6].setVisible(false);
             hub.ui.panelBackground[8].setVisible(false);
+            hub.ui.panelBackground[9].setVisible(false);
+            hub.ui.textStats.setVisible(false);
         } else {
             hub.ui.textMessage.setText("Door is locked with a strange-looking lock. It looks almost like a skull.");
         }
@@ -232,6 +244,8 @@ public class Event {
         hub.ui.panelBackground[6].setVisible(false);
         hub.ui.panelBackground[7].setVisible(false);
         hub.ui.panelBackground[8].setVisible(false);
+        hub.ui.panelBackground[9].setVisible(false);
+        hub.ui.textStats.setVisible(false);
         hub.ui.textMessage.setText("Town square 2\n");
         hub.player.playerCurrentStats();
     }
@@ -248,6 +262,30 @@ public class Event {
         hub.ui.panelBackground[6].setVisible(true);
         hub.ui.panelBackground[7].setVisible(false);
         hub.ui.panelBackground[8].setVisible(false);
+        hub.ui.panelBackground[9].setVisible(false);
+        hub.ui.textStats.setVisible(false);
+    }
+
+    public void stats() {
+        hub.player.playerCurrentStats();
+        hub.ui.panelBackground[1].setVisible(false);
+        hub.ui.panelBackground[2].setVisible(false);
+        hub.ui.panelBackground[3].setVisible(false);
+        hub.ui.panelBackground[4].setVisible(false);
+        hub.ui.panelBackground[5].setVisible(false);
+        hub.ui.panelBackground[6].setVisible(false);
+        hub.ui.panelBackground[7].setVisible(false);
+        hub.ui.panelBackground[8].setVisible(false);
+        hub.ui.panelBackground[9].setVisible(true);
+        hub.ui.textStats.setVisible(true);
+        hub.ui.buttonStats.setVisible(false);
+
+        hub.ui.textStats.setText("");
+        hub.ui.textStats.append("HP: " + hub.player.playerHp + "\n");
+        hub.ui.textStats.append("DMG: " + "1 - " + hub.player.playerDmg + "\n");
+        hub.ui.textStats.append("Armor: " + hub.player.playerDef + "%\n");
+        hub.ui.textStats.append("Coins: " + hub.player.playerCoins + "\n");
+        hub.ui.textStats.append("Weapon: " + hub.ui.labelWeapon.getName());
     }
 
     public void currentScreen(int currentScreen) {
@@ -270,6 +308,8 @@ public class Event {
         hub.ui.panelBackground[6].setVisible(false);
         hub.ui.panelBackground[7].setVisible(true);
         hub.ui.panelBackground[8].setVisible(false);
+        hub.ui.panelBackground[9].setVisible(false);
+        hub.ui.textStats.setVisible(false);
     }
 
     public void tavernMenu() {
@@ -279,6 +319,8 @@ public class Event {
         hub.ui.panelBackground[8].setVisible(true);
         hub.ui.panelBackground[6].setVisible(false);
         hub.ui.panelBackground[5].setVisible(false);
+        hub.ui.panelBackground[9].setVisible(false);
+        hub.ui.textStats.setVisible(false);
     }
 
     public void buyBeer() {
@@ -313,6 +355,43 @@ public class Event {
         }
     }
 
+    public void buyKnife() {
+        int price = 10;
+        if (hub.player.playerCoins >= price && !hub.player.knife) {
+            hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/knife.png"));
+            hub.ui.labelWeapon.setName("Knife +1 DMG");
+            hub.player.knife = true;
+            hub.ui.setMoneyCount(-10);
+            hub.player.playerCurrentStats();
+            hub.ui.textMessage.setText("You bought Knife (Max DMG = 4)");
+            hub.ui.buttonKnife.setVisible(false);
+        } else {
+            if (price >= hub.player.playerCoins) {
+                hub.ui.textMessage.setText("You don't have enough coins\nPrice: 10 coins, " + (price - hub.player.playerCoins) + " remaining");
+            } else {
+                hub.ui.textMessage.setText("You already bought this item!");
+            }
+        }
+    }
+
+    public void buyTorso() {
+        int price = 20;
+        if (hub.player.playerCoins >= price && !hub.player.torso) {
+            hub.ui.labelChestArmor.setIcon(hub.ui.jarImg("icon/chestArmor.png"));
+            hub.player.torso = true;
+            hub.ui.setMoneyCount(-20);
+            hub.player.playerCurrentStats();
+            hub.ui.textMessage.setText("You bought ChestPlate : (Armor +20% -> " + hub.player.playerDef + "% / " + hub.player.playerMaxDef + "%)");
+            hub.ui.buttonTorso.setVisible(false);
+        } else {
+            if (price >= hub.player.playerCoins) {
+                hub.ui.textMessage.setText("You don't have enough coins\nPrice: 20 coins, " + (price - hub.player.playerCoins) + " remaining");
+            } else {
+                hub.ui.textMessage.setText("You already bought this item!");
+            }
+        }
+    }
+
     public void am() {
         hub.player.playerHp = 10 - 1;
         hub.player.playerDmg = 100;
@@ -320,4 +399,5 @@ public class Event {
         hub.player.playerDef = 50;
         hub.player.playerCurrentStats();
     }
+
 }

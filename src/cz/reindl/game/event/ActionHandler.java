@@ -36,6 +36,9 @@ public class ActionHandler implements ActionListener {
             case "tavernMenu" -> hub.event.tavernMenu();
             case "buyBeer" -> hub.event.buyBeer();
             case "buyLiquor" -> hub.event.buyLiquor();
+            case "buyKnife" -> hub.event.buyKnife();
+            case "buyTorso" -> hub.event.buyTorso();
+            case "stats" -> hub.event.stats();
             //FIGHT SCENE
 
             case "runAway" -> {
