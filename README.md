@@ -19,7 +19,7 @@
   And more...<br>
   
   - <b>Fixed: </b><br>
-  Few bugs
+  Few bugs<br>
   Enemy HP bar<br>
   After defeating an enemy and retrieving chest you can't leave the dungeon until you loot the chest<br>
   Sound effects and music<br>
