@@ -152,6 +152,7 @@ public class Fight {
                 hub.player.playerCurrentStats();
                 hub.event.gameOverScreen(4);
                 hub.event.gameOverScreen(3);
+                hub.event.gameOverScreen(2);
                 hub.event.gameOverScreen(6);
                 restartEnemies();
             }
@@ -162,6 +163,7 @@ public class Fight {
     public void winScreen() {
         hub.ui.textMessage.setText("You won");
         hub.stopMusic(hub.sound.currentMusic);
+        hub.playSoundEffect(hub.sound.fightWin, false);
         hub.event.scenePubInside();
     }
 
@@ -245,6 +247,7 @@ public class Fight {
                 hub.player.playerCurrentStats();
                 hub.event.gameOverScreen(4);
                 hub.event.gameOverScreen(3);
+                hub.event.gameOverScreen(2);
                 hub.event.gameOverScreen(6);
                 restartEnemies();
             }

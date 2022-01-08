@@ -12,6 +12,10 @@ public class Player {
     public int playerDef;
     public int playerMaxDef;
     public int playerCoins;
+    public int playerExp;
+    public int levelUpExp;
+    public int playerLevel;
+    public int points;
 
     public boolean hand;
     public boolean knife;
@@ -32,6 +36,10 @@ public class Player {
     public boolean mapItem3;
     public boolean mapItem4;
 
+    public boolean buttonDmg;
+    public boolean buttonHp;
+    public boolean buttonArmor;
+
 
     public Player(GameHub gameHub) {
         this.hub = gameHub;
@@ -44,6 +52,10 @@ public class Player {
         playerMaxDef = 50;
         playerDef = 0;
         playerCoins = 0;
+        playerExp = 0;
+        levelUpExp = 100;
+        playerLevel = 1;
+        points = 0;
 
         hand = true;
         knife = false;
@@ -61,10 +73,15 @@ public class Player {
         mapItem3 = false;
         mapItem4 = false;
 
+        buttonDmg = false;
+        buttonHp = false;
+        buttonArmor = false;
+
         hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/hand.png"));
-        hub.ui.labelWeapon.setName("Hand +0 DMG");
+        hub.ui.labelWeapon.setName("\nHand +0 DMG");
         hub.ui.labelQuestItem.setIcon(hub.ui.jarImg("icon/coin.png"));
         hub.ui.moneyCount.setText(String.valueOf(playerCoins));
+        hub.ui.xpProgress.setString(0 + " / " + 100);
         hub.event.questCount = 0;
         hub.fight.count = 0;
 
@@ -99,6 +116,11 @@ public class Player {
         hub.ui.buttonMapItem2.setVisible(mapItem2);
         hub.ui.buttonMapItem3.setVisible(mapItem3);
         hub.ui.buttonMapItem4.setVisible(mapItem4);
+
+        hub.ui.buttonIncreaseDmg.setVisible(buttonDmg);
+        hub.ui.buttonIncreaseHP.setVisible(buttonHp);
+        hub.ui.buttonIncreaseArmor.setVisible(buttonArmor);
+
         hub.ui.buttonKnife.setVisible(!knife);
         hub.ui.buttonTorso.setVisible(!torso);
 
@@ -114,6 +136,28 @@ public class Player {
         if (shield) {
             playerDef += 10;
         }
+        if (playerExp >= levelUpExp) {
+            setLevelUp();
+        }
+        if (points <= 0) {
+            hub.ui.buttonIncreaseDmg.setVisible(false);
+            hub.ui.buttonIncreaseHP.setVisible(false);
+            hub.ui.buttonIncreaseArmor.setVisible(false);
+        }
+    }
+
+    public void setLevelUp() {
+        buttonDmg = true;
+        buttonHp = true;
+        buttonArmor = true;
+        hub.ui.textMessage.setText("Level up!\n(1 upgrade point)");
+        points++;
+        hub.ui.setMoneyCount(20);
+        hub.playSoundEffect(hub.sound.levelUp, false);
+        hub.ui.setExpCount(-levelUpExp);
+        playerLevel++;
+        levelUpExp += 25;
+        hub.ui.xpProgress.setString(playerExp + " / " + levelUpExp);
     }
 
 }

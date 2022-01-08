@@ -21,15 +21,17 @@ public class Event {
         hub.ui.labelTitle.setVisible(true);
         hub.ui.restartButton.setVisible(true);
         hub.ui.textStats.setVisible(false);
+        hub.ui.panelXpBar.setVisible(false);
 
         hub.stopMusic(hub.sound.currentMusic);
-        hub.playMusic(hub.sound.fightWin, false);
+        hub.playMusic(hub.sound.loseSound, false);
     }
 
     public void gameOverScreenApply() {
         hub.ui.labelTitle.setVisible(false);
         hub.ui.restartButton.setVisible(false);
         hub.ui.labelInventory.setVisible(true);
+        hub.ui.panelXpBar.setVisible(true);
         hub.player.playerDefaultStats();
     }
 
@@ -79,6 +81,8 @@ public class Event {
         //hub.ui.setLoadingScreen(1);
         hub.ui.panelBackground[2].setVisible(true);
         hub.ui.panelBackground[3].setVisible(false);
+        hub.ui.panelBackground[5].setVisible(false);
+        hub.ui.panelBackground[7].setVisible(false);
         hub.ui.panelBackground[6].setVisible(false);
         hub.ui.panelBackground[8].setVisible(false);
         hub.ui.panelBackground[9].setVisible(false);
@@ -143,7 +147,7 @@ public class Event {
             hub.ui.setMoneyCount(100);
             hub.ui.textMessage.setText("You opened the chest and found a sword!\n (max dmg + 2)");
             hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/sword.png"));
-            hub.ui.labelWeapon.setName("Sword +3 DMG");
+            hub.ui.labelWeapon.setName("\nSword +3 DMG");
             hub.player.sword = true;
             hub.player.playerCurrentStats();
             hub.event.scenePubInside();
@@ -156,6 +160,7 @@ public class Event {
         switch (questCount) {
             case 0 -> {
                 if (!hub.player.key) {
+                    hub.ui.setExpCount(25);
                     hub.playSoundEffect(hub.sound.moneyEarn, false);
                     hub.ui.textMessage.setText("You retrieved a skeleton key!");
                     hub.ui.consecutiveText("What's the key for?");
@@ -181,7 +186,7 @@ public class Event {
                     hub.player.playerHp--;
                 } else if (hub.player.playerHp <= 0) {
                     hub.ui.textMessage.setText("You died\n");
-                    hub.event.gameOverScreen(1);
+                    hub.event.gameOverScreen(2);
                 }
             } else if (hub.player.sword) {
                 hub.ui.textMessage.setText("You won and earned shield\n + (Unlocked block animation)");
@@ -286,6 +291,8 @@ public class Event {
         hub.ui.textStats.append("Armor: " + hub.player.playerDef + "%\n");
         hub.ui.textStats.append("Coins: " + hub.player.playerCoins + "\n");
         hub.ui.textStats.append("Weapon: " + hub.ui.labelWeapon.getName());
+        hub.ui.textStats.append("Level: " + hub.player.playerLevel + "\n");
+        hub.ui.textStats.append("Level points: " + hub.player.points + "\n");
     }
 
     public void currentScreen(int currentScreen) {
@@ -359,7 +366,7 @@ public class Event {
         int price = 10;
         if (hub.player.playerCoins >= price && !hub.player.knife) {
             hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/knife.png"));
-            hub.ui.labelWeapon.setName("Knife +1 DMG");
+            hub.ui.labelWeapon.setName("\nKnife +1 DMG");
             hub.player.knife = true;
             hub.ui.setMoneyCount(-10);
             hub.player.playerCurrentStats();
@@ -400,4 +407,45 @@ public class Event {
         hub.player.playerCurrentStats();
     }
 
+    public void dmg() {
+        if (hub.player.points >= 1) {
+            hub.player.points--;
+            hub.player.playerDmg++;
+            hub.player.playerCurrentStats();
+            System.out.println(hub.player.playerDmg);
+            stats();
+        } else {
+            hub.player.buttonDmg = false;
+            hub.ui.textMessage.setText("Not enough points");
+            hub.player.playerCurrentStats();
+        }
+    }
+
+    public void hp() {
+        if (hub.player.points >= 1) {
+            hub.player.points--;
+            hub.player.playerMaxHp++;
+            hub.player.playerCurrentStats();
+            System.out.println(hub.player.playerMaxHp);
+            stats();
+        } else {
+            hub.player.buttonDmg = false;
+            hub.ui.textMessage.setText("Not enough points");
+            hub.player.playerCurrentStats();
+        }
+    }
+
+    public void armor() {
+        if (hub.player.points >= 1) {
+            hub.player.points--;
+            hub.player.playerDef += 2;
+            hub.player.playerCurrentStats();
+            System.out.println(hub.player.playerDef);
+            stats();
+        } else {
+            hub.player.buttonDmg = false;
+            hub.ui.textMessage.setText("Not enough points");
+            hub.player.playerCurrentStats();
+        }
+    }
 }

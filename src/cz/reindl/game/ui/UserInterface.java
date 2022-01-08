@@ -32,14 +32,14 @@ public class UserInterface {
     //ImageIcon logo = new ImageIcon("src/cz/reindl/game/ui/graphics/logo/logo.png");
 
     public JLabel labelTitle, labelLoadingText;
-    public JButton restartButton;
+    public JButton restartButton, buttonIncreaseDmg, buttonIncreaseHP, buttonIncreaseArmor;
 
     //PLAYER UI
     public JPanel panelHp;
     public JLabel[] labelHp = new JLabel[10];
     public JPanel panelInventory;
     public JLabel labelInventory, labelHpBg, labelTextBg;
-    public JLabel labelDungeonEntrance, labelPubEntrance;
+    public JLabel labelDungeonEntrance, labelPubEntrance, labelTown2, labelWell;
     //items
     public JLabel labelWeapon, labelChestArmor, labelShield, labelQuestItem, labelCoins;
     public JButton buttonMapItem1, buttonMapItem2, buttonMapItem3, buttonMapItem4, buttonStats, buttonKnife, buttonTorso;
@@ -48,8 +48,8 @@ public class UserInterface {
     //FIGHT UI
     public JLabel labelRat, labelWolf, labelKnight, labelOgre, labelWizard, labelWarriorOgre; //enemies
     public JLabel labelChest, labelChest2, labelFinalChest; //rewards
-    public JPanel panelHeathBar;
-    public JProgressBar healthBarProgress;
+    public JPanel panelHeathBar, panelXpBar;
+    public JProgressBar healthBarProgress, xpProgress;
 
 
     public UserInterface(GameHub gameHub) {
@@ -99,7 +99,7 @@ public class UserInterface {
 
     public void mainField() {
         window = new JFrame("Windowed RPG");
-        window.setSize(1024, 800); //1024, 768
+        window.setSize(1024, 820); //1024, 768
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.getContentPane().setBackground(Color.BLACK);
         window.setLocationRelativeTo(null); //Center window
@@ -110,7 +110,7 @@ public class UserInterface {
 
         textMessage = new JTextArea();
         textMessage.setText("");
-        textMessage.setBounds(120, 515, 760, 120); //Text position relative to frame
+        textMessage.setBounds(120, 530, 760, 120); //Text position relative to frame
         textMessage.setBackground(Color.BLUE); // FIXME: 02.01.2022 Set new color
         textMessage.setForeground(Color.white);
         textMessage.setEditable(false);
@@ -142,6 +142,22 @@ public class UserInterface {
         healthBarProgress.setFont(new Font("MV Boli", Font.BOLD, 25));
         panelHeathBar.add(healthBarProgress);
         window.add(panelHeathBar);
+
+        panelXpBar = new JPanel();
+        panelXpBar.setBounds(120, 505, 760, 20);
+        panelXpBar.setBackground(Color.RED);
+        panelXpBar.setOpaque(false);
+
+        xpProgress = new JProgressBar();
+        xpProgress.setMinimum(0);
+        xpProgress.setString(0 + "/" + 100);
+        xpProgress.setStringPainted(true);
+        xpProgress.setPreferredSize(new Dimension(7600, 20));
+        xpProgress.setForeground(Color.GREEN);
+        xpProgress.setBackground(Color.lightGray);
+        xpProgress.setFont(new Font("MV Boli", Font.BOLD, 12));
+        panelXpBar.add(xpProgress);
+        window.add(panelXpBar);
     }
 
     public void playerStats() {
@@ -268,7 +284,13 @@ public class UserInterface {
                     gameHub.event.sceneDungeon();
                 }
                 if (labelObject == labelPubEntrance) {
-                    gameHub.event.scenePubInside();
+                    gameHub.event.pubDoor();
+                }
+                if (labelObject == labelWell) {
+                    gameHub.event.well();
+                }
+                if (labelObject == labelTown2) {
+                    gameHub.event.sceneTownSquare2();
                 }
                 /*try {
                     labelObject.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -292,8 +314,10 @@ public class UserInterface {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                if (labelObject == labelDungeonEntrance) {
-                    setCursorIcon(labelObject, "icon/cursor/cursor.png", "cursorEnter");
+                if (labelObject == labelDungeonEntrance || labelObject == labelPubEntrance || labelObject == labelTown2) {
+                    setCursorIcon(labelObject, "icon/cursor/cursorEnter.png", "cursorEnter");
+                } else if (labelObject == labelWell) {
+                    setCursorIcon(labelObject, "icon/cursor/cursorMagnifier.png", "cursorMagnifier");
                 } else {
                     setCursorIcon(labelObject, "icon/cursor/cursorGet.png", "cursorGet");
                 }
@@ -477,11 +501,11 @@ public class UserInterface {
         panelBackground[screenNum].add(arrowButton);
     }
 
-    public JButton buttonIcon(int screenNum, int x, int y, int width, int height, String command, String file, String text) {
+    public JButton buttonIcon(int screenNum, int x, int y, int width, int height, String command, String file, String text, Boolean opaque) {
         JButton buttonIcon = new JButton();
         buttonIcon.setBounds(x, y, width, height);
         buttonIcon.setIcon(jarImg(file));
-        buttonIcon.setContentAreaFilled(true);
+        buttonIcon.setContentAreaFilled(opaque);
         buttonIcon.setFocusPainted(false); //Border around image
         buttonIcon.setBorderPainted(false); //Border around button
         buttonIcon.setBackground(Color.gray);
@@ -498,8 +522,8 @@ public class UserInterface {
         //#SPAWN
         gameBackground(1, "bg/forest.png");
         changeScreenButton(1, 0, 150, 50, 50, "mainScreen2", "Town");
-        buttonIcon(1, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map");
-        buttonIcon(1, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics");
+        buttonIcon(1, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map", true);
+        buttonIcon(1, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics", true);
         buttonType(1, 757, 0, 3, 3, "am");
         gameObject(1, 0, 0, 0, 0, "object/blankTransparent.png", "", "", "", "", "", "");
 
@@ -508,18 +532,18 @@ public class UserInterface {
 
         //#TOWN 1 SIDE
         gameBackground(2, "bg/townSquare.png");
-        buttonIcon(2, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map");
-        buttonIcon(2, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics");
+        buttonIcon(2, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map", true);
+        buttonIcon(2, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics", true);
         changeScreenButton(2, 710, 150, 50, 50, "mainScreen1", "Forest");
         gameObject(2, 620, 320, 115, 141, ("entity/Knight2.png"), "Talk", "Challenge", "-", "talkKnight", "encounterKnight", "-");
-        gameObject(2, 100, 290, 40, 70, ("object/blankTransparent.png"), "Enter", "Knock", "-", "enterPub", "knockPub", "-");
-        gameObject(2, 480, 230, 100, 170, ("object/blankTransparent.png"), "Search", "-", "-", "searchWell", "-", "-");
-        gameObject(2, 230, 220, 100, 100, ("object/blankTransparent.png"), "Go", "-", "-", "goTown2", "-", "-");
+        labelPubEntrance = gameObject(2, 100, 290, 40, 70, ("object/blankTransparent.png"), "Enter", "Knock", "-", "enterPub", "knockPub", "-");
+        labelWell = gameObject(2, 480, 230, 100, 170, ("object/blankTransparent.png"), "Search", "-", "-", "searchWell", "-", "-");
+        labelTown2 = gameObject(2, 230, 220, 100, 100, ("object/blankTransparent.png"), "Go", "-", "-", "goTown2", "-", "-");
 
         //#PUB INSIDE
         gameBackground(3, "bg/tavernInside.png");
-        buttonIcon(3, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map");
-        buttonIcon(3, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics");
+        buttonIcon(3, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map", true);
+        buttonIcon(3, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics", true);
         changeScreenButton(3, 710, 150, 50, 50, "mainScreen2", "Town");
         labelDungeonEntrance = gameObject(3, 350, 150, 130, 100, ("object/blankTransparent.png"), "Enter", "-", "-", "enterDungeon", "-", "-");
         labelBeer = shopObject(3, 150, 270, 96, 105, "object/fullBeer.png");
@@ -529,18 +553,18 @@ public class UserInterface {
 
         //#BLACKSMITH
         gameBackground(7, "bg/blacksmith.png");
-        buttonIcon(7, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map");
-        buttonIcon(7, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics");
+        buttonIcon(7, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map", true);
+        buttonIcon(7, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics", true);
         changeScreenButton(7, 710, 150, 50, 50, "goTown2", "Forge");
-        buttonKnife = buttonIcon(7, 200, 250, 50, 50, "buyKnife", "icon/knife.png", "Weapon: Gives 1 DMG");
-        buttonTorso = buttonIcon(7, 255, 250, 50, 50, "buyTorso", "icon/chestArmor.png", "Torso: Gives 20% / 50% of Armor");
+        buttonKnife = buttonIcon(7, 250, 250, 50, 50, "buyKnife", "icon/knife.png", "Weapon: Gives 1 DMG", false);
+        buttonTorso = buttonIcon(7, 305, 250, 50, 50, "buyTorso", "icon/chestArmor.png", "Torso: Gives 20% / 50% of Armor", false);
         shopObject(7, 200, 200, 400, 200, "panels/panelShop.png");
         gameObject(7, 0, 0, 0, 0, ("object/blankTransparent.png"), "", "", "", "", "", "");
 
         //#TOWN 2 SIDE
         gameBackground(5, "bg/townSquare2.png");
-        buttonIcon(5, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map");
-        buttonIcon(5, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics");
+        buttonIcon(5, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map", true);
+        buttonIcon(5, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics", true);
         changeScreenButton(5, 710, 150, 50, 50, "mainScreen2", "Town");
         gameObject(5, 430, 230, 320, 200, ("object/blankTransparent.png"), "Enter", "-", "-", "enterForge", "-", "-");
 
@@ -559,26 +583,29 @@ public class UserInterface {
         //TAVERN SHOP
         gameBackground(8, "bg/map.png");
         changeScreenButton(8, 710, 150, 50, 50, "enterPub", "Pub");
-        buttonIcon(8, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map");
-        buttonIcon(8, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics");
-        buttonIcon(8, 365, 165, 50, 50, "buyBeer", "icon/beer.png", "Price: 1 coin : Adds 1 HP when drank");
-        buttonIcon(8, 365, 220, 50, 50, "buyLiquor", "icon/liquor.png", "Price: 10 coins : Adds 10 HP when drank");
+        buttonIcon(8, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map", true);
+        buttonIcon(8, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics", true);
+        buttonIcon(8, 365, 165, 50, 50, "buyBeer", "icon/beer.png", "Price: 1 coin : Adds 1 HP when drank", true);
+        buttonIcon(8, 365, 220, 50, 50, "buyLiquor", "icon/liquor.png", "Price: 10 coins : Adds 10 HP when drank", true);
         gameObject(8, 0, 0, 0, 0, ("object/blankTransparent.png"), "", "", "", "", "", "");
 
         //MAP
         gameBackground(6, "bg/map.png");
-        buttonIcon(6, 0, 0, 35, 35, "currentScreen", "icon/compass.png", "Teleportation map");
-        buttonIcon(6, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics");
-        buttonMapItem1 = buttonIcon(6, 365, 110, 50, 50, "mainScreen1", "icon/forest.png", "Forest");
-        buttonMapItem2 = buttonIcon(6, 365, 165, 50, 50, "mainScreen2", "icon/townEntrance.png", "Town");
-        buttonMapItem3 = buttonIcon(6, 365, 220, 50, 50, "enterPub", "icon/beer.png", "Tavern");
-        buttonMapItem4 = buttonIcon(6, 365, 275, 50, 50, "goTown2", "icon/forge.png", "Forge");
+        buttonIcon(6, 0, 0, 35, 35, "currentScreen", "icon/compass.png", "Teleportation map", true);
+        buttonIcon(6, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics", true);
+        buttonMapItem1 = buttonIcon(6, 365, 110, 50, 50, "mainScreen1", "icon/forest.png", "Forest", true);
+        buttonMapItem2 = buttonIcon(6, 365, 165, 50, 50, "mainScreen2", "icon/townEntrance.png", "Town", true);
+        buttonMapItem3 = buttonIcon(6, 365, 220, 50, 50, "enterPub", "icon/beer.png", "Tavern", true);
+        buttonMapItem4 = buttonIcon(6, 365, 275, 50, 50, "goTown2", "icon/forge.png", "Forge", true);
         gameObject(6, 0, 0, 0, 0, ("object/blankTransparent.png"), "", "", "", "", "", "");
 
         //STATISTICS
         gameBackground(9, "bg/map.png");
-        buttonIcon(9, 0, 0, 35, 35, "currentScreen", "icon/compass.png", "Teleportation map");
-        buttonStats = buttonIcon(9, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics");
+        buttonIcon(9, 0, 0, 35, 35, "currentScreen", "icon/compass.png", "Teleportation map", true);
+        buttonStats = buttonIcon(9, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics", true);
+        buttonIncreaseHP = buttonIcon(9, 430, 105, 30, 30, "increaseHP", "icon/hearthPlus.png", "Increase MAX HP by 1", false);
+        buttonIncreaseDmg = buttonIcon(9, 430, 137, 30, 30, "increaseDmg", "icon/plus.png", "Increase MAX DMG by 1", false);
+        buttonIncreaseArmor = buttonIcon(9, 430, 169, 30, 30, "increaseArmor", "icon/plus.png", "Increase Armor by 2%", false);
         gameObject(9, 0, 0, 0, 0, ("object/blankTransparent.png"), "", "", "", "", "", "");
 
     }
@@ -603,7 +630,7 @@ public class UserInterface {
     public void textInfo() {
         textInfo = new JTextArea();
         textInfo.setText("");
-        textInfo.setBounds(120, 640, 760, 120); //Text position relative to frame
+        textInfo.setBounds(120, 655, 760, 120); //Text position relative to frame
         textInfo.setBackground(Color.BLACK); // FIXME: 02.01.2022 Set new color
         textInfo.setForeground(Color.white);
         textInfo.setEditable(false);
@@ -616,7 +643,7 @@ public class UserInterface {
     public void textStats() {
         textStats = new JTextArea();
         textStats.setText("");
-        textStats.setBounds(400, 170, 300, 250);
+        textStats.setBounds(400, 170, 150, 250);
         textStats.setBackground(Color.RED);
         textStats.setOpaque(true);
         textStats.setForeground(Color.WHITE);
@@ -740,6 +767,13 @@ public class UserInterface {
     public void setMoneyCount(int moneyCount) {
         gameHub.player.playerCoins += moneyCount;
         gameHub.ui.moneyCount.setText(String.valueOf(gameHub.player.playerCoins));
+    }
+
+    public void setExpCount(int expCount) {
+        gameHub.player.playerExp += expCount;
+        gameHub.ui.xpProgress.setValue(gameHub.player.playerExp);
+        gameHub.ui.xpProgress.setString(gameHub.player.playerExp + " / " + gameHub.player.levelUpExp);
+        gameHub.player.playerCurrentStats();
     }
 
     public void loadingScreen() {

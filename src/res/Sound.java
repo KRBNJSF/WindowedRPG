@@ -43,6 +43,8 @@ public class Sound {
     public File chestOpen = new File("src/res/storage/chestOpen.mp3");
     public File finalChestOpen = new File("src/res/storage/finalChestOpen.mp3");
     public File maceHit = new File("src/res/storage/maceHit.mp3");
+    public File levelUp = new File("src/res/storage/levelUp.mp3");
+    public File loseSound = new File("src/res/storage/loseSound.mp3");
     //CHARACTERS SPEECH
 
     //TEXT SPEECH
