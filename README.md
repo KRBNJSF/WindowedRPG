@@ -1,22 +1,45 @@
 # WindowedRPG
 
-<strong>Version 0.1</strong>
+<strong>How to play</strong>
 ---
-- <b>Fixed: </b><br>
+...
+
+
+<strong>Version 0.3</strong>
+  ---
+  - <b>Added: </b><br>
+  Game currency<br>
+  Shop at blacksmiths<br>
+  Loading, main menu and login screens<br>
+  Player can see his statistics<br>
+  More items<br>
+  And more...<br>
+  
+  - <b>Fixed: </b><br>
+  Few bugs
+  Enemy HP bar<br>
+  After defeating an enemy and retrieving chest you can't leave the dungeon until you loot the chest<br>
+  Sound effects and music<br>
+  Sound effects during fight and attacking animation<br>
+  And more...<br>
+  
+  - <b>Needs to be added: </b><br>
+  .jar version<br>
+  Quest to retrieve skeleton key that leads to dungeons<br>
+  More items<br>
+  Shield and armor implemented to fight<br>
+  And more...<br>
+  
+  - <b>Needs to be fixed: </b><br>
   ...
-- <b>Needs to be added: </b><br>
-  Interactions with objects and entities<br>
-  Fight<br>
-  Inventory<br>
-  Items
-- <b>Needs to be fixed: </b><br>
-  ...
+  
   
   <strong>Version 0.2</strong>
   ---
-- <b>Fixed: </b><br>
+  - <b>Fixed: </b><br>
   Few bugs
-- <b>Needs to be added: </b><br>
+  
+  - <b>Needs to be added: </b><br>
   .jar version<br>
   Game currency<br>
   Quest to retrieve skeleton key that leads to dungeons<br>
@@ -25,8 +48,29 @@
   Shield and armor implemented to fight<br>
   Player can see his statistics<br>
   Loading, main menu and login screens<br>
-- <b>Needs to be fixed: </b><br>
+  And more...<br>
+  
+  - <b>Needs to be fixed: </b><br>
   After defeating an enemy and retrieving chest you can't leave the dungeon until you loot the chest<br>
   Sound effects and music<br>
   Sound effects during fight and attacking animation<br>
   Enemy HP bar<br>
+  And more...<br>
+  
+  
+  <strong>Version 0.1</strong>
+  ---
+  - <b>Fixed: </b><br>
+  ...
+  
+  - <b>Needs to be added: </b><br>
+  Interactions with objects and entities<br>
+  Fight<br>
+  Inventory<br>
+  Items
+  
+  - <b>Needs to be fixed: </b><br>
+  ...
+  
+
+ 
