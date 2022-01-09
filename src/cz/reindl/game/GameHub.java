@@ -28,7 +28,7 @@ public class GameHub {
         playMusic(sound.currentMusic, true);
 
         //event.loadingScreen();
-        //ui.setLoadingScreen(1);
+        ui.setLoadingScreen(1);
 
         //barCheck.progressBarCheck();
         event.spawnScreen(); //First executed scene method

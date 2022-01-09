@@ -155,119 +155,93 @@ public class Fight {
                 }
                 case 8 -> {
                     hub.sound.currentSoundEffect = hub.sound.maceHit;
-                    hub.ui.panelHeathBar.setBounds(hub.ui.labelWarriorOgre.getX() + 180, hub.ui.labelWarriorOgre.getY() + 50, 200, 50);
+                    hub.ui.panelHeathBar.setBounds(hub.ui.labelCoffinMonster.getX() + 180, hub.ui.labelCoffinMonster.getY() + 50, 200, 50);
                     hub.playSoundEffect(hub.sound.moneyEarn, false);
                     hub.ui.setMoneyCount(100);
-                    hub.fight.setEnemy(Enemies.WARRIOROGRE);
+                    hub.fight.setEnemy(Enemies.OCCULTISTS);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
                     hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
                     hub.ui.setExpCount(20);
-                    hub.ui.labelWizard.setVisible(false);
-                    hub.ui.labelWarriorOgre.setVisible(true);
+                    hub.ui.labelChestFinal.setVisible(false);
+                    hub.ui.labelCoffinMonster.setVisible(true);
                     winScreen();
                 }
                 case 9 -> {
                     hub.sound.currentSoundEffect = hub.sound.maceHit;
-                    hub.ui.panelHeathBar.setBounds(hub.ui.labelWarriorOgre.getX() + 180, hub.ui.labelWarriorOgre.getY() + 50, 200, 50);
+                    hub.ui.panelHeathBar.setBounds(hub.ui.labelGhastliness.getX() + 180, hub.ui.labelGhastliness.getY() + 50, 200, 50);
                     hub.playSoundEffect(hub.sound.moneyEarn, false);
                     hub.ui.setMoneyCount(100);
-                    hub.fight.setEnemy(Enemies.WARRIOROGRE);
+                    hub.fight.setEnemy(Enemies.GHASTLINESS);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
                     hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
                     hub.ui.setExpCount(20);
-                    hub.ui.labelWizard.setVisible(false);
-                    hub.ui.labelWarriorOgre.setVisible(true);
+                    hub.ui.labelCoffinMonster.setVisible(false);
+                    hub.ui.labelGhastliness.setVisible(true);
                     winScreen();
                 }
                 case 10 -> {
                     hub.sound.currentSoundEffect = hub.sound.maceHit;
-                    hub.ui.panelHeathBar.setBounds(hub.ui.labelWarriorOgre.getX() + 180, hub.ui.labelWarriorOgre.getY() + 50, 200, 50);
+                    hub.ui.panelHeathBar.setBounds(hub.ui.labelDoubleMonster.getX() + 180, hub.ui.labelDoubleMonster.getY() + 50, 200, 50);
                     hub.playSoundEffect(hub.sound.moneyEarn, false);
                     hub.ui.setMoneyCount(100);
-                    hub.fight.setEnemy(Enemies.WARRIOROGRE);
+                    hub.fight.setEnemy(Enemies.TWINS);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
                     hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
                     hub.ui.setExpCount(20);
-                    hub.ui.labelWizard.setVisible(false);
-                    hub.ui.labelWarriorOgre.setVisible(true);
+                    hub.ui.labelGhastliness.setVisible(false);
+                    hub.ui.labelDoubleMonster.setVisible(true);
                     winScreen();
                 }
                 case 11 -> {
                     hub.sound.currentSoundEffect = hub.sound.maceHit;
-                    hub.ui.panelHeathBar.setBounds(hub.ui.labelWarriorOgre.getX() + 180, hub.ui.labelWarriorOgre.getY() + 50, 200, 50);
+                    hub.ui.panelHeathBar.setBounds(hub.ui.labelWizard2.getX() + 180, hub.ui.labelWizard2.getY() + 50, 200, 50);
                     hub.playSoundEffect(hub.sound.moneyEarn, false);
                     hub.ui.setMoneyCount(100);
-                    hub.fight.setEnemy(Enemies.WARRIOROGRE);
+                    hub.fight.setEnemy(Enemies.ESSENCEWIZARD);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
                     hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
                     hub.ui.setExpCount(20);
-                    hub.ui.labelWizard.setVisible(false);
-                    hub.ui.labelWarriorOgre.setVisible(true);
+                    hub.ui.labelDoubleMonster.setVisible(false);
+                    hub.ui.labelWizard2.setVisible(true);
                     winScreen();
                 }
                 case 12 -> {
                     hub.sound.currentSoundEffect = hub.sound.maceHit;
-                    hub.ui.panelHeathBar.setBounds(hub.ui.labelWarriorOgre.getX() + 180, hub.ui.labelWarriorOgre.getY() + 50, 200, 50);
+                    hub.ui.panelHeathBar.setBounds(hub.ui.labelWitch.getX() + 180, hub.ui.labelWitch.getY() + 50, 200, 50);
                     hub.playSoundEffect(hub.sound.moneyEarn, false);
                     hub.ui.setMoneyCount(100);
-                    hub.fight.setEnemy(Enemies.WARRIOROGRE);
+                    hub.fight.setEnemy(Enemies.WITCH);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
                     hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
                     hub.ui.setExpCount(20);
-                    hub.ui.labelWizard.setVisible(false);
-                    hub.ui.labelWarriorOgre.setVisible(true);
+                    hub.ui.labelWizard2.setVisible(false);
+                    hub.ui.labelWitch.setVisible(true);
                     winScreen();
                 }
                 case 13 -> {
                     hub.sound.currentSoundEffect = hub.sound.maceHit;
-                    hub.ui.panelHeathBar.setBounds(hub.ui.labelWarriorOgre.getX() + 180, hub.ui.labelWarriorOgre.getY() + 50, 200, 50);
+                    hub.ui.panelHeathBar.setBounds(hub.ui.labelFrogMonster.getX() + 180, hub.ui.labelFrogMonster.getY() + 50, 200, 50);
                     hub.playSoundEffect(hub.sound.moneyEarn, false);
                     hub.ui.setMoneyCount(100);
-                    hub.fight.setEnemy(Enemies.WARRIOROGRE);
+                    hub.fight.setEnemy(Enemies.TOADWARRIOR);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
                     hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
                     hub.ui.setExpCount(20);
-                    hub.ui.labelWizard.setVisible(false);
-                    hub.ui.labelWarriorOgre.setVisible(true);
+                    hub.ui.labelWitch.setVisible(false);
+                    hub.ui.labelFrogMonster.setVisible(true);
                     winScreen();
                 }
                 case 14 -> {
                     hub.sound.currentSoundEffect = hub.sound.maceHit;
-                    hub.ui.panelHeathBar.setBounds(hub.ui.labelWarriorOgre.getX() + 180, hub.ui.labelWarriorOgre.getY() + 50, 200, 50);
+                    hub.ui.panelHeathBar.setBounds(hub.ui.labelSpiderMonster.getX() + 180, hub.ui.labelSpiderMonster.getY() + 50, 200, 50);
                     hub.playSoundEffect(hub.sound.moneyEarn, false);
                     hub.ui.setMoneyCount(100);
-                    hub.fight.setEnemy(Enemies.WARRIOROGRE);
+                    hub.fight.setEnemy(Enemies.SPIDER);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
                     hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
                     hub.ui.setExpCount(20);
-                    hub.ui.labelWizard.setVisible(false);
-                    hub.ui.labelWarriorOgre.setVisible(true);
-                    winScreen();
-                }
-                case 15 -> {
-                    hub.sound.currentSoundEffect = hub.sound.maceHit;
-                    hub.ui.panelHeathBar.setBounds(hub.ui.labelWarriorOgre.getX() + 180, hub.ui.labelWarriorOgre.getY() + 50, 200, 50);
-                    hub.playSoundEffect(hub.sound.moneyEarn, false);
-                    hub.ui.setMoneyCount(100);
-                    hub.fight.setEnemy(Enemies.WARRIOROGRE);
-                    hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
-                    hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
-                    hub.ui.setExpCount(20);
-                    hub.ui.labelWizard.setVisible(false);
-                    hub.ui.labelWarriorOgre.setVisible(true);
-                    winScreen();
-                }
-                case 16 -> {
-                    hub.sound.currentSoundEffect = hub.sound.maceHit;
-                    hub.ui.panelHeathBar.setBounds(hub.ui.labelWarriorOgre.getX() + 180, hub.ui.labelWarriorOgre.getY() + 50, 200, 50);
-                    hub.playSoundEffect(hub.sound.moneyEarn, false);
-                    hub.ui.setMoneyCount(100);
-                    hub.fight.setEnemy(Enemies.WARRIOROGRE);
-                    hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
-                    hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
-                    hub.ui.setExpCount(20);
-                    hub.ui.labelWizard.setVisible(false);
-                    hub.ui.labelWarriorOgre.setVisible(true);
+                    hub.ui.labelFrogMonster.setVisible(false);
+                    hub.ui.labelSpiderMonster.setVisible(true);
                     winScreen();
                 }
             }

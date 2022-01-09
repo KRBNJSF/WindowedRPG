@@ -27,6 +27,7 @@ public class ActionHandler implements ActionListener {
 
             case "talkKnight" -> hub.event.guard();
             case "openChest" -> hub.event.chest();
+            case "openTreasure" -> hub.event.treasure();
             case "enterPub" -> hub.event.pubDoor();
             //case "knockPub" -> hub.event;
             case "searchWell" -> hub.event.well();

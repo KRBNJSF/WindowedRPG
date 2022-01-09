@@ -390,6 +390,10 @@ public class UserInterface {
                         } else {
                             textMessage.setText("Open the chest!");
                         }*/
+                    } else if (gameHub.fight.count == 7) {
+                        gameHub.sound.currentSoundEffect = gameHub.sound.finalChestOpen;
+                        gameHub.event.treasure();
+                        gameHub.player.playerCurrentStats();
                     }
                     gameHub.fight.attack();
                 }
@@ -459,6 +463,9 @@ public class UserInterface {
                 }
                 if (labelObject == labelCheese) {
                     gameHub.event.cheese();
+                }
+                if (labelObject == labelPork) {
+                    gameHub.event.pork();
                 }
             }
 
@@ -555,11 +562,11 @@ public class UserInterface {
         buttonIcon(3, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics", true);
         changeScreenButton(3, 710, 150, 50, 50, "mainScreen2", "Town");
         labelDungeonEntrance = gameObject(3, 350, 150, 130, 100, ("object/blankTransparent.png"), "Enter", "-", "-", "enterDungeon", "-", "-");
-        labelBeer = shopObject(3, 150, 270, 96, 105, "object/fullBeer.png");
+        labelBeer = shopObject(3, 500, 180, 96, 105, "object/fullBeer.png");
         labelLiquor = shopObject(3, 230, 270, 52, 80, "object/liquor.png");
-        labelHolyWater = shopObject(3, 100, 290, 44, 54, "object/holyWaterObject.png");
-        //labelPork = shopObject(3, 230, 270, 52, 80, "object/pork.png");
-        labelCheese = shopObject(3, 140, 360, 63, 50, "object/cheeseObject.png");
+        labelHolyWater = shopObject(3, 160, 290, 44, 54, "object/holyWaterObject.png");
+        labelPork = shopObject(3, -20, 330, 180, 107, "object/porkObject.png");
+        labelCheese = shopObject(3, 160, 350, 63, 50, "object/cheeseObject.png");
         gameObject(3, 560, 100, 150, 208, ("entity/innkeeper.png"), "Menu", "Talk", "-", "tavernMenu", "talkBartender", "-");
         gameObject(3, 360, 250, 111, 205, ("entity/dwarf.png"), "Talk", "-", "Arena", "getQuest", "-", "-");
 
@@ -568,14 +575,14 @@ public class UserInterface {
         buttonIcon(7, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map", true);
         buttonIcon(7, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics", true);
         changeScreenButton(7, 710, 150, 50, 50, "goTown2", "Forge");
-        buttonKnife = buttonIcon(7, 270, 250, 50, 50, "buyKnife", "icon/knife.png", "Weapon: Gives 1 DMG", false);
-        buttonTorso = buttonIcon(7, 375, 305, 50, 50, "buyTorso", "icon/chestArmor.png", "Torso: Gives 20% / 50% of Armor", false);
-        buttonOldKnife = buttonIcon(7, 325, 250, 50, 50, "buyOldKnife", "icon/oldKnife.png", "Weapon: Gives 2 DMG", false);
-        buttonTorsoBasic = buttonIcon(7, 425, 305, 50, 50, "buyTorsoBasic", "icon/torsoBasic.png", "Torso: Gives 20% / 50% of Armor", false);
-        buttonTorsoBetter = buttonIcon(7, 270, 305, 50, 50, "buyTorsoBetter", "icon/torsoBetter.png", "Torso: Gives 20% / 50% of Armor", false);
-        buttonHelmet = buttonIcon(7, 325, 305, 50, 50, "buyHelmet", "icon/helmet.png", "Torso: Gives 20% / 50% of Armor", false);
-        buttonWarHammer = buttonIcon(7, 375, 250, 50, 50, "buyWarHammer", "icon/warHammer.png", "Weapon: Gives 2 DMG", false);
-        buttonShieldBasic = buttonIcon(7, 425, 250, 50, 50, "buyShieldBasic", "icon/shieldBasic.png", "Shield: Gives 20% / 50% of Armor", false);
+        buttonKnife = buttonIcon(7, 270, 250, 50, 50, "buyKnife", "icon/knife.png", "Price: 10, Weapon: Gives 1 DMG", false);
+        buttonTorso = buttonIcon(7, 375, 305, 50, 50, "buyTorso", "icon/chestArmor.png", "Price: 20, Torso: Gives 20% / 50% of Armor", false);
+        buttonOldKnife = buttonIcon(7, 325, 250, 50, 50, "buyOldKnife", "icon/oldKnife.png", "Price: 10, Weapon: Gives 2 DMG", false);
+        buttonTorsoBasic = buttonIcon(7, 425, 305, 50, 50, "buyTorsoBasic", "icon/torsoBasic.png", "Price: 10, Torso: Gives 20% / 50% of Armor", false);
+        buttonTorsoBetter = buttonIcon(7, 270, 305, 50, 50, "buyTorsoBetter", "icon/torsoBetter.png", "Price: 50, Torso: Gives 20% / 50% of Armor", false);
+        buttonHelmet = buttonIcon(7, 325, 305, 50, 50, "buyHelmet", "icon/helmet.png", "Price: 50, Torso: Gives 20% / 50% of Armor", false);
+        buttonWarHammer = buttonIcon(7, 375, 250, 50, 50, "buyWarHammer", "icon/warHammer.png", "Price: 150, Weapon: Gives 2 DMG", false);
+        buttonShieldBasic = buttonIcon(7, 425, 250, 50, 50, "buyShieldBasic", "icon/shieldBasic.png", "Price: 10, Shield: Gives 20% / 50% of Armor", false);
         shopObject(7, 180, 235, 400, 140, "panels/shopPanel.png");
         gameObject(7, 0, 0, 0, 0, ("object/blankTransparent.png"), "", "", "", "", "", "");
 
@@ -596,15 +603,15 @@ public class UserInterface {
         labelOgre = enemyObject(4, 320, 56, 200, 388, ("entity/ogre.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
         labelWizard = enemyObject(4, 320, 100, 120, 300, ("entity/wizard.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
         labelWarriorOgre = enemyObject(4, 260, 30, 300, 405, ("entity/warriorOgre.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
-        labelFrogMonster = enemyObject(4, 260, 30, 300, 405, ("entity/frogMan.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
-        labelCoffinMonster = enemyObject(4, 260, 30, 300, 405, ("entity/coffinMonster.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
-        labelDoubleMonster = enemyObject(4, 260, 30, 300, 405, ("entity/doubleMan.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
-        labelGhastliness = enemyObject(4, 260, 30, 300, 405, ("entity/ghastliness.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
-        labelSpiderMonster = enemyObject(4, 260, 30, 300, 405, ("entity/spiderWoman.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
-        labelWizard2 = enemyObject(4, 260, 30, 300, 405, ("entity/wizard2.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
-        labelWitch = enemyObject(4, 260, 30, 300, 405, ("entity/witch.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
+        labelFrogMonster = enemyObject(4, 260, 120, 341, 310, ("entity/toadWarrior.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
+        labelCoffinMonster = enemyObject(4, 260, 23, 357, 430, ("entity/occultists.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
+        labelDoubleMonster = enemyObject(4, 230, 10, 388, 404, ("entity/twins.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
+        labelGhastliness = enemyObject(4, 300, 30, 300, 405, ("entity/ghastliness.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
+        labelSpiderMonster = enemyObject(4, 200, 270, 388, 296, ("entity/spiderWoman.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
+        labelWizard2 = enemyObject(4, 340, 45, 216, 400, ("entity/essenceWizard.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
+        labelWitch = enemyObject(4, 290, 30, 218, 400, ("entity/witch.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
         labelChest = enemyObject(4, 350, 330, 150, 180, ("object/Chest.png"), "Open", "-", "-", "-", "openChest", "-", "-", "-");
-        labelChestFinal = enemyObject(4, 350, 330, 150, 180, ("object/Treasure.png"), "Open", "-", "-", "-", "openTreasure", "-", "-", "-");
+        labelChestFinal = enemyObject(4, 350, 300, 194, 150, ("object/finalChest.png"), "Open", "-", "-", "-", "openTreasure", "-", "-", "-");
 
         //TAVERN SHOP
         gameBackground(8, "bg/map.png");
@@ -834,6 +841,7 @@ public class UserInterface {
         gameHub.ui.labelInventory.setVisible(false);
         gameHub.ui.panelHp.setVisible(false);
         gameHub.ui.textMessage.setVisible(false);
+        gameHub.ui.panelXpBar.setVisible(false);
 
         gameHub.stopMusic(gameHub.sound.currentMusic);
         gameHub.playMusic(gameHub.sound.mainTheme, false);
@@ -844,7 +852,7 @@ public class UserInterface {
             bar.setVisible(true);
             bar.setValue(counter);
             try {
-                Thread.sleep(50);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

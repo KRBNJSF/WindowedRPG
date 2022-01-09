@@ -655,4 +655,19 @@ public class Event {
         }
     }
 
+    public void treasure() {
+        if (!hub.player.shardSword) {
+            hub.sound.currentSoundEffect = hub.sound.chestOpen;
+            hub.playSoundEffect(hub.sound.currentSoundEffect, false);
+            hub.ui.setMoneyCount(300);
+            hub.ui.textMessage.setText("You opened the chest and found a sword!\n (max dmg + 2)");
+            hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/shardSword.png"));
+            hub.ui.labelWeapon.setName("\nSword +6 MIN DMG, MAX DMG 10");
+            hub.player.shardSword = true;
+            hub.player.playerCurrentStats();
+            hub.event.scenePubInside();
+        } else {
+            hub.ui.textMessage.setText("It's empty\n");
+        }
+    }
 }
