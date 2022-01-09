@@ -647,7 +647,7 @@ public class Event {
         if (hub.player.playerHp != hub.player.playerMaxHp - 1) {
             hub.ui.consecutiveText("You recovered " + hub.player.playerMaxHp + " HP");
             hub.player.playerHp += 2;
-            hub.player.holyWater = false;
+            hub.player.cheese = false;
             hub.player.playerCurrentStats();
             hub.playSoundEffect(hub.sound.fullHealEffect, false);
         } else {

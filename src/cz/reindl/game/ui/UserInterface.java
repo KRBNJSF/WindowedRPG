@@ -457,6 +457,9 @@ public class UserInterface {
                 if (labelObject == labelHolyWater) {
                     gameHub.event.holyWater();
                 }
+                if (labelObject == labelCheese) {
+                    gameHub.event.cheese();
+                }
             }
 
             @Override

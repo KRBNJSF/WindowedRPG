@@ -9,6 +9,13 @@ public enum Enemies {
     KNIGHT("Knight", 10, 5, 0, 10, false),
     OGRE("Ogre", 15, 6, 0, 15, false),
     WIZARD("Wizard", 10, 9, 0, 10, false),
+    WITCH("WITCH", 15, 10, 0, 15, false),
+    ESSENCEWIZARD("Essence Wizard", 15, 10, 0, 15, false),
+    OCCULTISTS("Occultists", 40, 5, 0, 40, false),
+    GHASTLINESS("Ghastliness", 40, 5, 0, 40, false),
+    TWINS("Twins", 40, 5, 0, 40, false),
+    SPIDER("Spider", 40, 5, 0, 40, false),
+    TOADWARRIOR("Toad Warrior", 40, 5, 0, 40, false),
     WARRIOROGRE("Warrior Ogre", 40, 5, 0, 40, false),
     MIRROR("You", 10, 10, 0, 5, false);
 
