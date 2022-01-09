@@ -480,11 +480,11 @@ public class Event {
         int price = 10;
         if (hub.player.playerCoins >= price && !hub.player.torsoBasic) {
             hub.ui.labelChestArmor.setIcon(hub.ui.jarImg("icon/torsoBasic.png"));
-            hub.ui.labelChestArmor.setName("\nTorso +1 DMG");
+            hub.ui.labelChestArmor.setName("\nBasic torso +5 armor value");
             hub.player.torsoBasic = true;
             hub.ui.setMoneyCount(-10);
             hub.player.playerCurrentStats();
-            hub.ui.textMessage.setText("You bought Knife (Max DMG = 4)");
+            hub.ui.textMessage.setText("You bought Basic Torso : (Armor +? armor value -> " + hub.player.playerDef + "% / " + hub.player.playerMaxDef + "%)");
             hub.ui.buttonTorsoBasic.setVisible(false);
         } else {
             if (price >= hub.player.playerCoins) {
@@ -496,14 +496,14 @@ public class Event {
     }
 
     public void buyTorsoBetter() {
-        int price = 10;
+        int price = 50;
         if (hub.player.playerCoins >= price && !hub.player.torsoBetter) {
             hub.ui.labelChestArmor.setIcon(hub.ui.jarImg("icon/torsoBetter.png"));
-            hub.ui.labelChestArmor.setName("\nTorso +1 DMG");
+            hub.ui.labelChestArmor.setName("\nEnchanced torso +? armor value");
             hub.player.torsoBetter = true;
-            hub.ui.setMoneyCount(-10);
+            hub.ui.setMoneyCount(-50);
             hub.player.playerCurrentStats();
-            hub.ui.textMessage.setText("You bought Knife (Max DMG = 4)");
+            hub.ui.textMessage.setText("You bought Enchanced Torso : (Armor +? armor value -> " + hub.player.playerDef + "% / " + hub.player.playerMaxDef + "%)");
             hub.ui.buttonTorsoBetter.setVisible(false);
         } else {
             if (price >= hub.player.playerCoins) {
@@ -515,14 +515,14 @@ public class Event {
     }
 
     public void buyHelmet() {
-        int price = 10;
+        int price = 50;
         if (hub.player.playerCoins >= price && !hub.player.helmet) {
             hub.ui.labelChestArmor.setIcon(hub.ui.jarImg("icon/helmet.png"));
-            hub.ui.labelChestArmor.setName("\nHelmet +1 DMG");
+            hub.ui.labelChestArmor.setName("\nHelmet +? armor value");
             hub.player.helmet = true;
-            hub.ui.setMoneyCount(-10);
+            hub.ui.setMoneyCount(-50);
             hub.player.playerCurrentStats();
-            hub.ui.textMessage.setText("You bought Knife (Max DMG = 4)");
+            hub.ui.textMessage.setText("You bought Basic Torso : (Armor +? armor value -> " + hub.player.playerDef + "% / " + hub.player.playerMaxDef + "%)");
             hub.ui.buttonHelmet.setVisible(false);
         } else {
             if (price >= hub.player.playerCoins) {
@@ -534,14 +534,14 @@ public class Event {
     }
 
     public void buyWarHammer() {
-        int price = 10;
+        int price = 150;
         if (hub.player.playerCoins >= price && !hub.player.warHammer) {
             hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/warhammer.png"));
-            hub.ui.labelWeapon.setName("\nWarhammer +1 DMG");
+            hub.ui.labelWeapon.setName("\nWarhammer +? DMG");
             hub.player.warHammer = true;
-            hub.ui.setMoneyCount(-10);
+            hub.ui.setMoneyCount(-150);
             hub.player.playerCurrentStats();
-            hub.ui.textMessage.setText("You bought Knife (Max DMG = 4)");
+            hub.ui.textMessage.setText("You bought Warhammer (Min DMG + ?, Max DMG + ?)");
             hub.ui.buttonWarHammer.setVisible(false);
         } else {
             if (price >= hub.player.playerCoins) {
