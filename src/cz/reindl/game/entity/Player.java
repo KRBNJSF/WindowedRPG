@@ -8,7 +8,8 @@ public class Player {
 
     public int playerMaxHp;
     public double playerHp;
-    public int playerDmg;
+    public int playerMaxDmg;
+    public int playerMinDmg;
     public int playerDef;
     public int playerMaxDef;
     public int playerCoins;
@@ -19,17 +20,28 @@ public class Player {
 
     public boolean hand;
     public boolean knife;
+    public boolean oldKnife;
     public boolean sword;
+    public boolean warHammer;
+    public boolean shardSword;
 
-    public boolean shield;
+    public boolean shieldKnight;
+    public boolean shieldBasic;
+    public boolean shieldSkull;
 
     public boolean torso;
+    public boolean torsoBasic;
+    public boolean torsoBetter;
+    public boolean helmet;
 
     public boolean coin;
     public boolean key;
 
     public boolean beer;
     public boolean liquor;
+    public boolean cheese;
+    public boolean pork;
+    public boolean holyWater;
 
     public boolean mapItem1;
     public boolean mapItem2;
@@ -47,8 +59,9 @@ public class Player {
 
     public void playerDefaultStats() {
         playerMaxHp = 10;
-        playerHp = 9; // FIXME: 06.01.2022 Set to 5 and fix Hearth label img
-        playerDmg = 2;
+        playerHp = 5; // FIXME: 06.01.2022 Set to 5 and fix Hearth label img
+        playerMinDmg = 1;
+        playerMaxDmg = 2;
         playerMaxDef = 50;
         playerDef = 0;
         playerCoins = 0;
@@ -59,14 +72,29 @@ public class Player {
 
         hand = true;
         knife = false;
+        oldKnife = false;
         sword = false;
-        shield = false;
+        shardSword = false;
+        warHammer = false;
+
+        shieldKnight = false;
+        shieldBasic = false;
+        shieldSkull = false;
+
         torso = false;
+        torsoBasic = false;
+        torsoBetter = false;
+        helmet = false;
+
+
         coin = false;
         key = false;
 
         beer = false;
         liquor = false;
+        cheese = false;
+        pork = false;
+        holyWater = false;
 
         mapItem1 = true;
         mapItem2 = false;
@@ -78,7 +106,7 @@ public class Player {
         buttonArmor = false;
 
         hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/hand.png"));
-        hub.ui.labelWeapon.setName("\nHand +0 DMG");
+        hub.ui.labelWeapon.setName("Hand +0\n");
         hub.ui.labelQuestItem.setIcon(hub.ui.jarImg("icon/coin.png"));
         hub.ui.moneyCount.setText(String.valueOf(playerCoins));
         hub.ui.xpProgress.setString(0 + " / " + 100);
@@ -91,7 +119,7 @@ public class Player {
     public void playerCurrentStats() {
         //REMOVING HEARTH ICONS
         int i = 0;
-        while (i < 10) {
+        while (i < 60) {
             hub.ui.labelHp[i].setVisible(false);
             i++;
         }
@@ -105,12 +133,15 @@ public class Player {
 
         //PLAYER ITEMS CHECK
         hub.ui.labelWeapon.setVisible(hand);
-        hub.ui.labelShield.setVisible(shield);
+        hub.ui.labelShield.setVisible(shieldKnight);
         hub.ui.labelQuestItem.setVisible(coin);
         hub.ui.labelChestArmor.setVisible(torso);
 
         hub.ui.labelBeer.setVisible(beer);
         hub.ui.labelLiquor.setVisible(liquor);
+        //hub.ui.labelCheese.setVisible(cheese);
+        //hub.ui.labelPork.setVisible(pork);
+        //hub.ui.labelHolyWater.setVisible(holyWater);
 
         hub.ui.buttonMapItem1.setVisible(mapItem1);
         hub.ui.buttonMapItem2.setVisible(mapItem2);
@@ -123,19 +154,63 @@ public class Player {
 
         hub.ui.buttonKnife.setVisible(!knife);
         hub.ui.buttonTorso.setVisible(!torso);
+        hub.ui.buttonTorso.setVisible(!oldKnife);
+        hub.ui.buttonTorso.setVisible(!shieldBasic);
+        hub.ui.buttonTorso.setVisible(!torsoBasic);
+        hub.ui.buttonTorso.setVisible(!torsoBetter);
+        hub.ui.buttonTorso.setVisible(!helmet);
+        hub.ui.buttonTorso.setVisible(!warHammer);
 
+
+        //WEAPONS
         if (sword) {
-            playerDmg = 5;
+            playerMinDmg = 4;
+            playerMaxDmg = 5; // FIXME: 09.01.2022 Deduct players armor from older item
+        }
+        if (warHammer) {
+            playerMinDmg = 2;
+            playerMaxDmg = 5;
         }
         if (knife) {
-            playerDmg = 3;
+            playerMinDmg = 2;
+            playerMaxDmg = 3;
+        }
+        if (oldKnife) {
+            playerMinDmg = 1;
+            playerMaxDmg = 4;
+        }
+        if (shardSword) {
+            playerMinDmg = 6;
+            playerMaxDmg = 10;
+        }
+
+        //SHIELD
+        if (shieldKnight) {
+            playerDef += 10;
+        }
+        if (shieldSkull) {
+            playerDef += 15;
+        }
+        if (shieldBasic) {
+            playerDef += 5;
+        }
+
+        //ARMOUR
+        if (helmet) {
+            playerDef += 3;
         }
         if (torso) {
             playerDef += 20;
         }
-        if (shield) {
-            playerDef += 10;
+        if (torsoBasic) {
+            playerDef += 5;
         }
+        if (torsoBetter) {
+            playerDef += 20;
+        }
+
+
+        //LEVEL CHECK
         if (playerExp >= levelUpExp) {
             setLevelUp();
         }

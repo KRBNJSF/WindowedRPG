@@ -17,8 +17,8 @@ public class UserInterface {
     public JFrame window;
     public Container container; //Never used
     public JTextArea textMessage, textInfo, textStats;
-    public JPanel[] panelBackground = new JPanel[20];
-    public JLabel[] labelBackground = new JLabel[20];
+    public JPanel[] panelBackground = new JPanel[40];
+    public JLabel[] labelBackground = new JLabel[40];
     JProgressBar bar;
 
     public String noAction = "-";
@@ -36,14 +36,16 @@ public class UserInterface {
 
     //PLAYER UI
     public JPanel panelHp;
-    public JLabel[] labelHp = new JLabel[10];
+    public JLabel[] labelHp = new JLabel[60];
     public JPanel panelInventory;
     public JLabel labelInventory, labelHpBg, labelTextBg;
     public JLabel labelDungeonEntrance, labelPubEntrance, labelTown2, labelWell;
     //items
     public JLabel labelWeapon, labelChestArmor, labelShield, labelQuestItem, labelCoins;
-    public JButton buttonMapItem1, buttonMapItem2, buttonMapItem3, buttonMapItem4, buttonStats, buttonKnife, buttonTorso;
-    public JLabel labelBeer, labelLiquor; //shop items
+    public JButton buttonMapItem1, buttonMapItem2, buttonMapItem3, buttonMapItem4, buttonStats;
+    //FORGE SHOP
+    public JButton buttonKnife, buttonTorso, buttonOldKnife, buttonWarHammer, buttonShieldBasic, buttonTorsoBasic, buttonTorsoBetter, buttonHelmet;
+    public JLabel labelBeer, labelLiquor, labelPork, labelCheese, labelHolyWater; //shop items
 
     //FIGHT UI
     public JLabel labelRat, labelWolf, labelKnight, labelOgre, labelWizard, labelWarriorOgre; //enemies
@@ -149,9 +151,10 @@ public class UserInterface {
         panelXpBar.setOpaque(false);
 
         xpProgress = new JProgressBar();
-        xpProgress.setMinimum(0);
-        xpProgress.setString(0 + "/" + 100);
         xpProgress.setStringPainted(true);
+        xpProgress.setMinimum(0);
+        xpProgress.setValue(10);
+        xpProgress.setString(0 + "/" + 100);
         xpProgress.setPreferredSize(new Dimension(7600, 20));
         xpProgress.setForeground(Color.GREEN);
         xpProgress.setBackground(Color.lightGray);
@@ -164,14 +167,14 @@ public class UserInterface {
         ToolTipManager.sharedInstance().setInitialDelay(50);
         panelHp = new JPanel();
         panelHp.setBounds(120, 5, 320, 50);
-        panelHp.setBackground(Color.green);
+        panelHp.setBackground(Color.lightGray);
         //panelHp.setOpaque(false);
-        panelHp.setLayout(new GridLayout(1, 5)); //HP grid
+        panelHp.setLayout(new GridLayout(3, 20)); //HP grid
         panelHp.setToolTipText("HealthPoints");
         window.add(panelHp);
         //Image img = imgIcon("/icon/heath.png").getImage().getScaledInstance(10, 10, Image.SCALE_DEFAULT); //Image scaling to my preferred size
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 60; i++) {
             labelHp[i] = new JLabel();
             labelHp[i].setIcon(jarImg("/icon/hearth.png"));
             panelHp.add(labelHp[i]);
@@ -548,6 +551,9 @@ public class UserInterface {
         labelDungeonEntrance = gameObject(3, 350, 150, 130, 100, ("object/blankTransparent.png"), "Enter", "-", "-", "enterDungeon", "-", "-");
         labelBeer = shopObject(3, 150, 270, 96, 105, "object/fullBeer.png");
         labelLiquor = shopObject(3, 230, 270, 52, 80, "object/liquor.png");
+        //labelHolyWater = shopObject(3, 230, 270, 52, 80, "object/holyWater.png");
+        //labelPork = shopObject(3, 230, 270, 52, 80, "object/pork.png");
+        //labelCheese = shopObject(3, 230, 270, 52, 80, "object/cheese.png");
         gameObject(3, 560, 100, 150, 208, ("entity/innkeeper.png"), "Menu", "Talk", "-", "tavernMenu", "talkBartender", "-");
         gameObject(3, 360, 250, 111, 205, ("entity/dwarf.png"), "Talk", "-", "Arena", "getQuest", "-", "-");
 
@@ -557,7 +563,13 @@ public class UserInterface {
         buttonIcon(7, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics", true);
         changeScreenButton(7, 710, 150, 50, 50, "goTown2", "Forge");
         buttonKnife = buttonIcon(7, 250, 250, 50, 50, "buyKnife", "icon/knife.png", "Weapon: Gives 1 DMG", false);
-        buttonTorso = buttonIcon(7, 305, 250, 50, 50, "buyTorso", "icon/chestArmor.png", "Torso: Gives 20% / 50% of Armor", false);
+        buttonTorso = buttonIcon(7, 355, 305, 50, 50, "buyTorso", "icon/chestArmor.png", "Torso: Gives 20% / 50% of Armor", false);
+        buttonOldKnife = buttonIcon(7, 355, 250, 50, 50, "buyOldKnife", "icon/oldKnife.png", "Weapon: Gives 2 DMG", false);
+        buttonTorsoBasic = buttonIcon(7, 405, 305, 50, 50, "buyTorsoBasic", "icon/torsoBasic.png", "Torso: Gives 20% / 50% of Armor", false);
+        buttonTorsoBetter = buttonIcon(7, 255, 305, 50, 50, "buyTorsoBetter", "icon/torsoBetter.png", "Torso: Gives 20% / 50% of Armor", false);
+        buttonHelmet = buttonIcon(7, 305, 305, 50, 50, "buyHelmet", "icon/helmet.png", "Torso: Gives 20% / 50% of Armor", false);
+        buttonWarHammer = buttonIcon(7, 305, 250, 50, 50, "buyWarHammer", "icon/warHammer.png", "Weapon: Gives 2 DMG", false);
+        buttonShieldBasic = buttonIcon(7, 405, 250, 50, 50, "buyShieldBasic", "icon/shieldBasic.png", "Shield: Gives 20% / 50% of Armor", false);
         shopObject(7, 200, 200, 400, 200, "panels/panelShop.png");
         gameObject(7, 0, 0, 0, 0, ("object/blankTransparent.png"), "", "", "", "", "", "");
 
@@ -587,6 +599,9 @@ public class UserInterface {
         buttonIcon(8, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics", true);
         buttonIcon(8, 365, 165, 50, 50, "buyBeer", "icon/beer.png", "Price: 1 coin : Adds 1 HP when drank", true);
         buttonIcon(8, 365, 220, 50, 50, "buyLiquor", "icon/liquor.png", "Price: 10 coins : Adds 10 HP when drank", true);
+        buttonIcon(8, 365, 275, 50, 50, "buyHolyWater", "icon/holyWater.png", "Price: 10 coins : Adds 20 HP when drank", true);
+        buttonIcon(8, 365, 330, 50, 50, "buyPork", "icon/pork.png", "Price: 10 coins : Adds 3 HP when drank", true);
+        buttonIcon(8, 365, 385, 50, 50, "buyCheese", "icon/cheese.png", "Price: 10 coins : Adds 1 HP when drank", true);
         gameObject(8, 0, 0, 0, 0, ("object/blankTransparent.png"), "", "", "", "", "", "");
 
         //MAP
@@ -603,9 +618,9 @@ public class UserInterface {
         gameBackground(9, "bg/map.png");
         buttonIcon(9, 0, 0, 35, 35, "currentScreen", "icon/compass.png", "Teleportation map", true);
         buttonStats = buttonIcon(9, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics", true);
-        buttonIncreaseHP = buttonIcon(9, 430, 105, 30, 30, "increaseHP", "icon/hearthPlus.png", "Increase MAX HP by 1", false);
-        buttonIncreaseDmg = buttonIcon(9, 430, 137, 30, 30, "increaseDmg", "icon/plus.png", "Increase MAX DMG by 1", false);
-        buttonIncreaseArmor = buttonIcon(9, 430, 169, 30, 30, "increaseArmor", "icon/plus.png", "Increase Armor by 2%", false);
+        buttonIncreaseHP = buttonIcon(9, 450, 105, 30, 30, "increaseHP", "icon/hearthPlus.png", "Increase MAX HP by 1", false);
+        buttonIncreaseDmg = buttonIcon(9, 450, 137, 30, 30, "increaseDmg", "icon/plus.png", "Increase MAX DMG by 1", false);
+        buttonIncreaseArmor = buttonIcon(9, 450, 169, 30, 30, "increaseArmor", "icon/plus.png", "Increase Armor by 2%", false);
         gameObject(9, 0, 0, 0, 0, ("object/blankTransparent.png"), "", "", "", "", "", "");
 
     }
@@ -643,10 +658,10 @@ public class UserInterface {
     public void textStats() {
         textStats = new JTextArea();
         textStats.setText("");
-        textStats.setBounds(400, 170, 150, 250);
+        textStats.setBounds(420, 170, 150, 250);
         textStats.setBackground(Color.RED);
-        textStats.setOpaque(true);
-        textStats.setForeground(Color.WHITE);
+        textStats.setOpaque(false);
+        textStats.setForeground(Color.BLACK);
         textStats.setEditable(false);
         textStats.setLineWrap(true);
         textStats.setWrapStyleWord(true);
@@ -770,7 +785,9 @@ public class UserInterface {
     }
 
     public void setExpCount(int expCount) {
-        gameHub.player.playerExp += expCount;
+        gameHub.player.playerExp += expCount; // FIXME: 09.01.2022 Paint bar
+        //gameHub.ui.xpProgress.setMinimum(0);
+        //gameHub.ui.xpProgress.setMaximum(gameHub.player.levelUpExp);
         gameHub.ui.xpProgress.setValue(gameHub.player.playerExp);
         gameHub.ui.xpProgress.setString(gameHub.player.playerExp + " / " + gameHub.player.levelUpExp);
         gameHub.player.playerCurrentStats();

@@ -2,6 +2,9 @@ package cz.reindl.game.event;
 
 import cz.reindl.game.GameHub;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 public class Event {
 
     GameHub hub;
@@ -15,6 +18,7 @@ public class Event {
         hub.ui.panelBackground[currentScreen].setVisible(false);
         hub.ui.panelHeathBar.setVisible(false);
         hub.ui.panelInventory.setVisible(false);
+        hub.ui.panelInventory.setVisible(false);
         hub.ui.labelInventory.setVisible(false);
         hub.ui.panelHp.setVisible(false);
         hub.ui.textMessage.setVisible(false);
@@ -24,7 +28,8 @@ public class Event {
         hub.ui.panelXpBar.setVisible(false);
 
         hub.stopMusic(hub.sound.currentMusic);
-        hub.playMusic(hub.sound.loseSound, false);
+        hub.playMusic(hub.sound.fightLose, false);
+        hub.playSoundEffect(hub.sound.loseSound, false);
     }
 
     public void gameOverScreenApply() {
@@ -160,7 +165,6 @@ public class Event {
         switch (questCount) {
             case 0 -> {
                 if (!hub.player.key) {
-                    hub.ui.setExpCount(25);
                     hub.playSoundEffect(hub.sound.moneyEarn, false);
                     hub.ui.textMessage.setText("You retrieved a skeleton key!");
                     hub.ui.consecutiveText("What's the key for?");
@@ -169,6 +173,7 @@ public class Event {
                     hub.player.playerCurrentStats();
                     questCount++;
                     hub.ui.setMoneyCount(1);
+                    hub.ui.setExpCount(125);
                 }
             }
             case 1 -> {
@@ -179,7 +184,7 @@ public class Event {
 
     public void guard() {
         //hub.ui.textMessage.setText("Hello there");
-        if (!hub.player.shield) {
+        if (!hub.player.shieldKnight) {
             if (!hub.player.sword) {
                 if (hub.player.playerHp >= 1) {
                     hub.ui.textMessage.setText("Don't even try! \n(hp - 1)");
@@ -190,7 +195,7 @@ public class Event {
                 }
             } else if (hub.player.sword) {
                 hub.ui.textMessage.setText("You won and earned shield\n + (Unlocked block animation)");
-                hub.player.shield = true;
+                hub.player.shieldKnight = true;
             }
             hub.player.playerCurrentStats();
         } else {
@@ -272,6 +277,9 @@ public class Event {
     }
 
     public void stats() {
+        DecimalFormat df = new DecimalFormat("#.###");
+        df.setRoundingMode(RoundingMode.CEILING);
+
         hub.player.playerCurrentStats();
         hub.ui.panelBackground[1].setVisible(false);
         hub.ui.panelBackground[2].setVisible(false);
@@ -286,8 +294,8 @@ public class Event {
         hub.ui.buttonStats.setVisible(false);
 
         hub.ui.textStats.setText("");
-        hub.ui.textStats.append("HP: " + hub.player.playerHp + "\n");
-        hub.ui.textStats.append("DMG: " + "1 - " + hub.player.playerDmg + "\n");
+        hub.ui.textStats.append("HP: " + df.format(hub.player.playerHp) + " - " + hub.player.playerMaxHp + "\n"); // FIXME: 09.01.2022 format
+        hub.ui.textStats.append("DMG: " + hub.player.playerMinDmg + " - " + hub.player.playerMaxDmg + "\n");
         hub.ui.textStats.append("Armor: " + hub.player.playerDef + "%\n");
         hub.ui.textStats.append("Coins: " + hub.player.playerCoins + "\n");
         hub.ui.textStats.append("Weapon: " + hub.ui.labelWeapon.getName());
@@ -339,7 +347,7 @@ public class Event {
             hub.ui.textMessage.setText("You bought beer, check the table over there");
         } else {
             if (price >= hub.player.playerCoins) {
-                hub.ui.textMessage.setText("You don't have enough coins \nPrice: 1 coin, " + (price - hub.player.playerCoins) + " remaining");
+                hub.ui.textMessage.setText("You don't have enough coins\nPrice: " + price + " coins, " + (price - hub.player.playerCoins) + " remaining");
             } else {
                 hub.ui.textMessage.setText("You can't buy two beers at once. Drink the old one first");
             }
@@ -355,7 +363,7 @@ public class Event {
             hub.ui.textMessage.setText("You bought Liquor, check the table over there");
         } else {
             if (price >= hub.player.playerCoins) {
-                hub.ui.textMessage.setText("You don't have enough coins\nPrice: 10 coins, " + (price - hub.player.playerCoins) + " remaining");
+                hub.ui.textMessage.setText("You don't have enough coins\nPrice: " + price + " coins, " + (price - hub.player.playerCoins) + " remaining");
             } else {
                 hub.ui.textMessage.setText("You can't buy two liquors at once. Drink the old one first");
             }
@@ -366,7 +374,7 @@ public class Event {
         int price = 10;
         if (hub.player.playerCoins >= price && !hub.player.knife) {
             hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/knife.png"));
-            hub.ui.labelWeapon.setName("\nKnife +1 DMG");
+            hub.ui.labelWeapon.setName("\nKnife +1 min,max DMG");
             hub.player.knife = true;
             hub.ui.setMoneyCount(-10);
             hub.player.playerCurrentStats();
@@ -374,7 +382,7 @@ public class Event {
             hub.ui.buttonKnife.setVisible(false);
         } else {
             if (price >= hub.player.playerCoins) {
-                hub.ui.textMessage.setText("You don't have enough coins\nPrice: 10 coins, " + (price - hub.player.playerCoins) + " remaining");
+                hub.ui.textMessage.setText("You don't have enough coins\nPrice: " + price + " coins, " + (price - hub.player.playerCoins) + " remaining");
             } else {
                 hub.ui.textMessage.setText("You already bought this item!");
             }
@@ -392,7 +400,7 @@ public class Event {
             hub.ui.buttonTorso.setVisible(false);
         } else {
             if (price >= hub.player.playerCoins) {
-                hub.ui.textMessage.setText("You don't have enough coins\nPrice: 20 coins, " + (price - hub.player.playerCoins) + " remaining");
+                hub.ui.textMessage.setText("You don't have enough coins\nPrice: " + price + " coins, " + (price - hub.player.playerCoins) + " remaining");
             } else {
                 hub.ui.textMessage.setText("You already bought this item!");
             }
@@ -401,7 +409,7 @@ public class Event {
 
     public void am() {
         hub.player.playerHp = 10 - 1;
-        hub.player.playerDmg = 100;
+        hub.player.playerMaxDmg = 100;
         hub.ui.setMoneyCount(10);
         hub.player.playerDef = 50;
         hub.player.playerCurrentStats();
@@ -410,9 +418,9 @@ public class Event {
     public void dmg() {
         if (hub.player.points >= 1) {
             hub.player.points--;
-            hub.player.playerDmg++;
+            hub.player.playerMaxDmg++;
             hub.player.playerCurrentStats();
-            System.out.println(hub.player.playerDmg);
+            System.out.println(hub.player.playerMaxDmg);
             stats();
         } else {
             hub.player.buttonDmg = false;
@@ -422,15 +430,15 @@ public class Event {
     }
 
     public void hp() {
-        if (hub.player.points >= 1) {
+        if (hub.player.points >= 1 && hub.player.playerMaxHp < 59) {
             hub.player.points--;
             hub.player.playerMaxHp++;
             hub.player.playerCurrentStats();
             System.out.println(hub.player.playerMaxHp);
             stats();
         } else {
-            hub.player.buttonDmg = false;
-            hub.ui.textMessage.setText("Not enough points");
+            hub.player.buttonHp = false;
+            hub.ui.textMessage.setText("Not enough points or HP limit (60)");
             hub.player.playerCurrentStats();
         }
     }
@@ -443,9 +451,172 @@ public class Event {
             System.out.println(hub.player.playerDef);
             stats();
         } else {
-            hub.player.buttonDmg = false;
+            hub.player.buttonArmor = false;
             hub.ui.textMessage.setText("Not enough points");
             hub.player.playerCurrentStats();
         }
     }
+
+    public void buyOldKnife() {
+        int price = 10;
+        if (hub.player.playerCoins >= price && !hub.player.oldKnife) {
+            hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/oldKnife.png"));
+            hub.ui.labelWeapon.setName("\nold knife +1 DMG");
+            hub.player.oldKnife = true;
+            hub.ui.setMoneyCount(-10);
+            hub.player.playerCurrentStats();
+            hub.ui.textMessage.setText("You bought Knife (Max DMG = 4)");
+            hub.ui.buttonOldKnife.setVisible(false);
+        } else {
+            if (price >= hub.player.playerCoins) {
+                hub.ui.textMessage.setText("You don't have enough coins\nPrice: " + price + " coins, " + (price - hub.player.playerCoins) + " remaining");
+            } else {
+                hub.ui.textMessage.setText("You already bought this item!");
+            }
+        }
+    }
+
+    public void buyTorsoBasic() {
+        int price = 10;
+        if (hub.player.playerCoins >= price && !hub.player.torsoBasic) {
+            hub.ui.labelChestArmor.setIcon(hub.ui.jarImg("icon/torsoBasic.png"));
+            hub.ui.labelChestArmor.setName("\nTorso +1 DMG");
+            hub.player.torsoBasic = true;
+            hub.ui.setMoneyCount(-10);
+            hub.player.playerCurrentStats();
+            hub.ui.textMessage.setText("You bought Knife (Max DMG = 4)");
+            hub.ui.buttonTorsoBasic.setVisible(false);
+        } else {
+            if (price >= hub.player.playerCoins) {
+                hub.ui.textMessage.setText("You don't have enough coins\nPrice: " + price + " coins, " + (price - hub.player.playerCoins) + " remaining");
+            } else {
+                hub.ui.textMessage.setText("You already bought this item!");
+            }
+        }
+    }
+
+    public void buyTorsoBetter() {
+        int price = 10;
+        if (hub.player.playerCoins >= price && !hub.player.torsoBetter) {
+            hub.ui.labelChestArmor.setIcon(hub.ui.jarImg("icon/torsoBetter.png"));
+            hub.ui.labelChestArmor.setName("\nTorso +1 DMG");
+            hub.player.torsoBetter = true;
+            hub.ui.setMoneyCount(-10);
+            hub.player.playerCurrentStats();
+            hub.ui.textMessage.setText("You bought Knife (Max DMG = 4)");
+            hub.ui.buttonTorsoBetter.setVisible(false);
+        } else {
+            if (price >= hub.player.playerCoins) {
+                hub.ui.textMessage.setText("You don't have enough coins\nPrice: " + price + " coins, " + (price - hub.player.playerCoins) + " remaining");
+            } else {
+                hub.ui.textMessage.setText("You already bought this item!");
+            }
+        }
+    }
+
+    public void buyHelmet() {
+        int price = 10;
+        if (hub.player.playerCoins >= price && !hub.player.helmet) {
+            hub.ui.labelChestArmor.setIcon(hub.ui.jarImg("icon/helmet.png"));
+            hub.ui.labelChestArmor.setName("\nHelmet +1 DMG");
+            hub.player.helmet = true;
+            hub.ui.setMoneyCount(-10);
+            hub.player.playerCurrentStats();
+            hub.ui.textMessage.setText("You bought Knife (Max DMG = 4)");
+            hub.ui.buttonHelmet.setVisible(false);
+        } else {
+            if (price >= hub.player.playerCoins) {
+                hub.ui.textMessage.setText("You don't have enough coins\nPrice: " + price + " coins, " + (price - hub.player.playerCoins) + " remaining");
+            } else {
+                hub.ui.textMessage.setText("You already bought this item!");
+            }
+        }
+    }
+
+    public void buyWarHammer() {
+        int price = 10;
+        if (hub.player.playerCoins >= price && !hub.player.warHammer) {
+            hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/warhammer.png"));
+            hub.ui.labelWeapon.setName("\nWarhammer +1 DMG");
+            hub.player.warHammer = true;
+            hub.ui.setMoneyCount(-10);
+            hub.player.playerCurrentStats();
+            hub.ui.textMessage.setText("You bought Knife (Max DMG = 4)");
+            hub.ui.buttonWarHammer.setVisible(false);
+        } else {
+            if (price >= hub.player.playerCoins) {
+                hub.ui.textMessage.setText("You don't have enough coins\nPrice: " + price + " coins, " + (price - hub.player.playerCoins) + " remaining");
+            } else {
+                hub.ui.textMessage.setText("You already bought this item!");
+            }
+        }
+    }
+
+    public void buyShieldBasic() {
+        int price = 10;
+        if (hub.player.playerCoins >= price && !hub.player.shieldBasic) {
+            hub.ui.labelShield.setIcon(hub.ui.jarImg("icon/shieldBasic.png"));
+            hub.ui.labelShield.setName("\nShield +1 DMG");
+            hub.player.shieldBasic = true;
+            hub.ui.setMoneyCount(-10);
+            hub.player.playerCurrentStats();
+            hub.ui.textMessage.setText("You bought Knife (Max DMG = 4)");
+            hub.ui.buttonShieldBasic.setVisible(false);
+        } else {
+            if (price >= hub.player.playerCoins) {
+                hub.ui.textMessage.setText("You don't have enough coins\nPrice: " + price + " coins, " + (price - hub.player.playerCoins) + " remaining");
+            } else {
+                hub.ui.textMessage.setText("You already bought this item!");
+            }
+        }
+    }
+
+    public void buyCheese() {
+        int price = 2;
+        if (hub.player.playerCoins >= price && !hub.player.cheese) {
+            hub.player.cheese = true;
+            hub.ui.setMoneyCount(-2);
+            hub.player.playerCurrentStats();
+            hub.ui.textMessage.setText("You bought Cheese, check the table over there");
+        } else {
+            if (price >= hub.player.playerCoins) {
+                hub.ui.textMessage.setText("You don't have enough coins\nPrice: " + price + " coins, " + (price - hub.player.playerCoins) + " remaining");
+            } else {
+                hub.ui.textMessage.setText("You can't buy two cheeses at once. Drink the old one first");
+            }
+        }
+    }
+
+    public void buyPork() {
+        int price = 5;
+        if (hub.player.playerCoins >= price && !hub.player.pork) {
+            hub.player.pork = true;
+            hub.ui.setMoneyCount(-5);
+            hub.player.playerCurrentStats();
+            hub.ui.textMessage.setText("You bought Pork, check the table over there");
+        } else {
+            if (price >= hub.player.playerCoins) {
+                hub.ui.textMessage.setText("You don't have enough coins\nPrice: " + price + " coins, " + (price - hub.player.playerCoins) + " remaining");
+            } else {
+                hub.ui.textMessage.setText("You can't buy two porks at once. Drink the old one first");
+            }
+        }
+    }
+
+    public void buyHolyWater() {
+        int price = 100;
+        if (hub.player.playerCoins >= price && !hub.player.holyWater) {
+            hub.player.pork = true;
+            hub.ui.setMoneyCount(-100);
+            hub.player.playerCurrentStats();
+            hub.ui.textMessage.setText("You bought Holy water, check the table over there");
+        } else {
+            if (price >= hub.player.playerCoins) {
+                hub.ui.textMessage.setText("You don't have enough coins\nPrice: " + price + " coins, " + (price - hub.player.playerCoins) + " remaining");
+            } else {
+                hub.ui.textMessage.setText("You can't buy two Holy waters at once. Drink the old one first");
+            }
+        }
+    }
+
 }

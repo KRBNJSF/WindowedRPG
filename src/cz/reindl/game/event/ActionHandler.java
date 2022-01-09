@@ -34,13 +34,25 @@ public class ActionHandler implements ActionListener {
             case "drinkLiquor" -> hub.event.liquor();
             case "getQuest" -> hub.event.quests();
             case "tavernMenu" -> hub.event.tavernMenu();
+
             case "buyBeer" -> hub.event.buyBeer();
             case "buyLiquor" -> hub.event.buyLiquor();
+            case "buyCheese" -> hub.event.buyCheese();
+            case "buyPork" -> hub.event.buyPork();
+            case "buyHolyWater" -> hub.event.buyHolyWater();
+
             case "buyKnife" -> hub.event.buyKnife();
             case "buyTorso" -> hub.event.buyTorso();
+            case "buyOldKnife" -> hub.event.buyOldKnife();
+            case "buyTorsoBasic" -> hub.event.buyTorsoBasic();
+            case "buyTorsoBetter" -> hub.event.buyTorsoBetter();
+            case "buyHelmet" -> hub.event.buyHelmet();
+            case "buyWarHammer" -> hub.event.buyWarHammer();
+            case "buyShieldBasic" -> hub.event.buyShieldBasic();
+
             case "stats" -> hub.event.stats();
             case "increaseDmg" -> hub.event.dmg();
-            case "increaseHp" -> hub.event.hp();
+            case "increaseHP" -> hub.event.hp();
             case "increaseArmor" -> hub.event.armor();
             //FIGHT SCENE
 

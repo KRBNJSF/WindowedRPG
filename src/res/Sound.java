@@ -25,6 +25,8 @@ public class Sound {
     public File shopMusic = new File("src/res/storage/shopMusic.mp3");
     public File mainTheme = new File("src/res/storage/mainTheme.mp3");
     public File bossTheme = new File("src/res/storage/bossTheme.mp3");
+    public File fightStart = new File("src/res/storage/fightStart.mp3");
+    public File fightLose = new File("src/res/storage/fightLoseSound.mp3");
 
     //SOUND EFFECTS
     public File fightWin = new File("src/res/storage/fightWin.mp3");

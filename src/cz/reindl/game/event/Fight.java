@@ -12,7 +12,7 @@ public class Fight {
     GameHub hub;
     Enemies enemies;
     Random random = new Random();
-    DecimalFormat df = new DecimalFormat("#.###");
+    public DecimalFormat df = new DecimalFormat("#.###");
     private double playerDefPercent = 1;
     private int enemyDef = 1;
     public double defChance;
@@ -37,7 +37,7 @@ public class Fight {
                 hub.playSoundEffect(hub.sound.punch, false);
             }
             hub.ui.healthBarProgress.setMaximum(enemies.entityMaxHp);
-            int playerDmg = (random.nextInt(hub.player.playerDmg) + 1) * enemyDef;
+            int playerDmg = (random.nextInt(hub.player.playerMaxDmg) + hub.player.playerMinDmg) * enemyDef;
             hub.ui.textMessage.setText("");
             enemies.setEntityHp(enemies.getEntityHp() - playerDmg);
             hub.ui.textMessage.append("You hit " + enemies.getEntityName() + " and gave him " + playerDmg + " dmg \n" + enemies.getEntityName() + ": " + enemies.getEntityHp() + " HP left \n");
@@ -57,7 +57,7 @@ public class Fight {
                 hub.playSoundEffect(hub.sound.punch, false);
             }
             hub.ui.healthBarProgress.setMaximum(enemies.entityMaxHp);
-            int playerDmg = (random.nextInt(hub.player.playerDmg) + 1) * enemyDef;
+            int playerDmg = (random.nextInt(hub.player.playerMaxDmg) + hub.player.playerMinDmg) * enemyDef;
             hub.ui.textMessage.setText("");
             enemies.setEntityHp(enemies.getEntityHp() - playerDmg);
             hub.ui.textMessage.append("You hit " + enemies.getEntityName() + " and gave him " + playerDmg + " dmg \n" + enemies.getEntityName() + ": " + enemies.getEntityHp() + " HP left \n");
@@ -146,7 +146,7 @@ public class Fight {
             double enemyDmg = (random.nextInt(enemies.getEntityDmg()) + 1) * playerDefPercent;
             hub.player.playerHp -= enemyDmg;
             hub.player.playerCurrentStats();
-            hub.ui.textMessage.append(enemies.getEntityName() + " gave you " + enemyDmg + " dmg \n " + "You: " + hub.player.playerHp + " HP left");
+            hub.ui.textMessage.append(enemies.getEntityName() + " gave you " + df.format(enemyDmg) + " dmg \n " + "You: " + df.format(hub.player.playerHp) + " HP left");
             if (hub.player.playerHp <= 0) {
                 hub.player.playerHp = 1;
                 hub.player.playerCurrentStats();
