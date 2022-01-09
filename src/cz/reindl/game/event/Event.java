@@ -410,7 +410,7 @@ public class Event {
     public void am() {
         hub.player.playerHp = 10 - 1;
         hub.player.playerMaxDmg = 100;
-        hub.ui.setMoneyCount(10);
+        hub.ui.setMoneyCount(1000);
         hub.player.playerDef = 50;
         hub.player.playerCurrentStats();
     }
@@ -572,33 +572,33 @@ public class Event {
     }
 
     public void buyCheese() {
-        int price = 2;
+        int price = 5;
         if (hub.player.playerCoins >= price && !hub.player.cheese) {
             hub.player.cheese = true;
-            hub.ui.setMoneyCount(-2);
+            hub.ui.setMoneyCount(-5);
             hub.player.playerCurrentStats();
             hub.ui.textMessage.setText("You bought Cheese, check the table over there");
         } else {
             if (price >= hub.player.playerCoins) {
                 hub.ui.textMessage.setText("You don't have enough coins\nPrice: " + price + " coins, " + (price - hub.player.playerCoins) + " remaining");
             } else {
-                hub.ui.textMessage.setText("You can't buy two cheeses at once. Drink the old one first");
+                hub.ui.textMessage.setText("You can't buy two cheeses at once. Eat the old one first");
             }
         }
     }
 
     public void buyPork() {
-        int price = 5;
+        int price = 10;
         if (hub.player.playerCoins >= price && !hub.player.pork) {
             hub.player.pork = true;
-            hub.ui.setMoneyCount(-5);
+            hub.ui.setMoneyCount(-10);
             hub.player.playerCurrentStats();
             hub.ui.textMessage.setText("You bought Pork, check the table over there");
         } else {
             if (price >= hub.player.playerCoins) {
                 hub.ui.textMessage.setText("You don't have enough coins\nPrice: " + price + " coins, " + (price - hub.player.playerCoins) + " remaining");
             } else {
-                hub.ui.textMessage.setText("You can't buy two porks at once. Drink the old one first");
+                hub.ui.textMessage.setText("You can't buy two porks at once. Eat the old one first");
             }
         }
     }
@@ -606,16 +606,52 @@ public class Event {
     public void buyHolyWater() {
         int price = 100;
         if (hub.player.playerCoins >= price && !hub.player.holyWater) {
-            hub.player.pork = true;
+            hub.player.holyWater = true;
             hub.ui.setMoneyCount(-100);
             hub.player.playerCurrentStats();
             hub.ui.textMessage.setText("You bought Holy water, check the table over there");
         } else {
-            if (price >= hub.player.playerCoins) {
-                hub.ui.textMessage.setText("You don't have enough coins\nPrice: " + price + " coins, " + (price - hub.player.playerCoins) + " remaining");
-            } else {
+            if (hub.player.holyWater) {
                 hub.ui.textMessage.setText("You can't buy two Holy waters at once. Drink the old one first");
+            } else {
+                hub.ui.textMessage.setText("You don't have enough coins\nPrice: " + price + " coins, " + (price - hub.player.playerCoins) + " remaining");
             }
+        }
+    }
+
+    public void holyWater() {
+        if (hub.player.playerHp != hub.player.playerMaxHp - 1) {
+            hub.ui.consecutiveText("You recovered " + hub.player.playerMaxHp + " HP");
+            hub.player.playerHp += hub.player.playerMaxHp - 1;
+            hub.player.holyWater = false;
+            hub.player.playerCurrentStats();
+            hub.playSoundEffect(hub.sound.fullHealEffect, false);
+        } else {
+            hub.ui.textMessage.setText("You are at full health \n");
+        }
+    }
+
+    public void pork() {
+        if (hub.player.playerHp != hub.player.playerMaxHp - 1) {
+            hub.ui.consecutiveText("You recovered " + hub.player.playerMaxHp + " HP");
+            hub.player.playerHp += 5;
+            hub.player.holyWater = false;
+            hub.player.playerCurrentStats();
+            hub.playSoundEffect(hub.sound.fullHealEffect, false);
+        } else {
+            hub.ui.textMessage.setText("You are at full health \n");
+        }
+    }
+
+    public void cheese() {
+        if (hub.player.playerHp != hub.player.playerMaxHp - 1) {
+            hub.ui.consecutiveText("You recovered " + hub.player.playerMaxHp + " HP");
+            hub.player.playerHp += 2;
+            hub.player.holyWater = false;
+            hub.player.playerCurrentStats();
+            hub.playSoundEffect(hub.sound.fullHealEffect, false);
+        } else {
+            hub.ui.textMessage.setText("You are at full health \n");
         }
     }
 

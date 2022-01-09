@@ -48,8 +48,8 @@ public class UserInterface {
     public JLabel labelBeer, labelLiquor, labelPork, labelCheese, labelHolyWater; //shop items
 
     //FIGHT UI
-    public JLabel labelRat, labelWolf, labelKnight, labelOgre, labelWizard, labelWarriorOgre; //enemies
-    public JLabel labelChest, labelChest2, labelFinalChest; //rewards
+    public JLabel labelRat, labelWolf, labelKnight, labelOgre, labelWizard, labelWarriorOgre, labelFrogMonster, labelCoffinMonster, labelDoubleMonster, labelGhastliness, labelSpiderMonster, labelWizard2, labelWitch; //enemies
+    public JLabel labelChest, labelChestFinal; //rewards
     public JPanel panelHeathBar, panelXpBar;
     public JProgressBar healthBarProgress, xpProgress;
 
@@ -454,6 +454,9 @@ public class UserInterface {
                 if (labelObject == labelLiquor) {
                     gameHub.event.liquor();
                 }
+                if (labelObject == labelHolyWater) {
+                    gameHub.event.holyWater();
+                }
             }
 
             @Override
@@ -551,9 +554,9 @@ public class UserInterface {
         labelDungeonEntrance = gameObject(3, 350, 150, 130, 100, ("object/blankTransparent.png"), "Enter", "-", "-", "enterDungeon", "-", "-");
         labelBeer = shopObject(3, 150, 270, 96, 105, "object/fullBeer.png");
         labelLiquor = shopObject(3, 230, 270, 52, 80, "object/liquor.png");
-        //labelHolyWater = shopObject(3, 230, 270, 52, 80, "object/holyWater.png");
+        labelHolyWater = shopObject(3, 100, 290, 44, 54, "object/holyWaterObject.png");
         //labelPork = shopObject(3, 230, 270, 52, 80, "object/pork.png");
-        //labelCheese = shopObject(3, 230, 270, 52, 80, "object/cheese.png");
+        labelCheese = shopObject(3, 140, 360, 63, 50, "object/cheeseObject.png");
         gameObject(3, 560, 100, 150, 208, ("entity/innkeeper.png"), "Menu", "Talk", "-", "tavernMenu", "talkBartender", "-");
         gameObject(3, 360, 250, 111, 205, ("entity/dwarf.png"), "Talk", "-", "Arena", "getQuest", "-", "-");
 
@@ -562,15 +565,15 @@ public class UserInterface {
         buttonIcon(7, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map", true);
         buttonIcon(7, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics", true);
         changeScreenButton(7, 710, 150, 50, 50, "goTown2", "Forge");
-        buttonKnife = buttonIcon(7, 250, 250, 50, 50, "buyKnife", "icon/knife.png", "Weapon: Gives 1 DMG", false);
-        buttonTorso = buttonIcon(7, 355, 305, 50, 50, "buyTorso", "icon/chestArmor.png", "Torso: Gives 20% / 50% of Armor", false);
-        buttonOldKnife = buttonIcon(7, 355, 250, 50, 50, "buyOldKnife", "icon/oldKnife.png", "Weapon: Gives 2 DMG", false);
-        buttonTorsoBasic = buttonIcon(7, 405, 305, 50, 50, "buyTorsoBasic", "icon/torsoBasic.png", "Torso: Gives 20% / 50% of Armor", false);
-        buttonTorsoBetter = buttonIcon(7, 255, 305, 50, 50, "buyTorsoBetter", "icon/torsoBetter.png", "Torso: Gives 20% / 50% of Armor", false);
-        buttonHelmet = buttonIcon(7, 305, 305, 50, 50, "buyHelmet", "icon/helmet.png", "Torso: Gives 20% / 50% of Armor", false);
-        buttonWarHammer = buttonIcon(7, 305, 250, 50, 50, "buyWarHammer", "icon/warHammer.png", "Weapon: Gives 2 DMG", false);
-        buttonShieldBasic = buttonIcon(7, 405, 250, 50, 50, "buyShieldBasic", "icon/shieldBasic.png", "Shield: Gives 20% / 50% of Armor", false);
-        shopObject(7, 200, 200, 400, 200, "panels/panelShop.png");
+        buttonKnife = buttonIcon(7, 270, 250, 50, 50, "buyKnife", "icon/knife.png", "Weapon: Gives 1 DMG", false);
+        buttonTorso = buttonIcon(7, 375, 305, 50, 50, "buyTorso", "icon/chestArmor.png", "Torso: Gives 20% / 50% of Armor", false);
+        buttonOldKnife = buttonIcon(7, 325, 250, 50, 50, "buyOldKnife", "icon/oldKnife.png", "Weapon: Gives 2 DMG", false);
+        buttonTorsoBasic = buttonIcon(7, 425, 305, 50, 50, "buyTorsoBasic", "icon/torsoBasic.png", "Torso: Gives 20% / 50% of Armor", false);
+        buttonTorsoBetter = buttonIcon(7, 270, 305, 50, 50, "buyTorsoBetter", "icon/torsoBetter.png", "Torso: Gives 20% / 50% of Armor", false);
+        buttonHelmet = buttonIcon(7, 325, 305, 50, 50, "buyHelmet", "icon/helmet.png", "Torso: Gives 20% / 50% of Armor", false);
+        buttonWarHammer = buttonIcon(7, 375, 250, 50, 50, "buyWarHammer", "icon/warHammer.png", "Weapon: Gives 2 DMG", false);
+        buttonShieldBasic = buttonIcon(7, 425, 250, 50, 50, "buyShieldBasic", "icon/shieldBasic.png", "Shield: Gives 20% / 50% of Armor", false);
+        shopObject(7, 180, 235, 400, 140, "panels/shopPanel.png");
         gameObject(7, 0, 0, 0, 0, ("object/blankTransparent.png"), "", "", "", "", "", "");
 
         //#TOWN 2 SIDE
@@ -590,18 +593,26 @@ public class UserInterface {
         labelOgre = enemyObject(4, 320, 56, 200, 388, ("entity/ogre.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
         labelWizard = enemyObject(4, 320, 100, 120, 300, ("entity/wizard.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
         labelWarriorOgre = enemyObject(4, 260, 30, 300, 405, ("entity/warriorOgre.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
+        labelFrogMonster = enemyObject(4, 260, 30, 300, 405, ("entity/frogMan.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
+        labelCoffinMonster = enemyObject(4, 260, 30, 300, 405, ("entity/coffinMonster.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
+        labelDoubleMonster = enemyObject(4, 260, 30, 300, 405, ("entity/doubleMan.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
+        labelGhastliness = enemyObject(4, 260, 30, 300, 405, ("entity/ghastliness.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
+        labelSpiderMonster = enemyObject(4, 260, 30, 300, 405, ("entity/spiderWoman.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
+        labelWizard2 = enemyObject(4, 260, 30, 300, 405, ("entity/wizard2.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
+        labelWitch = enemyObject(4, 260, 30, 300, 405, ("entity/witch.png"), "Attack", "Luck", "Special Attack", "Run Away", "fightEnemy2", "defend", "specialAttack", "runAway");
         labelChest = enemyObject(4, 350, 330, 150, 180, ("object/Chest.png"), "Open", "-", "-", "-", "openChest", "-", "-", "-");
+        labelChestFinal = enemyObject(4, 350, 330, 150, 180, ("object/Treasure.png"), "Open", "-", "-", "-", "openTreasure", "-", "-", "-");
 
         //TAVERN SHOP
         gameBackground(8, "bg/map.png");
         changeScreenButton(8, 710, 150, 50, 50, "enterPub", "Pub");
         buttonIcon(8, 0, 0, 35, 35, "teleport", "icon/compass.png", "Teleportation map", true);
         buttonIcon(8, 40, 0, 35, 35, "stats", "icon/stats.png", "Statistics", true);
-        buttonIcon(8, 365, 165, 50, 50, "buyBeer", "icon/beer.png", "Price: 1 coin : Adds 1 HP when drank", true);
-        buttonIcon(8, 365, 220, 50, 50, "buyLiquor", "icon/liquor.png", "Price: 10 coins : Adds 10 HP when drank", true);
-        buttonIcon(8, 365, 275, 50, 50, "buyHolyWater", "icon/holyWater.png", "Price: 10 coins : Adds 20 HP when drank", true);
-        buttonIcon(8, 365, 330, 50, 50, "buyPork", "icon/pork.png", "Price: 10 coins : Adds 3 HP when drank", true);
-        buttonIcon(8, 365, 385, 50, 50, "buyCheese", "icon/cheese.png", "Price: 10 coins : Adds 1 HP when drank", true);
+        buttonIcon(8, 325, 115, 50, 50, "buyBeer", "icon/beer.png", "Price: 1 coin : Adds 1 HP when drank", true);
+        buttonIcon(8, 325, 170, 50, 50, "buyLiquor", "icon/liquor.png", "Price: 20 coins : Adds 10 HP when drank", true);
+        buttonIcon(8, 325, 225, 50, 50, "buyHolyWater", "icon/holyWater.png", "Price: 100 coins : Adds FULL HP when drank", true);
+        buttonIcon(8, 395, 115, 50, 50, "buyPork", "icon/pork.png", "Price: 10 coins : Adds 5 HP when eaten", true);
+        buttonIcon(8, 395, 170, 50, 50, "buyCheese", "icon/cheese.png", "Price: 5 coins : Adds 2 HP when eaten", true);
         gameObject(8, 0, 0, 0, 0, ("object/blankTransparent.png"), "", "", "", "", "", "");
 
         //MAP

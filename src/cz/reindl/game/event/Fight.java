@@ -74,6 +74,7 @@ public class Fight {
                     hub.sound.currentSoundEffect = hub.sound.wolfAttack;
                     hub.ui.panelHeathBar.setBounds(hub.ui.labelWolf.getX() + 105, hub.ui.labelWolf.getY() + 15, 200, 50);
                     hub.playSoundEffect(hub.sound.moneyEarn, false);
+                    hub.ui.setExpCount(5);
                     hub.ui.setMoneyCount(10);
                     hub.fight.setEnemy(Enemies.WOLF);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
@@ -87,6 +88,7 @@ public class Fight {
                     hub.sound.currentSoundEffect = hub.sound.swordSlash;
                     hub.ui.panelHeathBar.setBounds(hub.ui.labelKnight.getX() + 105, hub.ui.labelKnight.getY() + 15, 200, 50);
                     hub.playSoundEffect(hub.sound.moneyEarn, false);
+                    hub.ui.setExpCount(20);
                     hub.ui.setMoneyCount(20);
                     hub.fight.setEnemy(Enemies.KNIGHT);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
@@ -107,6 +109,7 @@ public class Fight {
                 case 4 -> {
                     hub.ui.panelHeathBar.setBounds(hub.ui.labelOgre.getX() + 105, hub.ui.labelOgre.getY() + 15, 200, 50);
                     hub.playSoundEffect(hub.sound.moneyEarn, false);
+                    hub.ui.setExpCount(20);
                     hub.ui.setMoneyCount(50);
                     hub.fight.setEnemy(Enemies.OGRE);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
@@ -119,6 +122,7 @@ public class Fight {
                     hub.sound.currentSoundEffect = hub.sound.fireBall;
                     hub.ui.panelHeathBar.setBounds(hub.ui.labelWizard.getX() + 105, hub.ui.labelWizard.getY() + 15, 200, 50);
                     hub.playSoundEffect(hub.sound.moneyEarn, false);
+                    hub.ui.setExpCount(20);
                     hub.ui.setMoneyCount(50);
                     hub.fight.setEnemy(Enemies.WIZARD);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
@@ -135,10 +139,19 @@ public class Fight {
                     hub.fight.setEnemy(Enemies.WARRIOROGRE);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
                     hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
-                    hub.ui.setMoneyCount(100);
+                    hub.ui.setExpCount(20);
                     hub.ui.labelWizard.setVisible(false);
                     hub.ui.labelWarriorOgre.setVisible(true);
                     winScreen();
+                }
+                case 7 -> {
+                    hub.sound.currentSoundEffect = hub.sound.chestOpen;
+                    hub.ui.textMessage.setText("You won chest! \n" +
+                            "Look inside to find out what you got");
+                    hub.playSoundEffect(hub.sound.moneyEarnMore, false);
+                    hub.ui.labelWarriorOgre.setVisible(false);
+                    hub.ui.panelHeathBar.setVisible(false);
+                    hub.ui.labelChestFinal.setVisible(true);
                 }
             }
         } else {
@@ -193,6 +206,14 @@ public class Fight {
         hub.ui.labelKnight.setVisible(false);
         hub.ui.labelOgre.setVisible(false);
         hub.ui.labelWizard.setVisible(false);
+        hub.ui.labelWizard2.setVisible(false);
+        hub.ui.labelSpiderMonster.setVisible(false);
+        hub.ui.labelDoubleMonster.setVisible(false);
+        hub.ui.labelWitch.setVisible(false);
+        hub.ui.labelCoffinMonster.setVisible(false);
+        hub.ui.labelFrogMonster.setVisible(false);
+        hub.ui.labelGhastliness.setVisible(false);
+        hub.ui.labelChestFinal.setVisible(false);
         hub.ui.labelWarriorOgre.setVisible(false);
 
         hub.ui.panelHeathBar.setBounds(hub.ui.labelRat.getX() + 50, hub.ui.labelRat.getY() - 20, 200, 30);

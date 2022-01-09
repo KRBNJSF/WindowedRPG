@@ -139,9 +139,9 @@ public class Player {
 
         hub.ui.labelBeer.setVisible(beer);
         hub.ui.labelLiquor.setVisible(liquor);
-        //hub.ui.labelCheese.setVisible(cheese);
+        hub.ui.labelCheese.setVisible(cheese);
         //hub.ui.labelPork.setVisible(pork);
-        //hub.ui.labelHolyWater.setVisible(holyWater);
+        hub.ui.labelHolyWater.setVisible(holyWater);
 
         hub.ui.buttonMapItem1.setVisible(mapItem1);
         hub.ui.buttonMapItem2.setVisible(mapItem2);
