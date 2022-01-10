@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class UserInterface {
 
@@ -153,7 +154,8 @@ public class UserInterface {
         xpProgress = new JProgressBar();
         xpProgress.setStringPainted(true);
         xpProgress.setMinimum(0);
-        xpProgress.setValue(10);
+        xpProgress.setMaximum(100);
+        xpProgress.setValue(0);
         xpProgress.setString(0 + "/" + 100);
         xpProgress.setPreferredSize(new Dimension(7600, 20));
         xpProgress.setForeground(Color.GREEN);
@@ -190,7 +192,7 @@ public class UserInterface {
         //window.add(panelInventory);
 
         labelInventory = new JLabel("", SwingConstants.CENTER);
-        labelInventory.setBounds(650, 5, 200, 50);
+        labelInventory.setBounds(650, 5, 198, 50);
         labelInventory.setIcon(jarImg("panels/inventoryPanel.png"));
         labelInventory.setLayout(new GridLayout(1, 6));
         labelInventory.setToolTipText("Inventory");
@@ -319,10 +321,13 @@ public class UserInterface {
             public void mouseEntered(MouseEvent e) {
                 if (labelObject == labelDungeonEntrance || labelObject == labelPubEntrance || labelObject == labelTown2) {
                     setCursorIcon(labelObject, "icon/cursor/cursorEnter.png", "cursorEnter");
+                    labelObject.setToolTipText("Enter");
                 } else if (labelObject == labelWell) {
                     setCursorIcon(labelObject, "icon/cursor/cursorMagnifier.png", "cursorMagnifier");
+                    labelObject.setToolTipText("Search");
                 } else {
                     setCursorIcon(labelObject, "icon/cursor/cursorGet.png", "cursorGet");
+                    labelObject.setToolTipText("Interact");
                 }
             }
 
@@ -500,7 +505,7 @@ public class UserInterface {
         JButton arrowButton = new JButton();
         arrowButton.setBounds(x, y, width, height);
         arrowButton.setBackground(Color.yellow);
-        arrowButton.setContentAreaFilled(true);
+        arrowButton.setContentAreaFilled(false);
         arrowButton.setFocusPainted(false);
         arrowButton.setBorderPainted(false);
         arrowButton.setToolTipText(text);
@@ -711,10 +716,11 @@ public class UserInterface {
             int arrayNumber = characters.length;
 
             String addedCharacter = String.valueOf(characters[i]);
-            if (characters.length <= characters[i]) { // FIXME: 05.01.2022 IF characters >= characters[i] -> timer.stop(), to working state
+            if (characters.length <= characters[i] && Arrays.equals(characters, text.toCharArray())) { // FIXME: 05.01.2022 IF characters >= characters[i] -> timer.stop(), to working state
                 textInfo.append(addedCharacter);
                 i++;
             } else {
+                i = 0;
                 timer.stop();
             }
 
@@ -806,11 +812,12 @@ public class UserInterface {
     }
 
     public void setExpCount(int expCount) {
+        gameHub.ui.xpProgress.setMinimum(0);
+        gameHub.ui.xpProgress.setMaximum(gameHub.player.levelUpExp);
         gameHub.player.playerExp += expCount; // FIXME: 09.01.2022 Paint bar
-        //gameHub.ui.xpProgress.setMinimum(0);
-        //gameHub.ui.xpProgress.setMaximum(gameHub.player.levelUpExp);
         gameHub.ui.xpProgress.setValue(gameHub.player.playerExp);
         gameHub.ui.xpProgress.setString(gameHub.player.playerExp + " / " + gameHub.player.levelUpExp);
+        System.out.println(gameHub.player.playerExp + " / " + gameHub.player.levelUpExp);
         gameHub.player.playerCurrentStats();
     }
 

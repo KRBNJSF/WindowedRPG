@@ -124,6 +124,9 @@ public class Event {
         if (hub.player.playerHp != hub.player.playerMaxHp - 1) {
             hub.ui.consecutiveText("You recovered 1 hp");
             hub.player.playerHp++;
+            if (hub.player.playerHp > hub.player.playerMaxHp) {
+                hub.player.playerHp = hub.player.playerMaxHp;
+            }
             hub.player.beer = false;
             hub.player.playerCurrentStats();
             hub.playSoundEffect(hub.sound.healEffect, false);
@@ -133,10 +136,13 @@ public class Event {
     }
 
     public void liquor() {
-        if (hub.player.playerHp != hub.player.playerMaxHp - 1) {
+        if (hub.player.playerHp != hub.player.playerMaxHp) {
             hub.playSoundEffect(hub.sound.fullHealEffect, false);
             hub.ui.textMessage.setText("You recovered full hp\n");
-            hub.player.playerHp = hub.player.playerMaxHp - 1;
+            hub.player.playerHp += 10;
+            if (hub.player.playerHp > hub.player.playerMaxHp) {
+                hub.player.playerHp = hub.player.playerMaxHp;
+            }
             hub.player.liquor = false;
             hub.player.playerCurrentStats();
             //hub.playMusic(hub.sound.pubGreet, false);
@@ -149,11 +155,12 @@ public class Event {
         if (!hub.player.sword) {
             hub.sound.currentSoundEffect = hub.sound.chestOpen;
             hub.playSoundEffect(hub.sound.currentSoundEffect, false);
-            hub.ui.setMoneyCount(100);
+            hub.ui.setMoneyCount(30);
             hub.ui.textMessage.setText("You opened the chest and found a sword!\n (max dmg + 2)");
             hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/sword.png"));
             hub.ui.labelWeapon.setName("\nSword +3 DMG");
             hub.player.sword = true;
+            hub.player.isSword = true;
             hub.player.playerCurrentStats();
             hub.event.scenePubInside();
         } else {
@@ -173,7 +180,7 @@ public class Event {
                     hub.player.playerCurrentStats();
                     questCount++;
                     hub.ui.setMoneyCount(1);
-                    hub.ui.setExpCount(125);
+                    hub.ui.setExpCount(25);
                 }
             }
             case 1 -> {
@@ -276,33 +283,6 @@ public class Event {
         hub.ui.textStats.setVisible(false);
     }
 
-    public void stats() {
-        DecimalFormat df = new DecimalFormat("#.###");
-        df.setRoundingMode(RoundingMode.CEILING);
-
-        hub.player.playerCurrentStats();
-        hub.ui.panelBackground[1].setVisible(false);
-        hub.ui.panelBackground[2].setVisible(false);
-        hub.ui.panelBackground[3].setVisible(false);
-        hub.ui.panelBackground[4].setVisible(false);
-        hub.ui.panelBackground[5].setVisible(false);
-        hub.ui.panelBackground[6].setVisible(false);
-        hub.ui.panelBackground[7].setVisible(false);
-        hub.ui.panelBackground[8].setVisible(false);
-        hub.ui.panelBackground[9].setVisible(true);
-        hub.ui.textStats.setVisible(true);
-        hub.ui.buttonStats.setVisible(false);
-
-        hub.ui.textStats.setText("");
-        hub.ui.textStats.append("HP: " + df.format(hub.player.playerHp) + " - " + hub.player.playerMaxHp + "\n"); // FIXME: 09.01.2022 format
-        hub.ui.textStats.append("DMG: " + hub.player.playerMinDmg + " - " + hub.player.playerMaxDmg + "\n");
-        hub.ui.textStats.append("Armor: " + hub.player.playerDef + "%\n");
-        hub.ui.textStats.append("Coins: " + hub.player.playerCoins + "\n");
-        hub.ui.textStats.append("Weapon: " + hub.ui.labelWeapon.getName());
-        hub.ui.textStats.append("Level: " + hub.player.playerLevel + "\n");
-        hub.ui.textStats.append("Level points: " + hub.player.points + "\n");
-    }
-
     public void currentScreen(int currentScreen) {
         hub.ui.panelBackground[6].setVisible(false);
         switch (currentScreen) {
@@ -355,10 +335,10 @@ public class Event {
     }
 
     public void buyLiquor() {
-        int price = 10;
+        int price = 20;
         if (hub.player.playerCoins >= price && !hub.player.liquor) {
             hub.player.liquor = true;
-            hub.ui.setMoneyCount(-10);
+            hub.ui.setMoneyCount(-20);
             hub.player.playerCurrentStats();
             hub.ui.textMessage.setText("You bought Liquor, check the table over there");
         } else {
@@ -375,6 +355,7 @@ public class Event {
         if (hub.player.playerCoins >= price && !hub.player.knife) {
             hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/knife.png"));
             hub.ui.labelWeapon.setName("\nKnife +1 min,max DMG");
+            hub.player.isKnife = true;
             hub.player.knife = true;
             hub.ui.setMoneyCount(-10);
             hub.player.playerCurrentStats();
@@ -409,18 +390,18 @@ public class Event {
 
     public void am() {
         hub.player.playerHp = 10 - 1;
-        hub.player.playerMaxDmg = 100;
-        hub.ui.setMoneyCount(1000);
-        hub.player.playerDef = 50;
+        hub.player.playerCurrentMaxDmg = 10;
+        hub.ui.setMoneyCount(10);
+        hub.ui.setExpCount(10);
         hub.player.playerCurrentStats();
     }
 
     public void dmg() {
         if (hub.player.points >= 1) {
             hub.player.points--;
-            hub.player.playerMaxDmg++;
+            hub.player.playerCurrentMaxDmg++;
             hub.player.playerCurrentStats();
-            System.out.println(hub.player.playerMaxDmg);
+            System.out.println(hub.player.playerCurrentMaxDmg);
             stats();
         } else {
             hub.player.buttonDmg = false;
@@ -461,8 +442,9 @@ public class Event {
         int price = 10;
         if (hub.player.playerCoins >= price && !hub.player.oldKnife) {
             hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/oldKnife.png"));
-            hub.ui.labelWeapon.setName("\nold knife +1 DMG");
+            hub.ui.labelWeapon.setName("\nOld Knife +1 DMG");
             hub.player.oldKnife = true;
+            hub.player.isOldKnife = true;
             hub.ui.setMoneyCount(-10);
             hub.player.playerCurrentStats();
             hub.ui.textMessage.setText("You bought Knife (Max DMG = 4)");
@@ -539,6 +521,7 @@ public class Event {
             hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/warhammer.png"));
             hub.ui.labelWeapon.setName("\nWarhammer +? DMG");
             hub.player.warHammer = true;
+            hub.player.isWarHammer = true;
             hub.ui.setMoneyCount(-150);
             hub.player.playerCurrentStats();
             hub.ui.textMessage.setText("You bought Warhammer (Min DMG + ?, Max DMG + ?)");
@@ -623,6 +606,9 @@ public class Event {
         if (hub.player.playerHp != hub.player.playerMaxHp - 1) {
             hub.ui.consecutiveText("You recovered " + hub.player.playerMaxHp + " HP");
             hub.player.playerHp += hub.player.playerMaxHp - 1;
+            if (hub.player.playerHp > hub.player.playerMaxHp) {
+                hub.player.playerHp = hub.player.playerMaxHp;
+            }
             hub.player.holyWater = false;
             hub.player.playerCurrentStats();
             hub.playSoundEffect(hub.sound.fullHealEffect, false);
@@ -635,7 +621,10 @@ public class Event {
         if (hub.player.playerHp != hub.player.playerMaxHp - 1) {
             hub.ui.consecutiveText("You recovered " + hub.player.playerMaxHp + " HP");
             hub.player.playerHp += 5;
-            hub.player.holyWater = false;
+            if (hub.player.playerHp > hub.player.playerMaxHp) {
+                hub.player.playerHp = hub.player.playerMaxHp;
+            }
+            hub.player.pork = false;
             hub.player.playerCurrentStats();
             hub.playSoundEffect(hub.sound.fullHealEffect, false);
         } else {
@@ -647,6 +636,9 @@ public class Event {
         if (hub.player.playerHp != hub.player.playerMaxHp - 1) {
             hub.ui.consecutiveText("You recovered " + hub.player.playerMaxHp + " HP");
             hub.player.playerHp += 2;
+            if (hub.player.playerHp > hub.player.playerMaxHp) {
+                hub.player.playerHp = hub.player.playerMaxHp;
+            }
             hub.player.cheese = false;
             hub.player.playerCurrentStats();
             hub.playSoundEffect(hub.sound.fullHealEffect, false);
@@ -664,10 +656,39 @@ public class Event {
             hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/shardSword.png"));
             hub.ui.labelWeapon.setName("\nSword +6 MIN DMG, MAX DMG 10");
             hub.player.shardSword = true;
+            hub.player.isShardSword = true;
             hub.player.playerCurrentStats();
             hub.event.scenePubInside();
         } else {
             hub.ui.textMessage.setText("It's empty\n");
         }
     }
+
+    public void stats() {
+        DecimalFormat df = new DecimalFormat("#.###");
+        df.setRoundingMode(RoundingMode.CEILING);
+
+        hub.player.playerCurrentStats();
+        hub.ui.panelBackground[1].setVisible(false);
+        hub.ui.panelBackground[2].setVisible(false);
+        hub.ui.panelBackground[3].setVisible(false);
+        hub.ui.panelBackground[4].setVisible(false);
+        hub.ui.panelBackground[5].setVisible(false);
+        hub.ui.panelBackground[6].setVisible(false);
+        hub.ui.panelBackground[7].setVisible(false);
+        hub.ui.panelBackground[8].setVisible(false);
+        hub.ui.panelBackground[9].setVisible(true);
+        hub.ui.textStats.setVisible(true);
+        hub.ui.buttonStats.setVisible(false);
+
+        hub.ui.textStats.setText("");
+        hub.ui.textStats.append("HP: " + df.format(hub.player.playerHp) + " - " + hub.player.playerMaxHp + "\n"); // FIXME: 09.01.2022 format
+        hub.ui.textStats.append("DMG: " + hub.player.playerMinDmg + " - " + hub.player.playerCurrentMaxDmg + "\n");
+        hub.ui.textStats.append("Armor: " + hub.fight.playerDefPercent + "%\n");
+        hub.ui.textStats.append("Coins: " + hub.player.playerCoins + "\n");
+        hub.ui.textStats.append("Weapon: " + hub.ui.labelWeapon.getName() + "" + hub.player.playerMinDmg + " - " + hub.player.playerMaxDmg + "\n");
+        hub.ui.textStats.append("Level: " + hub.player.playerLevel + "\n");
+        hub.ui.textStats.append("Level points: " + hub.player.points + "\n");
+    }
+
 }

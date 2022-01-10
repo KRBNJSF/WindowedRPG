@@ -13,7 +13,7 @@ public class Fight {
     Enemies enemies;
     Random random = new Random();
     public DecimalFormat df = new DecimalFormat("#.###");
-    private double playerDefPercent = 1;
+    public double playerDefPercent = 1;
     private int enemyDef = 1;
     public double defChance;
     public int count = 0;
@@ -37,7 +37,7 @@ public class Fight {
                 hub.playSoundEffect(hub.sound.punch, false);
             }
             hub.ui.healthBarProgress.setMaximum(enemies.entityMaxHp);
-            int playerDmg = (random.nextInt(hub.player.playerMaxDmg) + hub.player.playerMinDmg) * enemyDef;
+            int playerDmg = (random.nextInt(hub.player.playerCurrentMaxDmg) + hub.player.playerMinDmg) * enemyDef * 3;
             hub.ui.textMessage.setText("");
             enemies.setEntityHp(enemies.getEntityHp() - playerDmg);
             hub.ui.textMessage.append("You hit " + enemies.getEntityName() + " and gave him " + playerDmg + " dmg \n" + enemies.getEntityName() + ": " + enemies.getEntityHp() + " HP left \n");
@@ -57,7 +57,7 @@ public class Fight {
                 hub.playSoundEffect(hub.sound.punch, false);
             }
             hub.ui.healthBarProgress.setMaximum(enemies.entityMaxHp);
-            int playerDmg = (random.nextInt(hub.player.playerMaxDmg) + hub.player.playerMinDmg) * enemyDef;
+            int playerDmg = (random.nextInt(hub.player.playerCurrentMaxDmg) + hub.player.playerMinDmg) * enemyDef;
             hub.ui.textMessage.setText("");
             enemies.setEntityHp(enemies.getEntityHp() - playerDmg);
             hub.ui.textMessage.append("You hit " + enemies.getEntityName() + " and gave him " + playerDmg + " dmg \n" + enemies.getEntityName() + ": " + enemies.getEntityHp() + " HP left \n");
@@ -74,8 +74,8 @@ public class Fight {
                     hub.sound.currentSoundEffect = hub.sound.wolfAttack;
                     hub.ui.panelHeathBar.setBounds(hub.ui.labelWolf.getX() + 105, hub.ui.labelWolf.getY() + 15, 200, 50);
                     hub.playSoundEffect(hub.sound.moneyEarn, false);
-                    hub.ui.setExpCount(5);
-                    hub.ui.setMoneyCount(10);
+                    hub.ui.setExpCount(60);
+                    hub.ui.setMoneyCount(5);
                     hub.fight.setEnemy(Enemies.WOLF);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
                     hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
@@ -88,8 +88,8 @@ public class Fight {
                     hub.sound.currentSoundEffect = hub.sound.swordSlash;
                     hub.ui.panelHeathBar.setBounds(hub.ui.labelKnight.getX() + 105, hub.ui.labelKnight.getY() + 15, 200, 50);
                     hub.playSoundEffect(hub.sound.moneyEarn, false);
-                    hub.ui.setExpCount(20);
-                    hub.ui.setMoneyCount(20);
+                    hub.ui.setExpCount(80);
+                    hub.ui.setMoneyCount(5);
                     hub.fight.setEnemy(Enemies.KNIGHT);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
                     hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
@@ -109,8 +109,8 @@ public class Fight {
                 case 4 -> {
                     hub.ui.panelHeathBar.setBounds(hub.ui.labelOgre.getX() + 105, hub.ui.labelOgre.getY() + 15, 200, 50);
                     hub.playSoundEffect(hub.sound.moneyEarn, false);
-                    hub.ui.setExpCount(20);
-                    hub.ui.setMoneyCount(50);
+                    hub.ui.setExpCount(100);
+                    hub.ui.setMoneyCount(20);
                     hub.fight.setEnemy(Enemies.OGRE);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
                     hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
@@ -122,8 +122,8 @@ public class Fight {
                     hub.sound.currentSoundEffect = hub.sound.fireBall;
                     hub.ui.panelHeathBar.setBounds(hub.ui.labelWizard.getX() + 105, hub.ui.labelWizard.getY() + 15, 200, 50);
                     hub.playSoundEffect(hub.sound.moneyEarn, false);
-                    hub.ui.setExpCount(20);
-                    hub.ui.setMoneyCount(50);
+                    hub.ui.setExpCount(100);
+                    hub.ui.setMoneyCount(20);
                     hub.fight.setEnemy(Enemies.WIZARD);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
                     hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
@@ -139,7 +139,7 @@ public class Fight {
                     hub.fight.setEnemy(Enemies.WARRIOROGRE);
                     hub.ui.healthBarProgress.setValue(enemies.getEntityHp());
                     hub.ui.healthBarProgress.setString(enemies.getEntityHp() + "/" + enemies.entityMaxHp + "HP");
-                    hub.ui.setExpCount(20);
+                    hub.ui.setExpCount(250);
                     hub.ui.labelWizard.setVisible(false);
                     hub.ui.labelWarriorOgre.setVisible(true);
                     winScreen();
@@ -247,7 +247,7 @@ public class Fight {
             }
         } else {
             hub.playSoundEffect(hub.sound.currentSoundEffect, false);
-            double enemyDmg = (random.nextInt(enemies.getEntityDmg()) + 1) * playerDefPercent;
+            double enemyDmg = (random.nextInt(enemies.getEntityMaxDmg()) + enemies.entityMinDmg) * playerDefPercent;
             hub.player.playerHp -= enemyDmg;
             hub.player.playerCurrentStats();
             hub.ui.textMessage.append(enemies.getEntityName() + " gave you " + df.format(enemyDmg) + " dmg \n " + "You: " + df.format(hub.player.playerHp) + " HP left");
@@ -305,6 +305,7 @@ public class Fight {
         hub.ui.labelFrogMonster.setVisible(false);
         hub.ui.labelGhastliness.setVisible(false);
         hub.ui.labelChestFinal.setVisible(false);
+        hub.ui.labelChestFinal.setVisible(false);
         hub.ui.labelWarriorOgre.setVisible(false);
 
         hub.ui.panelHeathBar.setBounds(hub.ui.labelRat.getX() + 50, hub.ui.labelRat.getY() - 20, 200, 30);
@@ -314,17 +315,26 @@ public class Fight {
     }
 
     public void checkArmor() {
+        System.out.println(hub.player.playerMinDmg + " - " + hub.player.playerMaxDmg + " - " + hub.player.playerCurrentMaxDmg);
         if (hub.player.playerDef >= hub.player.playerMaxDef) {
             playerDefPercent = 0.5;
-        } else if (hub.player.playerDef <= 10 && hub.player.playerDef > 1) {
+            System.out.println("0.5, Maximum armor value reached " + playerDefPercent);
+        } else if (hub.player.playerDef > 1 && hub.player.playerDef <= 10) {
             playerDefPercent = 0.9;
-        } else if (hub.player.playerDef <= 20) {
+            System.out.println("0.9 - " + playerDefPercent);
+        } else if (hub.player.playerDef > 10 && hub.player.playerDef < 20) {
             playerDefPercent = 0.8;
-        } else if (hub.player.playerDef <= 30) {
+            System.out.println("0.8 - " + playerDefPercent);
+        } else if (hub.player.playerDef >= 20 && hub.player.playerDef < 30) {
             playerDefPercent = 0.7;
-        } else if (hub.player.playerDef <= 40) {
+            System.out.println("0.7 - " + playerDefPercent);
+        } else if (hub.player.playerDef >= 30 && hub.player.playerDef < 40) {
             playerDefPercent = 0.6;
-        } else playerDefPercent = 1;
+            System.out.println("0.6 - " + playerDefPercent);
+        } else {
+            playerDefPercent = 1;
+            System.out.println("1 " + playerDefPercent);
+        }
     }
 
     public void defend() {
@@ -332,7 +342,7 @@ public class Fight {
         df.setRoundingMode(RoundingMode.CEILING);
 
         defChance = random.nextDouble(1);
-        if (defChance >= 0.9) {
+        if (defChance >= 0.6) {
             if (defChance == 1) {
                 attack();
             }
@@ -341,6 +351,7 @@ public class Fight {
                 hub.ui.textMessage.setText("");
                 hub.ui.textMessage.append("You gained 1HP");
                 hub.player.playerHp += 1;
+                hub.player.playerCurrentStats();
             } else {
                 hub.playSoundEffect(hub.sound.coinWin, false);
                 hub.ui.textMessage.setText("");
@@ -349,7 +360,7 @@ public class Fight {
             }
         } else {
             hub.ui.textMessage.setText("");
-            double enemyDmg = (random.nextInt(enemies.getEntityDmg()) + 1) * playerDefPercent;
+            double enemyDmg = (random.nextInt(enemies.getEntityMaxDmg()) + 1) * playerDefPercent;
             System.out.println(enemies.getEntityName() + " " + df.format(enemyDmg));
             hub.player.playerHp -= enemyDmg;
             hub.player.playerCurrentStats();

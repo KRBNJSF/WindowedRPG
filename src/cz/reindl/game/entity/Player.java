@@ -10,6 +10,7 @@ public class Player {
     public double playerHp;
     public int playerMaxDmg;
     public int playerMinDmg;
+    public int playerCurrentMaxDmg;
     public int playerDef;
     public int playerMaxDef;
     public int playerCoins;
@@ -20,10 +21,15 @@ public class Player {
 
     public boolean hand;
     public boolean knife;
+    public boolean isKnife;
     public boolean oldKnife;
+    public boolean isOldKnife;
     public boolean sword;
+    public boolean isSword;
     public boolean warHammer;
+    public boolean isWarHammer;
     public boolean shardSword;
+    public boolean isShardSword;
 
     public boolean shieldKnight;
     public boolean shieldBasic;
@@ -61,7 +67,8 @@ public class Player {
         playerMaxHp = 10;
         playerHp = 5; // FIXME: 06.01.2022 Set to 5 and fix Hearth label img
         playerMinDmg = 1;
-        playerMaxDmg = 2;
+        playerMaxDmg = 0;
+        playerCurrentMaxDmg = 2;
         playerMaxDef = 50;
         playerDef = 0;
         playerCoins = 0;
@@ -72,6 +79,7 @@ public class Player {
 
         hand = true;
         knife = false;
+        isKnife = false;
         oldKnife = false;
         sword = false;
         shardSword = false;
@@ -106,9 +114,11 @@ public class Player {
         buttonArmor = false;
 
         hub.ui.labelWeapon.setIcon(hub.ui.jarImg("icon/hand.png"));
-        hub.ui.labelWeapon.setName("Hand +0\n");
+        hub.ui.labelWeapon.setName("\nHand ");
         hub.ui.labelQuestItem.setIcon(hub.ui.jarImg("icon/coin.png"));
         hub.ui.moneyCount.setText(String.valueOf(playerCoins));
+        hub.ui.xpProgress.setMinimum(0);
+        hub.ui.xpProgress.setMaximum(100);
         hub.ui.xpProgress.setString(0 + " / " + 100);
         hub.event.questCount = 0;
         hub.fight.count = 0;
@@ -126,7 +136,7 @@ public class Player {
 
         //Setting visible hearth icons equal to player's HP
         double currentHp = playerHp;
-        while (currentHp >= 0) { // FIXME: 07.01.2022 >0 -> 9HP, >=0 -> 10HP but it's actually 9
+        while (currentHp > 0) { // FIXME: 07.01.2022 >0 -> 9HP, >=0 -> 10HP but it's actually 9
             hub.ui.labelHp[(int) currentHp].setVisible(true);
             currentHp--;
         }
@@ -134,6 +144,8 @@ public class Player {
         //PLAYER ITEMS CHECK
         hub.ui.labelWeapon.setVisible(hand);
         hub.ui.labelShield.setVisible(shieldKnight);
+        hub.ui.labelShield.setVisible(shieldBasic);
+        hub.ui.labelShield.setVisible(shieldSkull);
         hub.ui.labelQuestItem.setVisible(coin);
         hub.ui.labelChestArmor.setVisible(torso);
 
@@ -163,28 +175,38 @@ public class Player {
 
 
         //WEAPONS
-        if (sword) {
+        if (isSword) {
             playerMinDmg = 4;
-            playerMaxDmg = 5; // FIXME: 09.01.2022 Deduct players armor from older item
+            playerMaxDmg = 5;
+            playerCurrentMaxDmg += playerMaxDmg;
+            isSword = false;
         }
-        if (warHammer) {
+        if (isWarHammer) {
             playerMinDmg = 2;
             playerMaxDmg = 5;
+            playerCurrentMaxDmg += playerMaxDmg;
+            isWarHammer = false;
         }
-        if (knife) {
+        if (isKnife) {
             playerMinDmg = 2;
             playerMaxDmg = 3;
+            playerCurrentMaxDmg += playerMaxDmg;
+            isKnife = false;
         }
-        if (oldKnife) {
+        if (isOldKnife) {
             playerMinDmg = 1;
             playerMaxDmg = 4;
+            playerCurrentMaxDmg += playerMaxDmg;
+            isOldKnife = false;
         }
-        if (shardSword) {
+        if (isShardSword) {
             playerMinDmg = 6;
             playerMaxDmg = 10;
+            playerCurrentMaxDmg += playerMaxDmg;
+            isShardSword = false;
         }
 
-        //SHIELD
+        //SHIELD // FIXME: 09.01.2022 Deduct players armor from older item
         if (shieldKnight) {
             playerDef += 10;
         }
@@ -200,7 +222,7 @@ public class Player {
             playerDef += 3;
         }
         if (torso) {
-            playerDef += 20;
+            playerDef += 10;
         }
         if (torsoBasic) {
             playerDef += 5;
@@ -227,7 +249,7 @@ public class Player {
         buttonArmor = true;
         hub.ui.textMessage.setText("Level up!\n(1 upgrade point)");
         points++;
-        hub.ui.setMoneyCount(20);
+        hub.ui.setMoneyCount(5);
         hub.playSoundEffect(hub.sound.levelUp, false);
         hub.ui.setExpCount(-levelUpExp);
         playerLevel++;
