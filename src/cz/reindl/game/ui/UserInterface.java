@@ -875,6 +875,7 @@ public class UserInterface {
         gameHub.ui.panelHp.setVisible(true);
         gameHub.ui.textMessage.setVisible(true);
         gameHub.ui.labelInventory.setVisible(true);
+        gameHub.ui.panelXpBar.setVisible(true);
     }
 
     public void pressKey() {
