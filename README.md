@@ -3,10 +3,15 @@
 <strong>How to play</strong>
 ---
 ![inventory](https://user-images.githubusercontent.com/90755554/148623086-7b595b9e-7314-4c9b-9f73-01b3a52b3959.png)<br>Inventory<br><br>
+![image](https://user-images.githubusercontent.com/90755554/149030277-ca44448f-908b-46bc-8d53-e9517d420f2a.png) <br>Stats + upgrades<br>
 ![fight](https://user-images.githubusercontent.com/90755554/148623004-ca32063a-b7fe-4def-b56d-49afad5f2060.png) <br>Fight<br><br>
-![tavern](https://user-images.githubusercontent.com/90755554/148623079-8489b593-d98c-4245-9db5-a9827c090d60.png) <br>Tavern<br><br>
+![image](https://user-images.githubusercontent.com/90755554/149030128-63b92f4e-73c3-4aa5-9eec-cb2b20389d15.png) <br>Tavern<br><br>
 ![map](https://user-images.githubusercontent.com/90755554/148623090-38bf7a9a-2766-4553-9462-1083ba756e6a.png) <br>Teleportation map<br><br>
-![tavernShop](https://user-images.githubusercontent.com/90755554/148623092-c689c1fe-c861-4070-a139-620c24a8cb53.png)<br> Shop<br>
+![tavernShop](https://user-images.githubusercontent.com/90755554/148623092-c689c1fe-c861-4070-a139-620c24a8cb53.png)<br>
+![image](https://user-images.githubusercontent.com/90755554/149029912-a54ab35b-0131-4e00-bbd0-64850efde955.png)<br>
+![image](https://user-images.githubusercontent.com/90755554/149029843-ad2b30c1-a8a9-4453-aaec-fbfd80eaefee.png)<br>
+ Shop<br>
+ ![image](https://user-images.githubusercontent.com/90755554/149030546-13f9854d-fc59-41ec-865c-d6b32b9ccf23.png) <br>Death screen<br>
 
 <strong>Version 0.3</strong>
   ---
